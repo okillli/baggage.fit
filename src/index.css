@@ -165,7 +165,7 @@
   
   /* Pinned section base — bg-background ensures higher-z sections fully cover lower ones */
   .section-pinned {
-    @apply w-screen h-screen relative overflow-hidden bg-background;
+    @apply w-screen h-screen relative overflow-hidden bg-background dot-grid;
   }
   
   /* Flowing section base */
