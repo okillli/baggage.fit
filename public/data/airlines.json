@@ -1,0 +1,576 @@
+[
+  {
+    "code": "RYR",
+    "name": "Ryanair",
+    "country": "IE",
+    "links": {
+      "policy": "https://www.ryanair.com/gb/en/useful-info/help-centre/terms-and-conditions/regulations-and-policies/baggage-policy"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [55, 40, 20], "maxKg": 10, "notes": "Priority boarding includes 1 cabin bag. Non-priority limited to small bag." },
+      "underseat": { "maxCm": [40, 25, 20], "maxKg": null, "notes": "Small bag must fit under seat." },
+      "checked": { "maxCm": null, "maxKg": 20, "notes": "Size varies by fare. 10kg and 20kg options available." }
+    }
+  },
+  {
+    "code": "EZY",
+    "name": "easyJet",
+    "country": "GB",
+    "links": {
+      "policy": "https://www.easyjet.com/en/help/baggage/cabin-bag-and-hold-luggage"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [45, 36, 20], "maxKg": 15, "notes": "Large cabin bag for Plus/Flexi fares. Standard fare includes smaller bag." },
+      "underseat": { "maxCm": [36, 20, 15], "maxKg": 15, "notes": "Standard small cabin bag included for all fares." },
+      "checked": { "maxCm": [275], "maxKg": 23, "notes": "Total dimensions up to 275cm (L+W+H). 15kg, 23kg, 26kg, 29kg options." }
+    }
+  },
+  {
+    "code": "BAW",
+    "name": "British Airways",
+    "country": "GB",
+    "links": {
+      "policy": "https://www.britishairways.com/en-gb/information/baggage-essentials/hand-baggage"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [56, 45, 25], "maxKg": 23, "notes": "1 cabin bag plus 1 handbag/laptop bag." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 23, "notes": "Handbag or laptop bag must fit under seat." },
+      "checked": { "maxCm": [90, 75, 43], "maxKg": 23, "notes": "Up to 32kg depending on fare class." }
+    }
+  },
+  {
+    "code": "DLH",
+    "name": "Lufthansa",
+    "country": "DE",
+    "links": {
+      "policy": "https://www.lufthansa.com/de/en/baggage"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [55, 40, 23], "maxKg": 8, "notes": "1 cabin bag plus 1 foldable garment bag or laptop bag." },
+      "underseat": { "maxCm": [40, 30, 10], "maxKg": 8, "notes": "Additional small item must fit under seat." },
+      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm (L+W+H). 23kg in Economy, 32kg in Premium." }
+    }
+  },
+  {
+    "code": "KLM",
+    "name": "KLM",
+    "country": "NL",
+    "links": {
+      "policy": "https://www.klm.com/travel/nl_en/prepare_for_travel/baggage/baggage_allowance/index.htm"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [55, 35, 25], "maxKg": 12, "notes": "1 cabin bag plus 1 small accessory." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 12, "notes": "Small accessory must fit under seat." },
+      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy, 32kg in Business." }
+    }
+  },
+  {
+    "code": "AFR",
+    "name": "Air France",
+    "country": "FR",
+    "links": {
+      "policy": "https://www.airfrance.fr/FR/en/common/guidevoyageur/pratique/bagages.htm"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [55, 35, 25], "maxKg": 12, "notes": "1 cabin bag plus 1 accessory." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 12, "notes": "Accessory must fit under seat." },
+      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. Weight varies by fare." }
+    }
+  },
+  {
+    "code": "DAL",
+    "name": "Delta Air Lines",
+    "country": "US",
+    "links": {
+      "policy": "https://www.delta.com/us/en/baggage"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [56, 35, 23], "maxKg": null, "notes": "1 cabin bag plus 1 personal item. No weight limit specified." },
+      "underseat": { "maxCm": [43, 33, 20], "maxKg": null, "notes": "Personal item must fit under seat." },
+      "checked": { "maxCm": [157], "maxKg": 23, "notes": "Total dimensions 157cm (62 inches). 23kg in Economy." }
+    }
+  },
+  {
+    "code": "UAL",
+    "name": "United Airlines",
+    "country": "US",
+    "links": {
+      "policy": "https://www.united.com/en/us/fly/travel/baggage.html"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [56, 35, 22], "maxKg": null, "notes": "1 cabin bag plus 1 personal item." },
+      "underseat": { "maxCm": [43, 25, 22], "maxKg": null, "notes": "Personal item must fit under seat." },
+      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+    }
+  },
+  {
+    "code": "AAL",
+    "name": "American Airlines",
+    "country": "US",
+    "links": {
+      "policy": "https://www.aa.com/i18n/travel-info/baggage/carry-on-baggage.jsp"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [56, 36, 23], "maxKg": null, "notes": "1 cabin bag plus 1 personal item." },
+      "underseat": { "maxCm": [45, 35, 20], "maxKg": null, "notes": "Personal item must fit under seat." },
+      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. Fees apply for most routes." }
+    }
+  },
+  {
+    "code": "UAE",
+    "name": "Emirates",
+    "country": "AE",
+    "links": {
+      "policy": "https://www.emirates.com/english/help/baggage/"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [55, 38, 20], "maxKg": 7, "notes": "1 cabin bag plus 1 handbag or laptop bag." },
+      "underseat": { "maxCm": [45, 35, 20], "maxKg": 7, "notes": "Handbag or laptop bag must fit under seat." },
+      "checked": { "maxCm": [300], "maxKg": 23, "notes": "Total dimensions 300cm. 23-35kg depending on fare." }
+    }
+  },
+  {
+    "code": "QTR",
+    "name": "Qatar Airways",
+    "country": "QA",
+    "links": {
+      "policy": "https://www.qatarairways.com/en/baggage/allowance.html"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [50, 37, 25], "maxKg": 7, "notes": "1 cabin bag plus 1 personal item." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 7, "notes": "Personal item must fit under seat." },
+      "checked": { "maxCm": [158], "maxKg": 30, "notes": "Total dimensions 158cm. 30kg in Economy, 40kg in Business." }
+    }
+  },
+  {
+    "code": "SIA",
+    "name": "Singapore Airlines",
+    "country": "SG",
+    "links": {
+      "policy": "https://www.singaporeair.com/en_UK/us/travel-info/baggage/"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [56, 36, 23], "maxKg": 7, "notes": "1 cabin bag plus 1 small item." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 7, "notes": "Small item must fit under seat." },
+      "checked": { "maxCm": [158], "maxKg": 30, "notes": "Total dimensions 158cm. 30kg in Economy, 40kg in Business." }
+    }
+  },
+  {
+    "code": "CPA",
+    "name": "Cathay Pacific",
+    "country": "HK",
+    "links": {
+      "policy": "https://www.cathaypacific.com/cx/en_US/travel-information/baggage.html"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [56, 36, 23], "maxKg": 7, "notes": "1 cabin bag plus 1 small item." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 7, "notes": "Small item must fit under seat." },
+      "checked": { "maxCm": [203], "maxKg": 30, "notes": "Total dimensions 203cm. 30kg in Economy, 40kg in Business." }
+    }
+  },
+  {
+    "code": "JAL",
+    "name": "Japan Airlines",
+    "country": "JP",
+    "links": {
+      "policy": "https://www.jal.co.jp/jp/en/inter/baggage/"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [55, 40, 25], "maxKg": 10, "notes": "1 cabin bag plus 1 personal item." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 10, "notes": "Personal item must fit under seat." },
+      "checked": { "maxCm": [203], "maxKg": 23, "notes": "Total dimensions 203cm. 23kg in Economy, 32kg in Business." }
+    }
+  },
+  {
+    "code": "ANA",
+    "name": "All Nippon Airways",
+    "country": "JP",
+    "links": {
+      "policy": "https://www.ana.co.jp/en/us/travel-information/baggage/"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [55, 40, 25], "maxKg": 10, "notes": "1 cabin bag plus 1 personal item." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 10, "notes": "Personal item must fit under seat." },
+      "checked": { "maxCm": [203], "maxKg": 23, "notes": "Total dimensions 203cm. 23kg in Economy, 32kg in Business." }
+    }
+  },
+  {
+    "code": "QFA",
+    "name": "Qantas",
+    "country": "AU",
+    "links": {
+      "policy": "https://www.qantas.com/au/en/travel-info/baggage.html"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [56, 36, 23], "maxKg": 7, "notes": "1 cabin bag plus 1 small item." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 7, "notes": "Small item must fit under seat." },
+      "checked": { "maxCm": [140], "maxKg": 30, "notes": "Total dimensions 140cm. 30kg in Economy, 40kg in Business." }
+    }
+  },
+  {
+    "code": "VIR",
+    "name": "Virgin Atlantic",
+    "country": "GB",
+    "links": {
+      "policy": "https://www.virgin-atlantic.com/gb/en/travel-information/baggage.html"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [56, 36, 23], "maxKg": 10, "notes": "1 cabin bag plus 1 handbag or laptop bag." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 10, "notes": "Handbag or laptop bag must fit under seat." },
+      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+    }
+  },
+  {
+    "code": "SWA",
+    "name": "Southwest Airlines",
+    "country": "US",
+    "links": {
+      "policy": "https://www.southwest.com/html/customer-service/baggage/index.html"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [60, 40, 25], "maxKg": null, "notes": "2 free checked bags. 1 cabin bag plus 1 personal item." },
+      "underseat": { "maxCm": [46, 34, 19], "maxKg": null, "notes": "Personal item must fit under seat." },
+      "checked": { "maxCm": [157], "maxKg": 23, "notes": "Total dimensions 157cm. 2 free checked bags up to 23kg each." }
+    }
+  },
+  {
+    "code": "ICE",
+    "name": "Icelandair",
+    "country": "IS",
+    "links": {
+      "policy": "https://www.icelandair.com/support/baggage/"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [55, 40, 20], "maxKg": 10, "notes": "1 cabin bag plus 1 small personal item." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 10, "notes": "Personal item must fit under seat." },
+      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+    }
+  },
+  {
+    "code": "NAX",
+    "name": "Norwegian",
+    "country": "NO",
+    "links": {
+      "policy": "https://www.norwegian.com/uk/travel-info/baggage/"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [55, 40, 23], "maxKg": 10, "notes": "1 cabin bag plus 1 small personal item. LowFare requires purchase." },
+      "underseat": { "maxCm": [38, 30, 20], "maxKg": 10, "notes": "Small personal item must fit under seat." },
+      "checked": { "maxCm": [250], "maxKg": 23, "notes": "Total dimensions 250cm. 23kg or 32kg options." }
+    }
+  },
+  {
+    "code": "WIZ",
+    "name": "Wizz Air",
+    "country": "HU",
+    "links": {
+      "policy": "https://wizzair.com/en-gb/information-and-services/travel-information/baggage"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [55, 40, 20], "maxKg": 10, "notes": "WIZZ Priority cabin bag. Free small bag is 40x30x20cm." },
+      "underseat": { "maxCm": [40, 30, 20], "maxKg": 10, "notes": "Free small bag must fit under seat." },
+      "checked": { "maxCm": [149], "maxKg": 20, "notes": "Total dimensions 149cm (L+W+H). 10kg, 20kg, 26kg, 32kg options." }
+    }
+  },
+  {
+    "code": "TAP",
+    "name": "TAP Air Portugal",
+    "country": "PT",
+    "links": {
+      "policy": "https://www.flytap.com/en-pt/baggage"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [55, 40, 20], "maxKg": 8, "notes": "1 cabin bag plus 1 personal item." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 8, "notes": "Personal item must fit under seat." },
+      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+    }
+  },
+  {
+    "code": "IBE",
+    "name": "Iberia",
+    "country": "ES",
+    "links": {
+      "policy": "https://www.iberia.com/es/ayuda/equipaje/"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [56, 40, 25], "maxKg": 10, "notes": "1 cabin bag plus 1 personal item." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 10, "notes": "Personal item must fit under seat." },
+      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+    }
+  },
+  {
+    "code": "AUA",
+    "name": "Austrian Airlines",
+    "country": "AT",
+    "links": {
+      "policy": "https://www.austrian.com/Info/Flying/Baggage.aspx"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [55, 40, 23], "maxKg": 8, "notes": "1 cabin bag plus 1 personal item." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 8, "notes": "Personal item must fit under seat." },
+      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+    }
+  },
+  {
+    "code": "SAS",
+    "name": "SAS",
+    "country": "SE",
+    "links": {
+      "policy": "https://www.flysas.com/en/us/travel-info/baggage/"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [55, 40, 23], "maxKg": 8, "notes": "1 cabin bag plus 1 small item. SAS Go Light excludes cabin bag." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 8, "notes": "Small item must fit under seat." },
+      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in SAS Go." }
+    }
+  },
+  {
+    "code": "FIN",
+    "name": "Finnair",
+    "country": "FI",
+    "links": {
+      "policy": "https://www.finnair.com/en/baggage"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [56, 45, 25], "maxKg": 8, "notes": "1 cabin bag plus 1 personal item. Economy Light excludes cabin bag." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 8, "notes": "Personal item must fit under seat." },
+      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+    }
+  },
+  {
+    "code": "LOT",
+    "name": "LOT Polish Airlines",
+    "country": "PL",
+    "links": {
+      "policy": "https://www.lot.com/us/en/baggage"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [55, 40, 23], "maxKg": 8, "notes": "1 cabin bag plus 1 personal item." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 8, "notes": "Personal item must fit under seat." },
+      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+    }
+  },
+  {
+    "code": "THY",
+    "name": "Turkish Airlines",
+    "country": "TR",
+    "links": {
+      "policy": "https://www.turkishairlines.com/en-int/any-questions/carry-on-baggage/"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [55, 40, 23], "maxKg": 8, "notes": "1 cabin bag plus 1 personal item." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 8, "notes": "Personal item must fit under seat." },
+      "checked": { "maxCm": [158], "maxKg": 20, "notes": "Total dimensions 158cm. 20kg in Economy." }
+    }
+  },
+  {
+    "code": "ETD",
+    "name": "Etihad Airways",
+    "country": "AE",
+    "links": {
+      "policy": "https://www.etihad.com/en-us/baggage"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [56, 36, 23], "maxKg": 7, "notes": "1 cabin bag plus 1 personal item." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 7, "notes": "Personal item must fit under seat." },
+      "checked": { "maxCm": [207], "maxKg": 23, "notes": "Total dimensions 207cm. 23kg in Economy." }
+    }
+  },
+  {
+    "code": "KAL",
+    "name": "Korean Air",
+    "country": "KR",
+    "links": {
+      "policy": "https://www.koreanair.com/booking/baggage"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [55, 40, 20], "maxKg": 12, "notes": "1 cabin bag plus 1 personal item." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 12, "notes": "Personal item must fit under seat." },
+      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+    }
+  },
+  {
+    "code": "ANZ",
+    "name": "Air New Zealand",
+    "country": "NZ",
+    "links": {
+      "policy": "https://www.airnewzealand.com/baggage"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [56, 36, 23], "maxKg": 7, "notes": "1 cabin bag plus 1 small item." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 7, "notes": "Small item must fit under seat." },
+      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+    }
+  },
+  {
+    "code": "VLE",
+    "name": "Vueling",
+    "country": "ES",
+    "links": {
+      "policy": "https://www.vueling.com/en/booking/baggage"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [40, 30, 20], "maxKg": 10, "notes": "Small cabin bag included. Larger bag requires purchase." },
+      "underseat": { "maxCm": [40, 30, 20], "maxKg": 10, "notes": "Free small bag must fit under seat." },
+      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg or 32kg options." }
+    }
+  },
+  {
+    "code": "EIN",
+    "name": "Aer Lingus",
+    "country": "IE",
+    "links": {
+      "policy": "https://www.aerlingus.com/help/baggage/"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [55, 40, 24], "maxKg": 10, "notes": "1 cabin bag plus 1 small personal item." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 10, "notes": "Personal item must fit under seat." },
+      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+    }
+  },
+  {
+    "code": "BEL",
+    "name": "Brussels Airlines",
+    "country": "BE",
+    "links": {
+      "policy": "https://www.brusselsairlines.com/en/be/practical-information/travel-info/baggage.aspx"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [55, 40, 23], "maxKg": 12, "notes": "1 cabin bag plus 1 personal item." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 12, "notes": "Personal item must fit under seat." },
+      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+    }
+  },
+  {
+    "code": "CSA",
+    "name": "Czech Airlines",
+    "country": "CZ",
+    "links": {
+      "policy": "https://www.csa.cz/en/baggage/"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [55, 45, 25], "maxKg": 8, "notes": "1 cabin bag plus 1 personal item." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 8, "notes": "Personal item must fit under seat." },
+      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+    }
+  },
+  {
+    "code": "MAL",
+    "name": "Malaysia Airlines",
+    "country": "MY",
+    "links": {
+      "policy": "https://www.malaysiaairlines.com/hq/en/baggage.html"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [56, 36, 23], "maxKg": 7, "notes": "1 cabin bag plus 1 personal item." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 7, "notes": "Personal item must fit under seat." },
+      "checked": { "maxCm": [158], "maxKg": 30, "notes": "Total dimensions 158cm. 30kg in Economy." }
+    }
+  },
+  {
+    "code": "THA",
+    "name": "Thai Airways",
+    "country": "TH",
+    "links": {
+      "policy": "https://www.thaiairways.com/en/baggage"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [56, 45, 25], "maxKg": 7, "notes": "1 cabin bag plus 1 personal item." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 7, "notes": "Personal item must fit under seat." },
+      "checked": { "maxCm": [158], "maxKg": 30, "notes": "Total dimensions 158cm. 30kg in Economy." }
+    }
+  },
+  {
+    "code": "PAL",
+    "name": "Philippine Airlines",
+    "country": "PH",
+    "links": {
+      "policy": "https://www.philippineairlines.com/en/baggage"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [56, 36, 23], "maxKg": 7, "notes": "1 cabin bag plus 1 personal item." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 7, "notes": "Personal item must fit under seat." },
+      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+    }
+  },
+  {
+    "code": "GIA",
+    "name": "Garuda Indonesia",
+    "country": "ID",
+    "links": {
+      "policy": "https://www.garuda-indonesia.com/en/baggage"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [56, 36, 23], "maxKg": 7, "notes": "1 cabin bag plus 1 personal item." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 7, "notes": "Personal item must fit under seat." },
+      "checked": { "maxCm": [158], "maxKg": 30, "notes": "Total dimensions 158cm. 30kg in Economy." }
+    }
+  },
+  {
+    "code": "CCA",
+    "name": "Air China",
+    "country": "CN",
+    "links": {
+      "policy": "https://www.airchina.com/en/baggage/"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [55, 40, 20], "maxKg": 5, "notes": "1 cabin bag plus 1 personal item." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 5, "notes": "Personal item must fit under seat." },
+      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+    }
+  },
+  {
+    "code": "CES",
+    "name": "China Eastern",
+    "country": "CN",
+    "links": {
+      "policy": "https://www.ceair.com/baggage"
+    },
+    "lastVerified": "2026-01-15",
+    "allowances": {
+      "cabin": { "maxCm": [55, 40, 20], "maxKg": 8, "notes": "1 cabin bag plus 1 personal item." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 8, "notes": "Personal item must fit under seat." },
+      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+    }
+  }
+]

@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 10%;
+    --foreground: 0 0% 96%;
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 96%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 96%;
+    --primary: 78 100% 62%;
+    --primary-foreground: 0 0% 10%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 96%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 72%;
+    --accent: 78 100% 62%;
+    --accent-foreground: 0 0% 10%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 20%;
+    --input: 0 0% 15%;
+    --ring: 78 100% 62%;
+    --radius: 0.625rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    scroll-behavior: auto;
+  }
+  
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+  }
+  
+  .font-mono {
+    font-family: 'IBM Plex Mono', monospace;
+  }
+}
+
+@layer components {
+  /* Dot grid background pattern */
+  .dot-grid {
+    background-image: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  
+  /* Light section grid lines */
+  .grid-lines {
+    background-image: 
+      linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  
+  /* Section label styling */
+  .section-label {
+    @apply font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground;
+  }
+  
+  /* Button hover lift effect */
+  .btn-lift {
+    @apply transition-transform duration-200 ease-out;
+  }
+  .btn-lift:hover {
+    @apply -translate-y-0.5;
+  }
+  
+  /* Card hover effect */
+  .card-hover {
+    @apply transition-all duration-300 ease-out;
+  }
+  .card-hover:hover {
+    @apply -translate-y-1;
+  }
+  
+  /* Glow effect for accent elements */
+  .glow-accent {
+    box-shadow: 0 0 20px rgba(215, 255, 59, 0.3);
+  }
+  
+  /* Sizer frame styling */
+  .sizer-frame {
+    @apply border border-white/20 rounded-xl;
+  }
+  
+  /* Input focus ring */
+  .input-focus {
+    @apply focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent;
+  }
+  
+  /* Chip selected state */
+  .chip-selected {
+    @apply bg-accent text-background border-accent;
+  }
+  
+  /* Outcome badge styles */
+  .badge-fits {
+    @apply bg-accent text-background font-semibold;
+  }
+  .badge-doesnt-fit {
+    @apply bg-transparent border-2 border-red-500 text-white;
+  }
+  .badge-unknown {
+    @apply bg-transparent border-2 border-white/30 text-white/70;
+  }
+}
+
+@layer utilities {
+  /* Typography utilities */
+  .text-h1 {
+    font-size: clamp(44px, 6vw, 84px);
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+  }
+  
+  .text-h2 {
+    font-size: clamp(34px, 4.2vw, 64px);
+    letter-spacing: -0.01em;
+    line-height: 1.0;
+  }
+  
+  .text-h3 {
+    font-size: clamp(24px, 2.5vw, 36px);
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+  
+  /* Animation utilities */
+  .will-change-transform {
+    will-change: transform;
+  }
+  
+  .gpu-accelerate {
+    transform: translateZ(0);
+  }
+  
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Pinned section base — bg-background ensures higher-z sections fully cover lower ones */
+  .section-pinned {
+    @apply w-screen h-screen relative overflow-hidden bg-background;
+  }
+  
+  /* Flowing section base */
+  .section-flowing {
+    @apply w-full relative;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
