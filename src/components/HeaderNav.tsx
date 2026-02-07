@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { gsap } from 'gsap';
 import { cn, scrollToPinCenter } from '@/lib/utils';
 import { useAppStore } from '@/store/appStore';
 import { Plane, Scale, List } from 'lucide-react';
@@ -20,6 +21,21 @@ export function HeaderNav() {
     { id: 'compare', label: 'Compare', icon: Scale },
     { id: 'airline', label: 'Airlines', icon: List },
   ] as const;
+
+  const handleNavClick = (id: typeof navItems[number]['id']) => {
+    setCurrentView(id);
+    switch (id) {
+      case 'check':
+        scrollToPinCenter('bag-type');
+        break;
+      case 'airline':
+        scrollToPinCenter('airline-selector');
+        break;
+      case 'compare':
+        gsap.to(window, { scrollTo: '#compare', duration: 0.8, ease: 'power2.inOut' });
+        break;
+    }
+  };
 
   return (
     <header
@@ -50,7 +66,7 @@ export function HeaderNav() {
             return (
               <button
                 key={item.id}
-                onClick={() => setCurrentView(item.id)}
+                onClick={() => handleNavClick(item.id)}
                 className={cn(
                   'flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all',
                   isActive
@@ -73,7 +89,7 @@ export function HeaderNav() {
             return (
               <button
                 key={item.id}
-                onClick={() => setCurrentView(item.id)}
+                onClick={() => handleNavClick(item.id)}
                 className={cn(
                   'flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all',
                   isActive

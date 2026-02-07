@@ -33,6 +33,9 @@ const bagTypes: { type: BagType; title: string; description: string; image: stri
 export function BagTypePicker() {
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
 
   const { bagType, setBagType, setCurrentView } = useAppStore();
 
@@ -43,27 +46,57 @@ export function BagTypePicker() {
     if (!section || !content) return;
 
     const ctx = gsap.context(() => {
-      // Set initial state - visible but ready for animation
-      gsap.set(content, { opacity: 1, y: 0 });
+      const header = headerRef.current!;
+      const cards = Array.from(cardsRef.current!.children);
+      const cta = ctaRef.current!;
 
       const scrollTl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
           start: 'top top',
-          end: '+=120%',
+          end: '+=130%',
           pin: true,
-          scrub: 0.5,
+          scrub: 0.3,
         },
       });
 
-      // ENTRANCE (0% - 25%): Fade in and slide up
-      scrollTl.fromTo(content,
-        { opacity: 0, y: 60 },
-        { opacity: 1, y: 0, ease: 'power2.out' },
-        0
-      );
+      // ENTRANCE (0% - 26%): Stagger Rise — per-element
+      scrollTl
+        .fromTo(header,
+          { opacity: 0, y: -30 },
+          { opacity: 1, y: 0, duration: 0.14, ease: 'power2.out' },
+          0
+        )
+        .fromTo(cards,
+          { opacity: 0, y: 50, scale: 0.95 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.14, stagger: 0.03, ease: 'power2.out' },
+          0.05
+        )
+        .fromTo(cta,
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.10, ease: 'power2.out' },
+          0.16
+        );
 
-      // SETTLE: Hold position (no exit fade — next section covers via z-index)
+      // SETTLE (26% - 70%): Hold
+
+      // EXIT (70% - 100%): Elements fly out
+      scrollTl
+        .fromTo(header,
+          { y: 0, opacity: 1 },
+          { y: -50, opacity: 0, duration: 0.30, ease: 'power2.in' },
+          0.70
+        )
+        .fromTo(cards,
+          { x: 0, opacity: 1, rotate: 0 },
+          { x: '40vw', opacity: 0, rotate: 3, duration: 0.26, stagger: 0.02, ease: 'power2.in' },
+          0.72
+        )
+        .fromTo(cta,
+          { x: 0, opacity: 1 },
+          { x: '-40vw', opacity: 0, duration: 0.25, ease: 'power2.in' },
+          0.75
+        );
     }, section);
 
     return () => ctx.revert();
@@ -82,7 +115,7 @@ export function BagTypePicker() {
     >
       <div ref={contentRef} className="w-full max-w-6xl mx-auto px-6">
         {/* Header */}
-        <div className="text-center mb-10">
+        <div ref={headerRef} className="text-center mb-10">
           <span className="section-label block mb-4">
             STEP 1 / BAG TYPE
           </span>
@@ -92,7 +125,7 @@ export function BagTypePicker() {
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
           {bagTypes.map((bag) => (
             <BagTypeCard
               key={bag.type}
@@ -108,14 +141,13 @@ export function BagTypePicker() {
         </div>
 
         {/* CTA */}
-        <div className="text-center">
+        <div ref={ctaRef} className="text-center">
           <button
             onClick={handleNext}
             className={cn(
               'inline-flex items-center gap-2 px-6 py-3',
-              'bg-white/10 text-foreground font-medium rounded-lg',
-              'hover:bg-white/20 transition-all duration-200 btn-lift',
-              'border border-white/10'
+              'bg-accent text-background font-heading font-bold rounded-lg',
+              'hover:brightness-110 transition-all duration-200 btn-lift'
             )}
           >
             Next: enter dimensions

@@ -12,6 +12,9 @@ gsap.registerPlugin(ScrollTrigger);
 export function DimensionsInput() {
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const inputPanelRef = useRef<HTMLDivElement>(null);
+  const diagramPanelRef = useRef<HTMLDivElement>(null);
 
   const { dimensions, unit, bagType, setDimensions, setUnit, setCurrentView } = useAppStore();
 
@@ -22,27 +25,57 @@ export function DimensionsInput() {
     if (!section || !content) return;
 
     const ctx = gsap.context(() => {
-      // Set initial state
-      gsap.set(content, { opacity: 1, y: 0 });
+      const header = headerRef.current!;
+      const inputPanel = inputPanelRef.current!;
+      const diagramPanel = diagramPanelRef.current!;
 
       const scrollTl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
           start: 'top top',
-          end: '+=120%',
+          end: '+=130%',
           pin: true,
-          scrub: 0.5,
+          scrub: 0.3,
         },
       });
 
-      // ENTRANCE (0% - 25%): Fade in and slide up
-      scrollTl.fromTo(content,
-        { opacity: 0, y: 60 },
-        { opacity: 1, y: 0, ease: 'power2.out' },
-        0
-      );
+      // ENTRANCE (0% - 24%): Converge — header drops, panels slide in from sides
+      scrollTl
+        .fromTo(header,
+          { opacity: 0, y: -30 },
+          { opacity: 1, y: 0, duration: 0.14, ease: 'power2.out' },
+          0
+        )
+        .fromTo(inputPanel,
+          { opacity: 0, x: -60 },
+          { opacity: 1, x: 0, duration: 0.16, ease: 'power2.out' },
+          0.06
+        )
+        .fromTo(diagramPanel,
+          { opacity: 0, x: 60 },
+          { opacity: 1, x: 0, duration: 0.16, ease: 'power2.out' },
+          0.08
+        );
 
-      // SETTLE: Hold position (no exit fade — next section covers via z-index)
+      // SETTLE (24% - 70%): Hold
+
+      // EXIT (70% - 100%): Panels split apart
+      scrollTl
+        .fromTo(header,
+          { y: 0, opacity: 1 },
+          { y: -50, opacity: 0, duration: 0.30, ease: 'power2.in' },
+          0.70
+        )
+        .fromTo(inputPanel,
+          { x: 0, opacity: 1 },
+          { x: '-40vw', opacity: 0, duration: 0.28, ease: 'power2.in' },
+          0.72
+        )
+        .fromTo(diagramPanel,
+          { x: 0, opacity: 1 },
+          { x: '40vw', opacity: 0, duration: 0.28, ease: 'power2.in' },
+          0.72
+        );
     }, section);
 
     return () => ctx.revert();
@@ -68,7 +101,7 @@ export function DimensionsInput() {
     >
       <div ref={contentRef} className="w-full max-w-6xl mx-auto px-6">
         {/* Header */}
-        <div className="text-center mb-10">
+        <div ref={headerRef} className="text-center mb-10">
           <span className="section-label block mb-4">
             STEP 2 / SIZE
           </span>
@@ -81,6 +114,7 @@ export function DimensionsInput() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
           {/* Input Panel */}
           <div
+            ref={inputPanelRef}
             className={cn(
               'bg-white/5 border border-white/10 rounded-xl p-6',
               'flex flex-col justify-center'
@@ -109,6 +143,7 @@ export function DimensionsInput() {
 
           {/* Diagram Panel */}
           <div
+            ref={diagramPanelRef}
             className={cn(
               'bg-black/40 border border-white/10 rounded-xl p-6',
               'flex flex-col items-center justify-center min-h-[300px]'

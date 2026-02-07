@@ -64,7 +64,7 @@ function App() {
             pinnedRanges[0]?.center ?? 0
           );
         },
-        duration: { min: 0.15, max: 0.35 },
+        duration: { min: 0.2, max: 0.4 },
         delay: 0,
         ease: 'power2.out',
       },

@@ -11,6 +11,9 @@ gsap.registerPlugin(ScrollTrigger);
 export function AirlineSelector() {
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const selectorRef = useRef<HTMLDivElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
 
   const {
     airlines,
@@ -36,27 +39,57 @@ export function AirlineSelector() {
     if (!section || !content) return;
 
     const ctx = gsap.context(() => {
-      // Set initial state
-      gsap.set(content, { opacity: 1, y: 0 });
+      const header = headerRef.current!;
+      const selector = selectorRef.current!;
+      const cta = ctaRef.current!;
 
       const scrollTl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
           start: 'top top',
-          end: '+=120%',
+          end: '+=130%',
           pin: true,
-          scrub: 0.5,
+          scrub: 0.3,
         },
       });
 
-      // ENTRANCE (0% - 25%): Fade in and slide up
-      scrollTl.fromTo(content,
-        { opacity: 0, y: 60 },
-        { opacity: 1, y: 0, ease: 'power2.out' },
-        0
-      );
+      // ENTRANCE (0% - 27%): Scale Bloom — header drops, selector blooms, CTAs rise
+      scrollTl
+        .fromTo(header,
+          { opacity: 0, y: -30 },
+          { opacity: 1, y: 0, duration: 0.14, ease: 'power2.out' },
+          0
+        )
+        .fromTo(selector,
+          { opacity: 0, scale: 0.92, y: 20 },
+          { opacity: 1, scale: 1, y: 0, duration: 0.18, ease: 'power2.out' },
+          0.06
+        )
+        .fromTo(cta,
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.12, ease: 'power2.out' },
+          0.15
+        );
 
-      // SETTLE: Hold position (no exit fade — next section covers via z-index)
+      // SETTLE (27% - 70%): Hold
+
+      // EXIT (70% - 100%): Elements fly out
+      scrollTl
+        .fromTo(header,
+          { y: 0, opacity: 1 },
+          { y: -50, opacity: 0, duration: 0.30, ease: 'power2.in' },
+          0.70
+        )
+        .fromTo(selector,
+          { x: 0, opacity: 1 },
+          { x: '-40vw', opacity: 0, duration: 0.28, ease: 'power2.in' },
+          0.72
+        )
+        .fromTo(cta,
+          { y: 0, opacity: 1 },
+          { y: 50, opacity: 0, duration: 0.25, ease: 'power2.in' },
+          0.75
+        );
     }, section);
 
     return () => ctx.revert();
@@ -97,7 +130,7 @@ export function AirlineSelector() {
     >
       <div ref={contentRef} className="w-full max-w-3xl mx-auto px-6">
         {/* Header */}
-        <div className="text-center mb-8">
+        <div ref={headerRef} className="text-center mb-8">
           <span className="section-label block mb-4">
             STEP 3 / AIRLINE
           </span>
@@ -107,7 +140,7 @@ export function AirlineSelector() {
         </div>
 
         {/* Search */}
-        <div className="origin-center">
+        <div ref={selectorRef} className="origin-center">
           <AirlineMultiSelect
             airlines={airlines}
             selected={selectedAirlines}
@@ -125,7 +158,7 @@ export function AirlineSelector() {
         </div>
 
         {/* CTAs */}
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div ref={ctaRef} className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
           <button
             onClick={handleCheckFit}
             disabled={selectedAirlines.length === 0}

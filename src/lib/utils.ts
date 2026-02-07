@@ -22,5 +22,7 @@ export function scrollToPinCenter(sectionId: string) {
   const spacerTop = spacer.getBoundingClientRect().top + window.scrollY;
   const pinScroll = spacer.clientHeight - window.innerHeight;
   const target = spacerTop + pinScroll * 0.5;
-  gsap.to(window, { scrollTo: target, duration: 0.8, ease: 'power2.inOut' });
+  const distance = Math.abs(target - window.scrollY);
+  const duration = Math.min(Math.max(1.0, (distance / window.innerHeight) * 0.55), 2.0);
+  gsap.to(window, { scrollTo: { y: target, autoKill: false }, duration, ease: 'power2.inOut' });
 }

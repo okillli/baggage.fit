@@ -65,7 +65,7 @@ export function Hero() {
           start: 'top top',
           end: '+=130%',
           pin: true,
-          scrub: 0.5,
+          scrub: 0.3,
           onLeaveBack: () => {
             // Reset all elements to visible when scrolling back to top
             gsap.set([headline, sub, cta, frame, scroll], { 
@@ -85,27 +85,27 @@ export function Hero() {
       scrollTl
         .fromTo(headline,
           { x: 0, opacity: 1 },
-          { x: '-40vw', opacity: 0, ease: 'power2.in' },
+          { x: '-40vw', opacity: 0, duration: 0.30, ease: 'power2.in' },
           0.70
         )
         .fromTo(sub,
           { x: 0, opacity: 1 },
-          { x: '40vw', opacity: 0, ease: 'power2.in' },
+          { x: '40vw', opacity: 0, duration: 0.28, ease: 'power2.in' },
           0.72
         )
         .fromTo(cta,
           { x: 0, opacity: 1 },
-          { x: '40vw', opacity: 0, ease: 'power2.in' },
+          { x: '40vw', opacity: 0, duration: 0.26, ease: 'power2.in' },
           0.74
         )
         .fromTo(frame,
           { scale: 1, opacity: 1 },
-          { scale: 1.08, opacity: 0, ease: 'power2.in' },
+          { scale: 1.08, opacity: 0, duration: 0.30, ease: 'power2.in' },
           0.70
         )
         .fromTo(scroll,
           { opacity: 1 },
-          { opacity: 0 },
+          { opacity: 0, duration: 0.30 },
           0.70
         );
     }, section);
