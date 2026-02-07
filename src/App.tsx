@@ -11,6 +11,7 @@ import { AirlineSelector } from '@/sections/AirlineSelector';
 import { ResultsDashboard } from '@/sections/ResultsDashboard';
 import { CompareMode } from '@/sections/CompareMode';
 import { Footer } from '@/sections/Footer';
+import { AirlineDetailSheet } from '@/components/AirlineDetailSheet';
 import './App.css';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
@@ -105,6 +106,9 @@ function App() {
         <CompareMode />
         <Footer />
       </main>
+
+      {/* Airline detail overlay */}
+      <AirlineDetailSheet />
     </div>
   );
 }

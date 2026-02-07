@@ -1,13 +1,18 @@
 import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { cn } from '@/lib/utils';
-import type { Dimensions, Unit } from '@/types';
+import type { Dimensions, Unit, WeightUnit } from '@/types';
+import { formatWeight } from '@/lib/fitLogic';
 
 interface VisualSizerProps {
   dimensions: Dimensions;
   maxDimensions?: [number, number, number] | null;
   unit?: Unit;
   outcome?: 'fits' | 'doesnt-fit' | 'unknown';
+  userWeightKg?: number | null;
+  maxWeightKg?: number | null;
+  weightOutcome?: 'fits' | 'doesnt-fit' | 'unknown';
+  weightUnit?: WeightUnit;
   className?: string;
   animate?: boolean;
 }
@@ -17,6 +22,10 @@ export function VisualSizer({
   maxDimensions,
   unit = 'cm',
   outcome = 'unknown',
+  userWeightKg,
+  maxWeightKg,
+  weightOutcome = 'unknown',
+  weightUnit = 'kg',
   className,
   animate = true,
 }: VisualSizerProps) {
@@ -174,6 +183,57 @@ export function VisualSizer({
           zIndex: -1,
         }}
       />
+
+      {/* Weight gauge bar */}
+      {(userWeightKg != null || maxWeightKg != null) && (
+        <WeightGauge
+          userWeightKg={userWeightKg ?? null}
+          maxWeightKg={maxWeightKg ?? null}
+          weightOutcome={weightOutcome}
+          weightUnit={weightUnit}
+        />
+      )}
+    </div>
+  );
+}
+
+function WeightGauge({
+  userWeightKg,
+  maxWeightKg,
+  weightOutcome,
+  weightUnit = 'kg',
+}: {
+  userWeightKg: number | null;
+  maxWeightKg: number | null;
+  weightOutcome: 'fits' | 'doesnt-fit' | 'unknown';
+  weightUnit?: WeightUnit;
+}) {
+  const fillPercent = userWeightKg != null && maxWeightKg != null && maxWeightKg > 0
+    ? Math.min((userWeightKg / maxWeightKg) * 100, 100)
+    : 0;
+
+  const label = userWeightKg != null && maxWeightKg != null
+    ? `${formatWeight(userWeightKg, weightUnit)} / ${formatWeight(maxWeightKg, weightUnit)}`
+    : maxWeightKg != null
+      ? `Max ${formatWeight(maxWeightKg, weightUnit)}`
+      : '';
+
+  return (
+    <div className="absolute -bottom-14 left-1/2 -translate-x-1/2 w-3/4 space-y-1">
+      <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
+        {fillPercent > 0 && (
+          <div
+            className={cn(
+              'h-full rounded-full transition-all duration-500',
+              weightOutcome === 'fits' && 'bg-accent',
+              weightOutcome === 'doesnt-fit' && 'bg-red-500',
+              weightOutcome === 'unknown' && 'bg-white/30'
+            )}
+            style={{ width: `${fillPercent}%` }}
+          />
+        )}
+      </div>
+      <p className="text-xs font-mono text-muted-foreground text-center">{label}</p>
     </div>
   );
 }

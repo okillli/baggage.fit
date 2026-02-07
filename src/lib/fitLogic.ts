@@ -1,4 +1,4 @@
-import type { Dimensions, FitOutcome, Unit } from '@/types';
+import type { Dimensions, FitOutcome, Unit, WeightUnit } from '@/types';
 
 /**
  * Convert dimensions from inches to centimeters
@@ -123,4 +123,60 @@ export function parseDimensionInput(value: string): number {
  */
 export function validateDimensions(dims: Dimensions): boolean {
   return dims.l > 0 && dims.w > 0 && dims.h > 0;
+}
+
+/**
+ * Check if user weight fits within airline weight limit
+ */
+export function checkWeightFit(
+  userKg: number | null,
+  maxKg: number | null
+): FitOutcome {
+  if (userKg === null || maxKg === null) return 'unknown';
+  return userKg <= maxKg ? 'fits' : 'doesnt-fit';
+}
+
+/**
+ * Combine dimension and weight outcomes into overall result.
+ * doesnt-fit beats fits; unknown is neutral (doesn't worsen the result).
+ */
+export function combinedOutcome(
+  dimOutcome: FitOutcome,
+  weightOutcome: FitOutcome
+): FitOutcome {
+  if (dimOutcome === 'doesnt-fit' || weightOutcome === 'doesnt-fit') {
+    return 'doesnt-fit';
+  }
+  if (dimOutcome === 'fits' && weightOutcome === 'fits') return 'fits';
+  if (dimOutcome === 'fits' && weightOutcome === 'unknown') return 'fits';
+  if (dimOutcome === 'unknown' && weightOutcome === 'fits') return 'unknown';
+  return 'unknown';
+}
+
+const KG_PER_LB = 0.453592;
+
+/**
+ * Convert weight to kilograms
+ */
+export function convertWeightToKg(weight: number, unit: WeightUnit): number {
+  return unit === 'lb' ? Math.round(weight * KG_PER_LB * 100) / 100 : weight;
+}
+
+/**
+ * Convert kilograms to pounds
+ */
+export function convertKgToLb(kg: number): number {
+  return Math.round((kg / KG_PER_LB) * 10) / 10;
+}
+
+/**
+ * Format weight for display in the user's preferred unit
+ */
+export function formatWeight(
+  kg: number | null,
+  unit: WeightUnit
+): string {
+  if (kg === null) return 'No limit';
+  if (unit === 'lb') return `${convertKgToLb(kg)} lb`;
+  return `${kg} kg`;
 }

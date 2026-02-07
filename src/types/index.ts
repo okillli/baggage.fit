@@ -1,5 +1,6 @@
 export type BagType = 'cabin' | 'underseat' | 'checked';
 export type Unit = 'cm' | 'in';
+export type WeightUnit = 'kg' | 'lb';
 export type FitOutcome = 'fits' | 'doesnt-fit' | 'unknown';
 export type SortOption = 'largest' | 'strictest' | 'alphabetical';
 
@@ -38,6 +39,10 @@ export interface FitResult {
   userDimensions: number[];
   maxDimensions: number[] | null;
   volumeDiff?: number;
+  dimensionOutcome: FitOutcome;
+  weightOutcome: FitOutcome;
+  userWeightKg: number | null;
+  maxWeightKg: number | null;
 }
 
 export interface AppState {
@@ -45,6 +50,8 @@ export interface AppState {
   bagType: BagType;
   dimensions: Dimensions;
   unit: Unit;
+  weight: number | null;
+  weightUnit: WeightUnit;
   selectedAirlines: string[];
 
   // Centralized airline data
@@ -65,6 +72,8 @@ export interface AppState {
   setBagType: (type: BagType) => void;
   setDimensions: (dims: Partial<Dimensions>) => void;
   setUnit: (unit: Unit) => void;
+  setWeight: (weight: number | null) => void;
+  setWeightUnit: (unit: WeightUnit) => void;
   toggleAirline: (code: string) => void;
   selectAllPopularAirlines: () => void;
   clearSelectedAirlines: () => void;

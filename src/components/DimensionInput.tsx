@@ -31,7 +31,7 @@ export function DimensionInput({
     <div className={cn('space-y-4', className)}>
       <div className="flex items-center justify-between">
         <span className="section-label">Dimensions</span>
-        <UnitToggle value={unit} onChange={onUnitChange} />
+        <UnitToggle value={unit} options={['cm', 'in']} onChange={onUnitChange} />
       </div>
 
       <div className="flex items-center gap-3">

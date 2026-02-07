@@ -9,6 +9,8 @@ interface CompareTableProps {
   bagType: BagType;
   sort: SortOption;
   unit: Unit;
+  userWeightKg?: number | null;
+  onAirlineClick?: (code: string) => void;
   className?: string;
 }
 
@@ -17,6 +19,8 @@ export function CompareTable({
   bagType,
   sort,
   unit,
+  userWeightKg,
+  onAirlineClick,
   className,
 }: CompareTableProps) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -114,7 +118,13 @@ export function CompareTable({
                   )}
                 >
                   <td className="py-4 px-4">
-                    <div className="flex items-center gap-3">
+                    <div
+                      className={cn(
+                        'flex items-center gap-3',
+                        onAirlineClick && 'cursor-pointer hover:text-accent transition-colors'
+                      )}
+                      onClick={() => onAirlineClick?.(airline.code)}
+                    >
                       {isBest && (
                         <span className="flex items-center gap-1 px-2 py-0.5 bg-accent text-background text-xs font-bold rounded">
                           <Crown className="w-3 h-3" />
@@ -130,7 +140,10 @@ export function CompareTable({
                   <td className="py-4 px-4 font-mono text-background/80">
                     {formatDimensions(allowance?.maxCm || null, unit)}
                   </td>
-                  <td className="py-4 px-4 text-background/80">
+                  <td className={cn(
+                    'py-4 px-4',
+                    getWeightCellColor(userWeightKg, allowance?.maxKg)
+                  )}>
                     {allowance?.maxKg ? `${allowance.maxKg} kg` : '—'}
                   </td>
                   <td className="py-4 px-4 text-sm text-background/60 max-w-xs truncate">
@@ -166,7 +179,13 @@ export function CompareTable({
                 isBest && 'border-accent/50 bg-accent/5'
               )}
             >
-              <div className="flex items-center justify-between mb-3">
+              <div
+                className={cn(
+                  'flex items-center justify-between mb-3',
+                  onAirlineClick && 'cursor-pointer'
+                )}
+                onClick={() => onAirlineClick?.(airline.code)}
+              >
                 <div>
                   <div className="flex items-center gap-2">
                     {isBest && (
@@ -186,7 +205,9 @@ export function CompareTable({
                 </div>
                 <div>
                   <p className="text-background/50 text-xs mb-1">Weight</p>
-                  <p className="text-background/80">{allowance?.maxKg ? `${allowance.maxKg} kg` : '—'}</p>
+                  <p className={cn('text-background/80', getWeightCellColor(userWeightKg, allowance?.maxKg))}>
+                    {allowance?.maxKg ? `${allowance.maxKg} kg` : '—'}
+                  </p>
                 </div>
               </div>
               {allowance?.notes && (
@@ -207,4 +228,12 @@ export function CompareTable({
       </div>
     </div>
   );
+}
+
+function getWeightCellColor(
+  userWeightKg: number | null | undefined,
+  maxKg: number | null | undefined,
+): string {
+  if (userWeightKg == null || !maxKg) return 'text-background/80';
+  return userWeightKg <= maxKg ? 'text-green-600 font-medium' : 'text-red-500 font-medium';
 }

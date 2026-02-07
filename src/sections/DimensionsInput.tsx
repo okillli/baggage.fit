@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { cn, scrollToPinCenter } from '@/lib/utils';
 import { useAppStore } from '@/store/appStore';
 import { DimensionInput } from '@/components/DimensionInput';
+import { WeightInput } from '@/components/WeightInput';
 import { VisualSizer } from '@/components/VisualSizer';
 import { ArrowRight } from 'lucide-react';
 
@@ -16,7 +17,10 @@ export function DimensionsInput() {
   const inputPanelRef = useRef<HTMLDivElement>(null);
   const diagramPanelRef = useRef<HTMLDivElement>(null);
 
-  const { dimensions, unit, bagType, setDimensions, setUnit, setCurrentView } = useAppStore();
+  const {
+    dimensions, unit, bagType, setDimensions, setUnit, setCurrentView,
+    weight, weightUnit, setWeight, setWeightUnit,
+  } = useAppStore();
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
@@ -103,10 +107,10 @@ export function DimensionsInput() {
         {/* Header */}
         <div ref={headerRef} className="text-center mb-10">
           <span className="section-label block mb-4">
-            STEP 2 / SIZE
+            STEP 2 / SIZE & WEIGHT
           </span>
           <h2 className="text-h2 font-heading font-bold">
-            ENTER DIMENSIONS
+            DESCRIBE YOUR BAG
           </h2>
         </div>
 
@@ -125,9 +129,17 @@ export function DimensionsInput() {
               unit={unit}
               onChange={setDimensions}
               onUnitChange={setUnit}
+              className="mb-5"
+            />
+
+            <WeightInput
+              weight={weight}
+              weightUnit={weightUnit}
+              onChange={setWeight}
+              onUnitChange={setWeightUnit}
               className="mb-6"
             />
-            
+
             <button
               onClick={handleNext}
               className={cn(

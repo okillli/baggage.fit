@@ -1,4 +1,4 @@
-import { useRef, useLayoutEffect, useEffect, useMemo } from 'react';
+import { useRef, useLayoutEffect, useEffect, useMemo, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { cn } from '@/lib/utils';
@@ -6,8 +6,8 @@ import { useAppStore } from '@/store/appStore';
 import { CompareTable } from '@/components/CompareTable';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import type { BagType, SortOption } from '@/types';
+import { convertWeightToKg } from '@/lib/fitLogic';
 import { ArrowUpDown, Ruler, Backpack, Package, Globe } from 'lucide-react';
-import { useState } from 'react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -52,6 +52,9 @@ export function CompareMode() {
     setCompareBagType,
     setCompareSort,
     unit,
+    weight,
+    weightUnit,
+    setSelectedAirlineDetail,
   } = useAppStore();
 
   // Load airlines data from centralized store
@@ -208,6 +211,8 @@ export function CompareMode() {
             bagType={compareBagType}
             sort={compareSort}
             unit={unit}
+            userWeightKg={weight != null && weight > 0 ? convertWeightToKg(weight, weightUnit) : null}
+            onAirlineClick={(code) => setSelectedAirlineDetail(code)}
           />
         </ScrollReveal>
 

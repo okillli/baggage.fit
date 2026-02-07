@@ -16,7 +16,7 @@ export function ResultsDashboard() {
   const headerRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
 
-  const { results, unit, clearResults, setCurrentView } = useAppStore();
+  const { results, unit, weight, weightUnit, clearResults, setCurrentView, setSelectedAirlineDetail } = useAppStore();
 
   // Flowing section animation
   useLayoutEffect(() => {
@@ -124,7 +124,7 @@ export function ResultsDashboard() {
           <span className="section-label block mb-4">RESULTS</span>
           <h2 className="text-h2 font-heading font-bold mb-4">YOUR RESULTS</h2>
           <p className="text-muted-foreground max-w-xl mx-auto mb-8">
-            Based on the size you entered vs each airline&apos;s published limits.
+            Based on the {weight ? 'size and weight' : 'size'} you entered vs each airline&apos;s published limits.
           </p>
 
           {/* Summary Pills */}
@@ -154,7 +154,12 @@ export function ResultsDashboard() {
         <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
           {results.map((result) => (
             <div key={result.airline.code} className="result-card">
-              <FitResultCard result={result} unit={unit} />
+              <FitResultCard
+                result={result}
+                unit={unit}
+                weightUnit={weightUnit}
+                onClick={() => setSelectedAirlineDetail(result.airline.code)}
+              />
             </div>
           ))}
         </div>
