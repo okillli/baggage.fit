@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { cn, gsapScrollTo } from '@/lib/utils';
+import { cn, scrollToPinCenter, gsapScrollTo } from '@/lib/utils';
 import { useAppStore } from '@/store/appStore';
 import { Plane, List } from 'lucide-react';
 
