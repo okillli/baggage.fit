@@ -49,9 +49,22 @@ function App() {
           }));
 
           const lastEnd = pinnedRanges[pinnedRanges.length - 1]?.end ?? 0;
+          const lastCenter = pinnedRanges[pinnedRanges.length - 1]?.center ?? 0;
 
-          // Allow free scroll after all pinned sections (flowing content)
-          if (value > lastEnd + 0.02) return value;
+          // Bridge the gap between last pin and first flowing section:
+          // the pin-spacer leaves ~100vh of dead space after the pin ends.
+          // Snap users to either the last pin center or the flowing section.
+          if (value > lastEnd) {
+            const airlinesEl = document.getElementById('airlines');
+            if (airlinesEl) {
+              const airlinesNorm = (airlinesEl.getBoundingClientRect().top + scrollY) / snapEnd;
+              // Snap to whichever is closer
+              return Math.abs(value - lastCenter) < Math.abs(value - airlinesNorm)
+                ? lastCenter
+                : airlinesNorm;
+            }
+            return value;
+          }
 
           // Within or between pinned sections: snap to nearest center
           return pinnedRanges.reduce(

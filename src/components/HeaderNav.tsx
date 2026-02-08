@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { cn, scrollToPinCenter, gsapScrollTo } from '@/lib/utils';
+import { cn, gsapScrollTo } from '@/lib/utils';
 import { useAppStore } from '@/store/appStore';
 import { Plane, List } from 'lucide-react';
 
@@ -49,7 +49,7 @@ export function HeaderNav() {
         <button
           onClick={() => {
             setCurrentView('hero');
-            scrollToPinCenter('hero');
+            gsapScrollTo(0);
           }}
           className="font-heading font-bold text-xl tracking-tight text-foreground hover:text-accent transition-colors"
         >

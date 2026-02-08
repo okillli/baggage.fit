@@ -38,10 +38,12 @@ function withPointerGuard(onComplete?: () => void) {
  * Disables pointer-events on <main> during animation to prevent click-through.
  */
 export function gsapScrollTo(target: string | number, options?: { duration?: number; ease?: string }) {
+  const dur = options?.duration ?? 0.8;
+  pauseSnap((dur + 0.4) * 1000);
   const restore = withPointerGuard();
   gsap.to(window, {
     scrollTo: { y: target, autoKill: false },
-    duration: options?.duration ?? 0.8,
+    duration: dur,
     ease: options?.ease ?? 'power2.inOut',
     onComplete: restore,
   });
@@ -61,6 +63,7 @@ export function scrollToPinCenter(sectionId: string) {
   const target = spacerTop + pinScroll * 0.5;
   const distance = Math.abs(target - window.scrollY);
   const duration = Math.min(Math.max(1.0, (distance / window.innerHeight) * 0.55), 2.0);
+  pauseSnap((duration + 0.4) * 1000);
   const restore = withPointerGuard();
   gsap.to(window, { scrollTo: { y: target, autoKill: false }, duration, ease: 'power2.inOut', onComplete: restore });
 }
