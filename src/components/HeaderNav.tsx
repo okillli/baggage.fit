@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
-import { gsap } from 'gsap';
-import { cn, scrollToPinCenter } from '@/lib/utils';
+import { cn, scrollToPinCenter, gsapScrollTo } from '@/lib/utils';
 import { useAppStore } from '@/store/appStore';
-import { Plane, Scale, List } from 'lucide-react';
+import { Plane, List } from 'lucide-react';
 
 export function HeaderNav() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const { currentView, setCurrentView } = useAppStore();
+  const { currentView, setCurrentView, setCheckPanelOpen } = useAppStore();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,21 +17,20 @@ export function HeaderNav() {
 
   const navItems = [
     { id: 'check', label: 'Check', icon: Plane },
-    { id: 'compare', label: 'Compare', icon: Scale },
-    { id: 'airline', label: 'Airlines', icon: List },
+    { id: 'browse', label: 'Airlines', icon: List },
   ] as const;
 
   const handleNavClick = (id: typeof navItems[number]['id']) => {
-    setCurrentView(id);
     switch (id) {
       case 'check':
+        setCheckPanelOpen(true);
+        setCurrentView('browse');
         scrollToPinCenter('bag-type');
         break;
-      case 'airline':
-        scrollToPinCenter('airline-selector');
-        break;
-      case 'compare':
-        gsap.to(window, { scrollTo: '#compare', duration: 0.8, ease: 'power2.inOut' });
+      case 'browse':
+        setCheckPanelOpen(false);
+        setCurrentView('browse');
+        gsapScrollTo('#airlines');
         break;
     }
   };
@@ -62,7 +60,7 @@ export function HeaderNav() {
         <nav className="hidden md:flex items-center gap-1">
           {navItems.map((item) => {
             const Icon = item.icon;
-            const isActive = currentView === item.id;
+            const isActive = currentView === item.id || (currentView === 'browse' && item.id === 'browse');
             return (
               <button
                 key={item.id}
@@ -85,7 +83,7 @@ export function HeaderNav() {
         <nav className="md:hidden flex items-center gap-1">
           {navItems.map((item) => {
             const Icon = item.icon;
-            const isActive = currentView === item.id;
+            const isActive = currentView === item.id || (currentView === 'browse' && item.id === 'browse');
             return (
               <button
                 key={item.id}

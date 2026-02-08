@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react';
 import { cn } from '@/lib/utils';
-import type { Airline, BagType, SortOption, Unit } from '@/types';
+import type { Airline, BagType, FitResult, SortOption, Unit } from '@/types';
 import { calculateSizeMetric, formatDimensions } from '@/lib/fitLogic';
+import { OutcomeBadge } from '@/components/OutcomeBadge';
 import { Ruler, Weight, Search, ExternalLink, Crown } from 'lucide-react';
 
 interface CompareTableProps {
@@ -10,6 +11,7 @@ interface CompareTableProps {
   sort: SortOption;
   unit: Unit;
   userWeightKg?: number | null;
+  fitResults?: FitResult[];
   onAirlineClick?: (code: string) => void;
   className?: string;
 }
@@ -20,10 +22,20 @@ export function CompareTable({
   sort,
   unit,
   userWeightKg,
+  fitResults,
   onAirlineClick,
   className,
 }: CompareTableProps) {
   const [searchQuery, setSearchQuery] = useState('');
+
+  const fitMap = useMemo(() => {
+    if (!fitResults || fitResults.length === 0) return null;
+    const map = new Map<string, FitResult>();
+    for (const r of fitResults) {
+      map.set(r.airline.code, r);
+    }
+    return map;
+  }, [fitResults]);
 
   const sortedAirlines = useMemo(() => {
     const withAllowance = airlines
@@ -102,6 +114,9 @@ export function CompareTable({
                   Weight
                 </span>
               </th>
+              {fitMap && (
+                <th className="text-left py-3 px-4 font-heading text-sm font-semibold">Fit</th>
+              )}
               <th className="text-left py-3 px-4 font-heading text-sm font-semibold">Notes</th>
               <th className="text-left py-3 px-4 font-heading text-sm font-semibold">Action</th>
             </tr>
@@ -109,6 +124,7 @@ export function CompareTable({
           <tbody>
             {sortedAirlines.map(({ airline, allowance }, index) => {
               const isBest = sort === 'largest' && index === 0 && !searchQuery;
+              const fit = fitMap?.get(airline.code);
               return (
                 <tr
                   key={airline.code}
@@ -146,6 +162,11 @@ export function CompareTable({
                   )}>
                     {allowance?.maxKg ? `${allowance.maxKg} kg` : '—'}
                   </td>
+                  {fitMap && (
+                    <td className="py-4 px-4">
+                      {fit && <OutcomeBadge outcome={fit.outcome} variant="light" className="text-xs px-2 py-1" />}
+                    </td>
+                  )}
                   <td className="py-4 px-4 text-sm text-background/60 max-w-xs truncate">
                     {allowance?.notes || '—'}
                   </td>
@@ -171,6 +192,7 @@ export function CompareTable({
       <div className="md:hidden space-y-3">
         {sortedAirlines.map(({ airline, allowance }, index) => {
           const isBest = sort === 'largest' && index === 0 && !searchQuery;
+          const fit = fitMap?.get(airline.code);
           return (
             <div
               key={airline.code}
@@ -197,6 +219,7 @@ export function CompareTable({
                   </div>
                   <p className="text-xs text-background/50 font-mono">{airline.code}</p>
                 </div>
+                {fit && <OutcomeBadge outcome={fit.outcome} variant="light" className="text-xs px-2 py-1" />}
               </div>
               <div className="grid grid-cols-2 gap-3 text-sm mb-3">
                 <div>

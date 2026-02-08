@@ -15,35 +15,43 @@ npm run preview   # Preview production build
 
 ### Scroll System (GSAP ScrollTrigger + ScrollToPlugin)
 
-The app is built around a **pinned scroll** pattern. Four sections are pinned to the viewport with GSAP ScrollTrigger (`pin: true, scrub`), stacked by z-index so each "covers" the previous:
+The app uses a **browse-first** layout with **2 pinned + 2 flowing** sections:
 
 ```
-Hero (z-10) → BagTypePicker (z-20) → DimensionsInput (z-30) → AirlineSelector (z-40)
+Hero (pinned, z-10) → BagTypePicker (pinned, z-20) → AirlinesBrowse (flowing) → Footer (flowing)
 ```
 
-Each pinned section has ~120% scroll height. Entrance animations play during the first ~25% of the pin range; the section then stays visible for the remaining scroll. The next section covers it via higher z-index.
+Each pinned section has ~130% scroll height with entrance/exit animations driven by scrub. The next section covers the previous via higher z-index.
 
-After the pinned sections, **flowing sections** (ResultsDashboard, CompareMode, Footer) scroll normally at z-50.
+After the pinned sections, **flowing sections** (AirlinesBrowse, Footer) scroll normally.
 
 **Global snap** (`App.tsx`): A single `ScrollTrigger.create({ snap })` snaps to the center of each pinned section's scroll range. Free scroll is allowed past the last pin for flowing content.
 
 **Stale snap end fix**: The snap callback derives `snapEnd = scrollY / value` instead of relying on the snap trigger's internal `end`, which can go stale when async content (airline data) changes page height.
 
+### Browse-First UX
+
+- **Hero** has dual CTA: "Start checking" (opens bag panel + scrolls to BagType) and "Browse airline limits" (scrolls straight to AirlinesBrowse)
+- **BagTypePicker** → "Next: browse airlines" scrolls to AirlinesBrowse with check panel open
+- **AirlinesBrowse** is the main destination: airline table + collapsible `CheckYourBagPanel` for optional dimension/weight entry
+- Fit badges appear inline in the CompareTable after the user checks their bag
+- Fit filter chips (All / Fits / Doesn't fit) appear when results exist
+
 ### Programmatic Scroll Navigation
 
-- **Pinned sections**: Use `scrollToPinCenter(sectionId)` from `src/lib/utils.ts`. It calculates the pin-spacer center and uses GSAP ScrollToPlugin to animate there. Since the target equals the snap center, snap agrees with the final position.
+- **Pinned sections**: Use `scrollToPinCenter(sectionId)` from `src/lib/utils.ts`.
 - **Flowing sections**: Use `gsap.to(window, { scrollTo: '#section-id' })` directly.
-- **Never use native `behavior: 'smooth'`** — it competes with the GSAP snap system. GSAP ScrollToPlugin tweens do not compete (snap waits for them to finish).
+- **Never use native `behavior: 'smooth'`** — it competes with the GSAP snap system.
 
 ### State Management (Zustand)
 
 `src/store/appStore.ts` — Single Zustand store holding:
-- User inputs: `bagType`, `dimensions`, `unit`, `selectedAirlines`
+- User inputs: `bagType`, `dimensions`, `unit`, `weight`, `weightUnit`
 - Data: `airlines[]` (fetched once from `/data/airlines.json`), `airlinesLoading`
 - Results: `results[]` (computed fit outcomes)
-- UI: `currentView`, `compareSort`, `compareBagType`
+- UI: `currentView` (`'hero' | 'browse'`), `compareSort`, `checkPanelOpen`
 
-Key action: `checkFit()` compares user dimensions against airline limits. Handles two formats: per-dimension `[L, W, H]` and total-dimension `[158]`.
+Key action: `checkFit(airlines)` compares user dimensions against ALL passed airlines. Handles two formats: per-dimension `[L, W, H]` and total-dimension `[158]`.
 
 ### Airline Data Format
 
@@ -75,10 +83,10 @@ Key action: `checkFit()` compares user dimensions against airline limits. Handle
 - `src/App.tsx` — Section composition + global snap config
 - `src/lib/utils.ts` — `cn()`, `scrollToPinCenter()`
 - `src/lib/fitLogic.ts` — Dimension comparison, unit conversion, formatting
-- `src/types/index.ts` — `Airline`, `FitResult`, `BagType`, `Dimensions`, etc.
+- `src/types/index.ts` — `Airline`, `FitResult`, `BagType`, `Dimensions`, `FitFilter`, etc.
 - `src/store/appStore.ts` — Zustand store
-- `src/sections/` — 7 section components (4 pinned, 3 flowing)
-- `src/components/` — Shared components (HeaderNav, FitResultCard, CompareTable, VisualSizer, etc.)
+- `src/sections/` — 4 sections: Hero, BagTypePicker (pinned), AirlinesBrowse, Footer (flowing)
+- `src/components/` — CheckYourBagPanel, CompareTable, OutcomeBadge, HeaderNav, VisualSizer, etc.
 
 ### Path Alias
 

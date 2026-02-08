@@ -1,7 +1,7 @@
 import { useRef, useLayoutEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { cn, scrollToPinCenter } from '@/lib/utils';
+import { cn, gsapScrollTo } from '@/lib/utils';
 import { useAppStore } from '@/store/appStore';
 import { BagTypeCard } from '@/components/BagTypeCard';
 import type { BagType } from '@/types';
@@ -37,7 +37,7 @@ export function BagTypePicker() {
   const cardsRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
 
-  const { bagType, setBagType, setCurrentView } = useAppStore();
+  const { bagType, setBagType, setCheckPanelOpen } = useAppStore();
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
@@ -60,7 +60,7 @@ export function BagTypePicker() {
         },
       });
 
-      // ENTRANCE (0% - 26%): Stagger Rise — per-element
+      // ENTRANCE (0% - 26%): Stagger Rise
       scrollTl
         .fromTo(header,
           { opacity: 0, y: -30 },
@@ -103,8 +103,8 @@ export function BagTypePicker() {
   }, []);
 
   const handleNext = () => {
-    setCurrentView('check');
-    scrollToPinCenter('dimensions');
+    setCheckPanelOpen(true);
+    gsapScrollTo('#airlines');
   };
 
   return (
@@ -150,7 +150,7 @@ export function BagTypePicker() {
               'hover:brightness-110 transition-all duration-200 btn-lift'
             )}
           >
-            Next: enter dimensions
+            Next: browse airlines
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>

@@ -2,8 +2,6 @@ import { create } from 'zustand';
 import type { AppState, Airline, BagType, Dimensions, FitResult, FitOutcome, Unit, WeightUnit } from '@/types';
 import { isTotalDimensionLimit, calculateTotalDimension, checkWeightFit, combinedOutcome, convertWeightToKg } from '@/lib/fitLogic';
 
-export const POPULAR_AIRLINE_CODES = ['RYR', 'EZY', 'BAW', 'DLH', 'KLM', 'DAL', 'UAL', 'UAE', 'QTR', 'SIA'];
-
 const initialDimensions: Dimensions = {
   l: 55,
   w: 40,
@@ -17,7 +15,6 @@ export const useAppStore = create<AppState>((set, get) => ({
   unit: 'cm',
   weight: null,
   weightUnit: 'kg',
-  selectedAirlines: [],
 
   // Centralized airline data
   airlines: [],
@@ -30,7 +27,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   currentView: 'hero',
   selectedAirlineDetail: null,
   compareSort: 'largest',
-  compareBagType: 'cabin',
+  checkPanelOpen: false,
 
   // Actions
   loadAirlines: async () => {
@@ -47,7 +44,14 @@ export const useAppStore = create<AppState>((set, get) => ({
     }
   },
 
-  setBagType: (type: BagType) => set({ bagType: type, results: [] }),
+  setBagType: (type: BagType) => {
+    const { results, airlines } = get();
+    const hadResults = results.length > 0;
+    set({ bagType: type, results: [] });
+    if (hadResults && airlines.length > 0) {
+      get().checkFit(airlines);
+    }
+  },
 
   setDimensions: (dims: Partial<Dimensions>) =>
     set((state) => ({
@@ -55,31 +59,31 @@ export const useAppStore = create<AppState>((set, get) => ({
       results: [],
     })),
 
-  setUnit: (unit: Unit) => set({ unit, results: [] }),
+  setUnit: (newUnit: Unit) => {
+    const { unit: oldUnit, dimensions } = get();
+    if (newUnit === oldUnit) return;
+    const factor = newUnit === 'in' ? 1 / 2.54 : 2.54;
+    const convert = (v: number) => Math.round(v * factor * 10) / 10;
+    set({
+      unit: newUnit,
+      dimensions: { l: convert(dimensions.l), w: convert(dimensions.w), h: convert(dimensions.h) },
+    });
+  },
 
   setWeight: (weight: number | null) => set({ weight, results: [] }),
 
-  setWeightUnit: (weightUnit: WeightUnit) => set({ weightUnit, results: [] }),
-
-  toggleAirline: (code: string) =>
-    set((state) => {
-      const isSelected = state.selectedAirlines.includes(code);
-      if (isSelected) {
-        return {
-          selectedAirlines: state.selectedAirlines.filter((c) => c !== code),
-          results: [],
-        };
-      }
-      return {
-        selectedAirlines: [...state.selectedAirlines, code],
-        results: [],
-      };
-    }),
-
-  selectAllPopularAirlines: () =>
-    set({ selectedAirlines: [...POPULAR_AIRLINE_CODES], results: [] }),
-
-  clearSelectedAirlines: () => set({ selectedAirlines: [], results: [] }),
+  setWeightUnit: (newUnit: WeightUnit) => {
+    const { weightUnit: oldUnit, weight } = get();
+    if (newUnit === oldUnit) return;
+    if (weight !== null && weight > 0) {
+      const converted = newUnit === 'lb'
+        ? Math.round((weight / 0.453592) * 10) / 10
+        : Math.round(weight * 0.453592 * 10) / 10;
+      set({ weightUnit: newUnit, weight: converted });
+    } else {
+      set({ weightUnit: newUnit });
+    }
+  },
 
   checkFit: (airlines) => {
     const { dimensions, unit, bagType, weight, weightUnit } = get();
@@ -95,7 +99,6 @@ export const useAppStore = create<AppState>((set, get) => ({
       : null;
 
     const results: FitResult[] = airlines
-      .filter((a) => get().selectedAirlines.includes(a.code))
       .map((airline) => {
         const allowance = airline.allowances[bagType];
         const maxDims = allowance?.maxCm || null;
@@ -149,5 +152,5 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   setCompareSort: (sort) => set({ compareSort: sort }),
 
-  setCompareBagType: (type) => set({ compareBagType: type }),
+  setCheckPanelOpen: (open) => set({ checkPanelOpen: open }),
 }));

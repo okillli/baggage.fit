@@ -1,6 +1,7 @@
 import { useAppStore } from '@/store/appStore';
 import { AirlineDetailContent } from './AirlineDetailContent';
 import { convertWeightToKg } from '@/lib/fitLogic';
+import { pauseSnap } from '@/lib/utils';
 import {
   Sheet,
   SheetContent,
@@ -38,7 +39,10 @@ export function AirlineDetailSheet() {
     <Sheet
       open={!!airline}
       onOpenChange={(open) => {
-        if (!open) setSelectedAirlineDetail(null);
+        if (!open) {
+          pauseSnap(500);
+          setSelectedAirlineDetail(null);
+        }
       }}
     >
       <SheetContent

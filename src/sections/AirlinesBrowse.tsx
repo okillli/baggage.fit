@@ -1,15 +1,12 @@
-import { useRef, useLayoutEffect, useEffect, useMemo, useState } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useEffect, useMemo, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { useAppStore } from '@/store/appStore';
 import { CompareTable } from '@/components/CompareTable';
+import { CheckYourBagPanel } from '@/components/CheckYourBagPanel';
 import { ScrollReveal } from '@/components/ScrollReveal';
-import type { BagType, SortOption } from '@/types';
+import type { BagType, FitFilter, FitResult, SortOption } from '@/types';
 import { convertWeightToKg } from '@/lib/fitLogic';
-import { ArrowUpDown, Ruler, Backpack, Package, Globe } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
+import { ArrowUpDown, Ruler, Backpack, Package, Globe, Check, X } from 'lucide-react';
 
 const bagTypeOptions: { type: BagType; label: string; icon: typeof Ruler }[] = [
   { type: 'cabin', label: 'Cabin', icon: Ruler },
@@ -38,70 +35,70 @@ const regionMap: Record<string, string[]> = {
   middle_east: ['AE', 'QA', 'TR'],
 };
 
-export function CompareMode() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const controlsRef = useRef<HTMLDivElement>(null);
+export function AirlinesBrowse() {
   const [regionFilter, setRegionFilter] = useState('all');
+  const [fitFilter, setFitFilter] = useState<FitFilter>('all');
 
   const {
     airlines,
     airlinesLoading,
     loadAirlines,
-    compareBagType,
+    bagType,
+    setBagType,
     compareSort,
-    setCompareBagType,
     setCompareSort,
     unit,
     weight,
     weightUnit,
+    results,
     setSelectedAirlineDetail,
   } = useAppStore();
 
-  // Load airlines data from centralized store
   useEffect(() => {
     loadAirlines();
   }, [loadAirlines]);
 
-  // Filter airlines by region
+  // Build fit map for filtering
+  const fitMap = useMemo(() => {
+    if (results.length === 0) return null;
+    const map = new Map<string, FitResult>();
+    for (const r of results) {
+      map.set(r.airline.code, r);
+    }
+    return map;
+  }, [results]);
+
+  // Filter airlines by region, then by fit
   const filteredAirlines = useMemo(() => {
-    if (regionFilter === 'all') return airlines;
-    const regionCountries = regionMap[regionFilter] || [];
-    return airlines.filter((airline) => regionCountries.includes(airline.country));
-  }, [airlines, regionFilter]);
+    let filtered = airlines;
 
-  // Flowing section animation
-  useLayoutEffect(() => {
-    const section = sectionRef.current;
-    const controls = controlsRef.current;
-    if (!section || !controls) return;
+    // Region filter
+    if (regionFilter !== 'all') {
+      const regionCountries = regionMap[regionFilter] || [];
+      filtered = filtered.filter((airline) => regionCountries.includes(airline.country));
+    }
 
-    const ctx = gsap.context(() => {
-      gsap.fromTo(controls,
-        { x: -30, opacity: 0 },
-        {
-          x: 0,
-          opacity: 1,
-          duration: 0.6,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: section,
-            start: 'top 80%',
-            toggleActions: 'play none none reverse',
-          },
-        }
-      );
-    }, section);
+    // Fit filter (only when results exist)
+    if (fitFilter !== 'all' && fitMap) {
+      filtered = filtered.filter((airline) => {
+        const fit = fitMap.get(airline.code);
+        if (!fit) return false;
+        return fitFilter === 'fits' ? fit.outcome === 'fits' : fit.outcome === 'doesnt-fit';
+      });
+    }
 
-    return () => ctx.revert();
-  }, [airlinesLoading]);
+    return filtered;
+  }, [airlines, regionFilter, fitFilter, fitMap]);
+
+  const fitsCount = results.filter((r) => r.outcome === 'fits').length;
+  const doesntFitCount = results.filter((r) => r.outcome === 'doesnt-fit').length;
+  const hasResults = results.length > 0;
+
+  const userWeightKg = weight != null && weight > 0 ? convertWeightToKg(weight, weightUnit) : null;
 
   if (airlinesLoading) {
     return (
-      <section
-        ref={sectionRef}
-        id="compare"
-        className="section-flowing py-20 bg-[#F2F2F2] text-background"
-      >
+      <section id="airlines" className="section-flowing py-20 bg-[#F2F2F2] text-background">
         <div className="max-w-6xl mx-auto px-6 text-center">
           <div className="flex flex-col items-center gap-4">
             <div className="w-8 h-8 border-4 border-background/30 border-t-background rounded-full animate-spin" />
@@ -113,24 +110,20 @@ export function CompareMode() {
   }
 
   return (
-    <section
-      ref={sectionRef}
-      id="compare"
-      className="section-flowing py-20 bg-[#F2F2F2] text-background grid-lines"
-    >
+    <section id="airlines" className="section-flowing py-20 bg-[#F2F2F2] text-background">
       <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
         <ScrollReveal className="mb-10">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <div>
               <span className="font-mono text-xs uppercase tracking-wider text-background/60 block mb-4">
-                COMPARE
+                AIRLINE LIMITS
               </span>
               <h2 className="text-h2 font-heading font-bold text-background">
-                COMPARE AIRLINES
+                BROWSE AIRLINES
               </h2>
               <p className="text-background/70 mt-2">
-                Rank by the most generous allowance for your bag type.
+                See every airline&apos;s size and weight limits at a glance.
               </p>
             </div>
 
@@ -152,18 +145,67 @@ export function CompareMode() {
           </div>
         </ScrollReveal>
 
-        {/* Filters */}
+        {/* Check your bag panel */}
+        <ScrollReveal className="mb-8">
+          <CheckYourBagPanel airlines={airlines} />
+        </ScrollReveal>
+
+        {/* Fit summary + filter chips (only when results exist) */}
+        {hasResults && (
+          <ScrollReveal delay={0.05} className="mb-6">
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="text-sm font-medium text-background/70">Filter:</span>
+              <button
+                onClick={() => setFitFilter('all')}
+                className={cn(
+                  'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all',
+                  fitFilter === 'all'
+                    ? 'bg-background text-white'
+                    : 'bg-white border border-background/20 text-background/70 hover:bg-background/5'
+                )}
+              >
+                All ({results.length})
+              </button>
+              <button
+                onClick={() => setFitFilter('fits')}
+                className={cn(
+                  'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all',
+                  fitFilter === 'fits'
+                    ? 'bg-accent text-background'
+                    : 'bg-white border border-background/20 text-background/70 hover:bg-background/5'
+                )}
+              >
+                <Check className="w-3.5 h-3.5" />
+                Fits ({fitsCount})
+              </button>
+              <button
+                onClick={() => setFitFilter('doesnt-fit')}
+                className={cn(
+                  'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all',
+                  fitFilter === 'doesnt-fit'
+                    ? 'bg-red-500 text-white'
+                    : 'bg-white border border-background/20 text-background/70 hover:bg-background/5'
+                )}
+              >
+                <X className="w-3.5 h-3.5" />
+                Doesn&apos;t fit ({doesntFitCount})
+              </button>
+            </div>
+          </ScrollReveal>
+        )}
+
+        {/* Filters: bag type + region */}
         <ScrollReveal delay={0.1} className="mb-8">
-          <div ref={controlsRef} className="flex flex-col lg:flex-row gap-4">
+          <div className="flex flex-col lg:flex-row gap-4">
             {/* Bag Type Toggle */}
             <div className="flex flex-wrap gap-2">
               {bagTypeOptions.map((opt) => {
                 const Icon = opt.icon;
-                const isActive = compareBagType === opt.type;
+                const isActive = bagType === opt.type;
                 return (
                   <button
                     key={opt.type}
-                    onClick={() => setCompareBagType(opt.type)}
+                    onClick={() => setBagType(opt.type)}
                     className={cn(
                       'inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all',
                       isActive
@@ -208,10 +250,11 @@ export function CompareMode() {
         <ScrollReveal delay={0.2}>
           <CompareTable
             airlines={filteredAirlines}
-            bagType={compareBagType}
+            bagType={bagType}
             sort={compareSort}
             unit={unit}
-            userWeightKg={weight != null && weight > 0 ? convertWeightToKg(weight, weightUnit) : null}
+            userWeightKg={userWeightKg}
+            fitResults={hasResults ? results : undefined}
             onAirlineClick={(code) => setSelectedAirlineDetail(code)}
           />
         </ScrollReveal>

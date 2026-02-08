@@ -1,9 +1,9 @@
 import { useRef, useLayoutEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { cn, scrollToPinCenter } from '@/lib/utils';
+import { cn, scrollToPinCenter, gsapScrollTo } from '@/lib/utils';
 import { useAppStore } from '@/store/appStore';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, ArrowRight } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -11,11 +11,11 @@ export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const subRef = useRef<HTMLParagraphElement>(null);
-  const ctaRef = useRef<HTMLButtonElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
-  
-  const { setCurrentView } = useAppStore();
+
+  const { setCurrentView, setCheckPanelOpen } = useAppStore();
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
@@ -30,9 +30,9 @@ export function Hero() {
     const ctx = gsap.context(() => {
       // Auto-play entrance animation on load
       const entranceTl = gsap.timeline({ defaults: { ease: 'power2.out' } });
-      
+
       entranceTl
-        .fromTo(frame, 
+        .fromTo(frame,
           { opacity: 0, scale: 0.92 },
           { opacity: 1, scale: 1, duration: 0.8 },
           0.1
@@ -68,19 +68,16 @@ export function Hero() {
           scrub: 0.3,
           onLeaveBack: () => {
             // Reset all elements to visible when scrolling back to top
-            gsap.set([headline, sub, cta, frame, scroll], { 
-              opacity: 1, 
-              x: 0, 
-              y: 0, 
-              scale: 1 
+            gsap.set([headline, sub, cta, frame, scroll], {
+              opacity: 1,
+              x: 0,
+              y: 0,
+              scale: 1
             });
           },
         },
       });
 
-      // ENTRANCE (0% - 30%): Hold at settled state (entrance already played)
-      // SETTLE (30% - 70%): Hold
-      
       // EXIT (70% - 100%)
       scrollTl
         .fromTo(headline,
@@ -114,8 +111,14 @@ export function Hero() {
   }, []);
 
   const handleStart = () => {
-    setCurrentView('check');
+    setCheckPanelOpen(true);
+    setCurrentView('browse');
     scrollToPinCenter('bag-type');
+  };
+
+  const handleBrowse = () => {
+    setCurrentView('browse');
+    gsapScrollTo('#airlines');
   };
 
   return (
@@ -139,25 +142,37 @@ export function Hero() {
         >
           WILL YOUR BAG FIT?
         </h1>
-        
+
         <p
           ref={subRef}
           className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto mb-10"
         >
           Check cabin, underseat, and checked limits for 30+ airlines in seconds.
         </p>
-        
-        <button
-          ref={ctaRef}
-          onClick={handleStart}
-          className={cn(
-            'inline-flex items-center gap-2 px-8 py-4',
-            'bg-accent text-background font-heading font-bold text-lg rounded-lg',
-            'hover:brightness-110 transition-all duration-200 btn-lift'
-          )}
-        >
-          Start checking
-        </button>
+
+        <div ref={ctaRef} className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <button
+            onClick={handleStart}
+            className={cn(
+              'inline-flex items-center gap-2 px-8 py-4',
+              'bg-accent text-background font-heading font-bold text-lg rounded-lg',
+              'hover:brightness-110 transition-all duration-200 btn-lift'
+            )}
+          >
+            Start checking
+          </button>
+          <button
+            onClick={handleBrowse}
+            className={cn(
+              'inline-flex items-center gap-2 px-8 py-4',
+              'bg-white/10 border border-white/20 text-foreground font-heading font-bold text-lg rounded-lg',
+              'hover:bg-white/15 transition-all duration-200'
+            )}
+          >
+            Browse airline limits
+            <ArrowRight className="w-5 h-5" />
+          </button>
+        </div>
       </div>
 
       {/* Scroll indicator */}

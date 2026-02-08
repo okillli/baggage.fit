@@ -6,12 +6,11 @@ import { DotGridBackground } from '@/components/DotGridBackground';
 import { HeaderNav } from '@/components/HeaderNav';
 import { Hero } from '@/sections/Hero';
 import { BagTypePicker } from '@/sections/BagTypePicker';
-import { DimensionsInput } from '@/sections/DimensionsInput';
-import { AirlineSelector } from '@/sections/AirlineSelector';
-import { ResultsDashboard } from '@/sections/ResultsDashboard';
-import { CompareMode } from '@/sections/CompareMode';
+import { AirlinesBrowse } from '@/sections/AirlinesBrowse';
 import { Footer } from '@/sections/Footer';
 import { AirlineDetailSheet } from '@/components/AirlineDetailSheet';
+import { useAppStore } from '@/store/appStore';
+import { isSnapPaused } from '@/lib/utils';
 import './App.css';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
@@ -25,18 +24,16 @@ function App() {
     snapTriggerRef.current = ScrollTrigger.create({
       snap: {
         snapTo: (value: number) => {
+          // Don't snap while overlay is open or just closed
+          const { selectedAirlineDetail } = useAppStore.getState();
+          if (selectedAirlineDetail !== null || isSnapPaused()) return value;
+
           const pinned = ScrollTrigger.getAll()
             .filter((st) => st.vars.pin)
             .sort((a, b) => a.start - b.start);
 
           if (pinned.length === 0) return value;
 
-          // Derive the effective scroll range from value & scrollY so we
-          // normalise in the same coordinate space GSAP uses.  The snap
-          // ScrollTrigger's internal `end` may be stale after async DOM
-          // changes (e.g. airline list loading), whereas
-          // ScrollTrigger.maxScroll(window) reflects the current DOM.
-          // Using scrollY / value keeps us consistent with `value`.
           const scrollY = window.scrollY;
           const snapEnd =
             value > 0.001 && scrollY > 1
@@ -98,12 +95,9 @@ function App() {
         {/* Pinned Sections (z-index stacking) */}
         <Hero />
         <BagTypePicker />
-        <DimensionsInput />
-        <AirlineSelector />
 
         {/* Flowing Sections */}
-        <ResultsDashboard />
-        <CompareMode />
+        <AirlinesBrowse />
         <Footer />
       </main>
 

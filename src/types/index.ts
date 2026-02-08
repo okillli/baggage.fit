@@ -3,6 +3,7 @@ export type Unit = 'cm' | 'in';
 export type WeightUnit = 'kg' | 'lb';
 export type FitOutcome = 'fits' | 'doesnt-fit' | 'unknown';
 export type SortOption = 'largest' | 'strictest' | 'alphabetical';
+export type FitFilter = 'all' | 'fits' | 'doesnt-fit';
 
 export interface BagAllowance {
   maxCm: number[] | null;
@@ -52,7 +53,6 @@ export interface AppState {
   unit: Unit;
   weight: number | null;
   weightUnit: WeightUnit;
-  selectedAirlines: string[];
 
   // Centralized airline data
   airlines: Airline[];
@@ -62,10 +62,10 @@ export interface AppState {
   results: FitResult[];
 
   // UI state
-  currentView: 'hero' | 'check' | 'compare' | 'airline';
+  currentView: 'hero' | 'browse';
   selectedAirlineDetail: string | null;
   compareSort: SortOption;
-  compareBagType: BagType;
+  checkPanelOpen: boolean;
 
   // Actions
   loadAirlines: () => Promise<void>;
@@ -74,13 +74,10 @@ export interface AppState {
   setUnit: (unit: Unit) => void;
   setWeight: (weight: number | null) => void;
   setWeightUnit: (unit: WeightUnit) => void;
-  toggleAirline: (code: string) => void;
-  selectAllPopularAirlines: () => void;
-  clearSelectedAirlines: () => void;
   checkFit: (airlines: Airline[]) => void;
   clearResults: () => void;
   setCurrentView: (view: AppState['currentView']) => void;
   setSelectedAirlineDetail: (code: string | null) => void;
   setCompareSort: (sort: SortOption) => void;
-  setCompareBagType: (type: BagType) => void;
+  setCheckPanelOpen: (open: boolean) => void;
 }
