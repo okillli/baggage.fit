@@ -60,7 +60,7 @@ export function HeaderNav() {
         <nav className="hidden md:flex items-center gap-1">
           {navItems.map((item) => {
             const Icon = item.icon;
-            const isActive = currentView === item.id || (currentView === 'browse' && item.id === 'browse');
+            const isActive = item.id === 'browse' ? currentView === 'browse' : false;
             return (
               <button
                 key={item.id}
@@ -83,7 +83,7 @@ export function HeaderNav() {
         <nav className="md:hidden flex items-center gap-1">
           {navItems.map((item) => {
             const Icon = item.icon;
-            const isActive = currentView === item.id || (currentView === 'browse' && item.id === 'browse');
+            const isActive = item.id === 'browse' ? currentView === 'browse' : false;
             return (
               <button
                 key={item.id}

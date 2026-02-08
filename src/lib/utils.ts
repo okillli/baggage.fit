@@ -40,7 +40,7 @@ function withPointerGuard(onComplete?: () => void) {
 export function gsapScrollTo(target: string | number, options?: { duration?: number; ease?: string }) {
   const restore = withPointerGuard();
   gsap.to(window, {
-    scrollTo: target,
+    scrollTo: { y: target, autoKill: false },
     duration: options?.duration ?? 0.8,
     ease: options?.ease ?? 'power2.inOut',
     onComplete: restore,

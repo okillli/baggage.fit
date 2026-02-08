@@ -45,11 +45,12 @@ export const useAppStore = create<AppState>((set, get) => ({
   },
 
   setBagType: (type: BagType) => {
-    const { results, airlines } = get();
-    const hadResults = results.length > 0;
-    set({ bagType: type, results: [] });
-    if (hadResults && airlines.length > 0) {
-      get().checkFit(airlines);
+    const state = get();
+    set({ bagType: type });
+    if (state.results.length > 0 && state.airlines.length > 0) {
+      get().checkFit(state.airlines);
+    } else {
+      set({ results: [] });
     }
   },
 
