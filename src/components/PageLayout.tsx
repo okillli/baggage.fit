@@ -1,4 +1,6 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { CURRENT_YEAR } from '@/lib/format';
 import { ArrowLeft } from 'lucide-react';
 
 interface PageLayoutProps {
@@ -6,10 +8,17 @@ interface PageLayoutProps {
 }
 
 export function PageLayout({ children }: PageLayoutProps) {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {/* Skip to content */}
+      <a href="#main-content" className="skip-link">Skip to content</a>
+
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-background/90 backdrop-blur-md border-b border-white/10">
+      <header className="sticky top-0 z-overlay bg-background/90 backdrop-blur-md border-b border-border">
         <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
           <Link
             to="/"
@@ -25,16 +34,16 @@ export function PageLayout({ children }: PageLayoutProps) {
       </header>
 
       {/* Content */}
-      <main className="max-w-6xl mx-auto px-6 py-10">
+      <main id="main-content" className="max-w-6xl mx-auto px-6 py-10">
         {children}
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-white/10 py-8">
+      <footer className="border-t border-border py-8">
         <div className="max-w-6xl mx-auto px-6 text-center text-xs text-muted-foreground/60">
           <p>Sizes are published limits; enforcement varies by route and staff.</p>
           <p className="mt-1">
-            &copy; {new Date().getFullYear()} baggage.fit
+            &copy; {CURRENT_YEAR} baggage.fit
           </p>
         </div>
       </footer>

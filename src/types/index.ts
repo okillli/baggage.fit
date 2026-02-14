@@ -57,6 +57,7 @@ export interface AppState {
   // Centralized airline data
   airlines: Airline[];
   airlinesLoading: boolean;
+  airlinesError: string | null;
 
   // Results
   results: FitResult[];
@@ -76,6 +77,7 @@ export interface AppState {
   setWeightUnit: (unit: WeightUnit) => void;
   checkFit: (airlines: Airline[]) => void;
   clearResults: () => void;
+  resetInputs: () => void;
   setCurrentView: (view: AppState['currentView']) => void;
   setSelectedAirlineDetail: (code: string | null) => void;
   setCompareSort: (sort: SortOption) => void;

@@ -37,7 +37,7 @@ export function BagTypeAllowanceCard({
   if (!allowance) {
     return (
       <div className={cn(
-        'bg-white/5 border border-white/10 rounded-xl p-4 opacity-50',
+        'bg-secondary border border-border rounded-xl p-4 opacity-50',
         className
       )}>
         <div className="flex items-center gap-2 mb-2">
@@ -65,8 +65,8 @@ export function BagTypeAllowanceCard({
 
   return (
     <div className={cn(
-      'bg-white/5 border rounded-xl p-4 transition-colors',
-      isActive ? 'border-accent/40' : 'border-white/10',
+      'bg-secondary border rounded-xl p-4 transition-colors',
+      isActive ? 'border-accent/40' : 'border-border',
       className
     )}>
       {/* Header */}
@@ -93,7 +93,7 @@ export function BagTypeAllowanceCard({
           <span className={cn(
             'font-mono',
             wOutcome === 'fits' && 'text-accent',
-            wOutcome === 'doesnt-fit' && 'text-red-400',
+            wOutcome === 'doesnt-fit' && 'text-red-500',
           )}>
             {formatWeight(allowance.maxKg, weightUnit)}
           </span>
@@ -101,7 +101,7 @@ export function BagTypeAllowanceCard({
 
         {/* Notes */}
         {allowance.notes && (
-          <div className="flex items-start gap-2 text-sm mt-2 pt-2 border-t border-white/5">
+          <div className="flex items-start gap-2 text-sm mt-2 pt-2 border-t border-border/50">
             <StickyNote className="w-4 h-4 text-muted-foreground shrink-0 mt-0.5" />
             <p className="text-muted-foreground text-xs leading-relaxed">
               {allowance.notes}

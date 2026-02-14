@@ -40,6 +40,7 @@ function startServer() {
         const mimeTypes = {
           html: 'text/html', js: 'application/javascript', css: 'text/css',
           json: 'application/json', png: 'image/png', svg: 'image/svg+xml',
+          jpg: 'image/jpeg', jpeg: 'image/jpeg',
           woff2: 'font/woff2', woff: 'font/woff', ttf: 'font/ttf',
         };
         resp.writeHead(200, { 'Content-Type': mimeTypes[ext] || 'application/octet-stream' });
@@ -61,8 +62,19 @@ async function renderRoute(browser, route) {
     await page.goto(`http://localhost:${PORT}${route}`, { waitUntil: 'networkidle0', timeout: 15000 });
     // Wait for #root to have content
     await page.waitForSelector('#root *', { timeout: 10000 });
-    // Small extra wait for async data (airlines loading)
-    await new Promise((r) => setTimeout(r, 1500));
+    // Wait for airline data to render (table rows or airline cards)
+    await page.waitForFunction(
+      () => {
+        const rows = document.querySelectorAll('table tbody tr, [data-airline]');
+        const heading = document.querySelector('h1, h2');
+        return rows.length > 0 || (heading && heading.textContent.trim().length > 0);
+      },
+      { timeout: 10000 }
+    ).catch(() => {
+      // Fallback: wait 2s if no specific elements found (e.g. home page)
+    });
+    // Small buffer for remaining async renders
+    await new Promise((r) => setTimeout(r, 500));
     const html = await page.content();
 
     // Write to dist/<route>/index.html
@@ -77,6 +89,26 @@ async function renderRoute(browser, route) {
   }
 }
 
+// Generate sitemap.xml from routes
+function generateSitemap(baseUrl) {
+  const today = new Date().toISOString().split('T')[0];
+  const urls = routes.map((route) => {
+    const priority = route === '/' ? '1.0' : route === '/airlines' ? '0.8' : '0.6';
+    const changefreq = route === '/' ? 'weekly' : 'monthly';
+    return `  <url>
+    <loc>${baseUrl}${route}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>${changefreq}</changefreq>
+    <priority>${priority}</priority>
+  </url>`;
+  });
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls.join('\n')}
+</urlset>`;
+}
+
 async function main() {
   console.log(`[prerender] Starting — ${routes.length} routes`);
   const server = await startServer();
@@ -88,9 +120,14 @@ async function main() {
     await Promise.all(batch.map((route) => renderRoute(browser, route)));
   }
 
+  // Generate sitemap
+  const sitemap = generateSitemap('https://baggage.fit');
+  writeFileSync(resolve(DIST, 'sitemap.xml'), sitemap, 'utf-8');
+  console.log('  ✓ sitemap.xml');
+
   await browser.close();
   server.close();
-  console.log(`[prerender] Done — ${routes.length} routes prerendered`);
+  console.log(`[prerender] Done — ${routes.length} routes prerendered + sitemap`);
 }
 
 main().catch((err) => {

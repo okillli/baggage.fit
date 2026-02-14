@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import { gsap } from 'gsap';
+import { gsap } from '@/lib/gsap-setup';
 import { cn } from '@/lib/utils';
 import type { Dimensions, Unit, WeightUnit } from '@/types';
 import { formatWeight } from '@/lib/fitLogic';
@@ -54,6 +54,9 @@ export function VisualSizer({
   useEffect(() => {
     if (!animate || !bagRef.current || !frameRef.current) return;
 
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
     const bag = bagRef.current;
     const frame = frameRef.current;
 
@@ -101,7 +104,7 @@ export function VisualSizer({
         duration: 0.3,
       });
     }
-  }, [outcome, animate, dimensions]);
+  }, [outcome, animate]);
 
   const displayUnit = unit;
   const displayMaxL = unit === 'in' ? Math.round(maxDims[0] / 2.54 * 10) / 10 : maxDims[0];
@@ -118,7 +121,7 @@ export function VisualSizer({
       <div
         ref={frameRef}
         className={cn(
-          'absolute border-2 border-white/30 rounded-xl transition-shadow',
+          'absolute border-2 border-white/30 rounded-xl',
           'flex items-center justify-center'
         )}
         style={{
@@ -163,7 +166,7 @@ export function VisualSizer({
         {/* Bag dimensions */}
         <div className="absolute inset-0 flex items-center justify-center">
           <span className="text-xs font-mono text-foreground/70">
-            {dimensions.l}×{dimensions.w}×{dimensions.h}
+            {dimensions.l}×{dimensions.w}×{dimensions.h} {unit}
           </span>
         </div>
       </div>
@@ -180,7 +183,6 @@ export function VisualSizer({
           width: bagWidth * 0.7,
           height: bagHeight * 0.7,
           transform: `translate(${bagWidth * 0.3 + 20}px, ${bagHeight * 0.3 + 20}px)`,
-          zIndex: -1,
         }}
       />
 

@@ -42,6 +42,7 @@ export function WeightInput({
           value={weightUnit}
           options={['kg', 'lb']}
           onChange={onUnitChange}
+          label="Weight unit"
         />
       </div>
 
@@ -49,13 +50,14 @@ export function WeightInput({
         <input
           id={id}
           type="number"
+          inputMode="decimal"
           min="0"
           step="0.1"
           value={weight ?? ''}
           onChange={handleChange}
           placeholder={weightUnit === 'kg' ? '10' : '22'}
           className={cn(
-            'w-full bg-white/5 border border-white/10 rounded-lg px-3 py-3',
+            'w-full bg-secondary border border-border rounded-lg px-3 py-3',
             'text-foreground placeholder:text-muted-foreground/50',
             'input-focus transition-all'
           )}

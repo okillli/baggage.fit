@@ -1,11 +1,8 @@
 import { useRef, useLayoutEffect } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { gsap } from '@/lib/gsap-setup';
 import { cn, scrollToPinCenter, gsapScrollTo } from '@/lib/utils';
 import { useAppStore } from '@/store/appStore';
 import { ChevronDown, ArrowRight } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -27,7 +24,24 @@ export function Hero() {
 
     if (!section || !headline || !sub || !cta || !frame || !scroll) return;
 
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     const ctx = gsap.context(() => {
+      if (prefersReducedMotion) {
+        // Show all elements immediately, still pin for scroll structure
+        gsap.set([headline, sub, cta, frame, scroll], { opacity: 1 });
+        gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: 'top top',
+            end: '+=130%',
+            pin: true,
+            scrub: false,
+          },
+        });
+        return;
+      }
+
       // Auto-play entrance animation on load
       const entranceTl = gsap.timeline({ defaults: { ease: 'power2.out' } });
 
@@ -125,7 +139,7 @@ export function Hero() {
     <section
       ref={sectionRef}
       id="hero"
-      className="section-pinned flex items-center justify-center z-10"
+      className="section-pinned flex items-center justify-center z-pin-hero"
     >
       {/* Sizer Frame (decorative) */}
       <div
@@ -155,7 +169,7 @@ export function Hero() {
             onClick={handleStart}
             className={cn(
               'inline-flex items-center gap-2 px-8 py-4',
-              'bg-accent text-background font-heading font-bold text-lg rounded-lg',
+              'bg-accent text-accent-foreground font-heading font-bold text-lg rounded-lg',
               'hover:brightness-110 transition-all duration-200 btn-lift'
             )}
           >

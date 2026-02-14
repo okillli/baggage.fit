@@ -95,18 +95,30 @@ export function getOutcomeText(outcome: FitOutcome): string {
 }
 
 /**
- * Get outcome color class
+ * Get outcome color class for dark or light backgrounds
  */
-export function getOutcomeColor(outcome: FitOutcome): string {
+export function getOutcomeColor(outcome: FitOutcome, variant: 'dark' | 'light' = 'dark'): string {
+  if (variant === 'light') {
+    switch (outcome) {
+      case 'fits':
+        return 'badge-fits';
+      case 'doesnt-fit':
+        return 'badge-doesnt-fit-light';
+      case 'unknown':
+        return 'badge-unknown-light';
+      default:
+        return 'badge-unknown-light';
+    }
+  }
   switch (outcome) {
     case 'fits':
-      return 'bg-accent text-background';
+      return 'badge-fits';
     case 'doesnt-fit':
-      return 'bg-transparent border-2 border-red-500 text-white';
+      return 'badge-doesnt-fit';
     case 'unknown':
-      return 'bg-transparent border-2 border-white/30 text-white/70';
+      return 'badge-unknown';
     default:
-      return 'bg-transparent border-2 border-white/30 text-white/70';
+      return 'badge-unknown';
   }
 }
 
@@ -149,7 +161,7 @@ export function combinedOutcome(
   }
   if (dimOutcome === 'fits' && weightOutcome === 'fits') return 'fits';
   if (dimOutcome === 'fits' && weightOutcome === 'unknown') return 'fits';
-  if (dimOutcome === 'unknown' && weightOutcome === 'fits') return 'unknown';
+  if (dimOutcome === 'unknown' && weightOutcome === 'fits') return 'fits';
   return 'unknown';
 }
 

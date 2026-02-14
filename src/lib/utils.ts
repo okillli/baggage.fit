@@ -1,9 +1,6 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
-import { gsap } from "gsap"
-import { ScrollToPlugin } from "gsap/ScrollToPlugin"
-
-gsap.registerPlugin(ScrollToPlugin);
+import { gsap } from "@/lib/gsap-setup"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -54,10 +51,17 @@ export function gsapScrollTo(target: string | number, options?: { duration?: num
  * so the entrance animation has completed and content is visible.
  * Disables pointer-events on <main> during animation to prevent click-through.
  */
-export function scrollToPinCenter(sectionId: string) {
+export function scrollToPinCenter(sectionId: string, _retried = false) {
   const section = document.getElementById(sectionId);
   if (!section) return;
-  const spacer = section.closest('.pin-spacer') || section;
+  const spacer = section.closest('.pin-spacer');
+  if (!spacer) {
+    // Pin-spacer may not exist yet if GSAP hasn't initialized — retry once
+    if (!_retried) {
+      setTimeout(() => scrollToPinCenter(sectionId, true), 100);
+    }
+    return;
+  }
   const spacerTop = spacer.getBoundingClientRect().top + window.scrollY;
   const pinScroll = spacer.clientHeight - window.innerHeight;
   const target = spacerTop + pinScroll * 0.5;

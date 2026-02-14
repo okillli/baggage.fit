@@ -1,10 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  /* Dark theme (default) */
   :root {
     --background: 0 0% 10%;
     --foreground: 0 0% 96%;
@@ -26,7 +25,85 @@
     --input: 0 0% 15%;
     --ring: 78 100% 62%;
     --radius: 0.625rem;
+    --surface-light: 0 0% 95%;
+    --accent-on-light: 78 80% 32%;
   }
+
+  /* Light theme */
+  .light {
+    --background: 0 0% 98%;
+    --foreground: 0 0% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 10%;
+    --primary: 78 100% 40%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 94%;
+    --secondary-foreground: 0 0% 10%;
+    --muted: 0 0% 94%;
+    --muted-foreground: 0 0% 40%;
+    --accent: 78 100% 40%;
+    --accent-foreground: 0 0% 10%;
+    --destructive: 0 84% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 85%;
+    --input: 0 0% 94%;
+    --ring: 78 100% 40%;
+    --surface-light: 0 0% 94%;
+    --accent-on-light: 78 80% 32%;
+  }
+
+  /* Pinned sections always use dark theme (brand identity) */
+  .section-pinned {
+    --background: 0 0% 10%;
+    --foreground: 0 0% 96%;
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 96%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 96%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 72%;
+    --accent: 78 100% 62%;
+    --accent-foreground: 0 0% 10%;
+    --border: 0 0% 20%;
+    --input: 0 0% 15%;
+    --ring: 78 100% 62%;
+  }
+
+  /* Light-bg section — always renders with light palette */
+  .section-surface {
+    --background: 0 0% 95%;
+    --foreground: 0 0% 10%;
+    --muted-foreground: 0 0% 40%;
+    --border: 0 0% 80%;
+    --secondary: 0 0% 90%;
+    --input: 0 0% 90%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 10%;
+    --accent: 78 100% 40%;
+    --accent-on-light: 78 80% 32%;
+    --ring: 78 100% 40%;
+  }
+
+  /* Dark inset within a light section (e.g., input container) */
+  .section-dark-inset {
+    --background: 0 0% 10%;
+    --foreground: 0 0% 96%;
+    --muted-foreground: 0 0% 72%;
+    --border: 0 0% 20%;
+    --secondary: 0 0% 15%;
+    --input: 0 0% 15%;
+    --accent: 78 100% 62%;
+    --accent-foreground: 0 0% 10%;
+    --ring: 78 100% 62%;
+  }
+}
+
+/* Skip to content link */
+.skip-link {
+  @apply sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-skip;
+  @apply px-4 py-2 bg-accent text-accent-foreground font-heading font-bold rounded-lg;
 }
 
 @layer base {
@@ -52,9 +129,6 @@
     line-height: 0.95;
   }
   
-  .font-mono {
-    font-family: 'IBM Plex Mono', monospace;
-  }
 }
 
 @layer components {
@@ -74,7 +148,7 @@
   
   /* Section label styling */
   .section-label {
-    @apply font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground;
+    @apply font-mono text-xs uppercase tracking-widest text-muted-foreground;
   }
   
   /* Button hover lift effect */
@@ -85,37 +159,14 @@
     @apply -translate-y-0.5;
   }
   
-  /* Card hover effect */
-  .card-hover {
-    @apply transition-all duration-300 ease-out;
-  }
-  .card-hover:hover {
-    @apply -translate-y-1;
-  }
-  
-  /* Glow effect for accent elements */
-  .glow-accent {
-    box-shadow: 0 0 20px rgba(215, 255, 59, 0.3);
-  }
-  
-  /* Sizer frame styling */
-  .sizer-frame {
-    @apply border border-white/20 rounded-xl;
-  }
-  
   /* Input focus ring */
   .input-focus {
     @apply focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent;
   }
-  
-  /* Chip selected state */
-  .chip-selected {
-    @apply bg-accent text-background border-accent;
-  }
-  
-  /* Outcome badge styles */
+
+  /* Outcome badge styles — dark background */
   .badge-fits {
-    @apply bg-accent text-background font-semibold;
+    @apply bg-accent text-accent-foreground font-semibold;
   }
   .badge-doesnt-fit {
     @apply bg-transparent border-2 border-red-500 text-white;
@@ -123,24 +174,32 @@
   .badge-unknown {
     @apply bg-transparent border-2 border-white/30 text-white/70;
   }
+
+  /* Outcome badge styles — light background */
+  .badge-doesnt-fit-light {
+    @apply bg-transparent border-2 border-red-500 text-red-600;
+  }
+  .badge-unknown-light {
+    @apply bg-transparent border-2 border-muted-foreground/30 text-muted-foreground/50;
+  }
 }
 
 @layer utilities {
   /* Typography utilities */
   .text-h1 {
-    font-size: clamp(44px, 6vw, 84px);
+    font-size: clamp(2.75rem, 6vw, 5.25rem);
     letter-spacing: -0.02em;
     line-height: 0.95;
   }
-  
+
   .text-h2 {
-    font-size: clamp(34px, 4.2vw, 64px);
+    font-size: clamp(2.125rem, 4.2vw, 4rem);
     letter-spacing: -0.01em;
     line-height: 1.0;
   }
-  
+
   .text-h3 {
-    font-size: clamp(24px, 2.5vw, 36px);
+    font-size: clamp(1.5rem, 2.5vw, 2.25rem);
     letter-spacing: -0.01em;
     line-height: 1.1;
   }
@@ -165,13 +224,85 @@
   
   /* Pinned section base — bg-background ensures higher-z sections fully cover lower ones */
   .section-pinned {
-    @apply w-screen h-screen relative overflow-hidden bg-background dot-grid;
+    @apply w-screen relative overflow-hidden bg-background dot-grid;
+    height: 100vh;
+    height: 100dvh;
+    will-change: transform;
+  }
+  .section-pinned > * {
+    pointer-events: auto;
   }
   
   /* Flowing section base */
   .section-flowing {
     @apply w-full relative;
   }
+}
+
+/* Focus visible styles */
+:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+}
+
+/* Number input spinner hide */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Selection color */
+::selection {
+  background: rgba(215, 255, 59, 0.3);
+  color: inherit;
+}
+.light ::selection {
+  background: rgba(100, 160, 30, 0.25);
+  color: inherit;
+}
+
+/* Light mode scrollbar */
+.light ::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.03);
+}
+.light ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+}
+.light ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* Mobile touch improvements */
+@media (hover: none) {
+  .btn-lift:hover {
+    transform: none;
+  }
+}
+
+/* ScrollReveal initial state — hidden until GSAP animates */
+.scroll-reveal-init {
+  opacity: 0;
 }
 
 /* Reduced motion support */
@@ -183,5 +314,9 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .scroll-reveal-init {
+    opacity: 1 !important;
   }
 }

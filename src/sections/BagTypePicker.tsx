@@ -1,13 +1,10 @@
 import { useRef, useLayoutEffect } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { gsap } from '@/lib/gsap-setup';
 import { cn, gsapScrollTo } from '@/lib/utils';
 import { useAppStore } from '@/store/appStore';
 import { BagTypeCard } from '@/components/BagTypeCard';
 import type { BagType } from '@/types';
 import { ArrowRight } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const bagTypes: { type: BagType; title: string; description: string; image: string }[] = [
   {
@@ -45,10 +42,26 @@ export function BagTypePicker() {
 
     if (!section || !content) return;
 
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     const ctx = gsap.context(() => {
       const header = headerRef.current!;
       const cards = Array.from(cardsRef.current!.children);
       const cta = ctaRef.current!;
+
+      if (prefersReducedMotion) {
+        gsap.set([header, ...cards, cta], { opacity: 1 });
+        gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: 'top top',
+            end: '+=130%',
+            pin: true,
+            scrub: false,
+          },
+        });
+        return;
+      }
 
       const scrollTl = gsap.timeline({
         scrollTrigger: {
@@ -111,7 +124,7 @@ export function BagTypePicker() {
     <section
       ref={sectionRef}
       id="bag-type"
-      className="section-pinned flex flex-col items-center justify-center z-20"
+      className="section-pinned flex flex-col items-center justify-center z-pin-bagtype"
     >
       <div ref={contentRef} className="w-full max-w-6xl mx-auto px-6">
         {/* Header */}
@@ -125,7 +138,7 @@ export function BagTypePicker() {
         </div>
 
         {/* Cards */}
-        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <div ref={cardsRef} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-10">
           {bagTypes.map((bag) => (
             <BagTypeCard
               key={bag.type}
@@ -146,7 +159,7 @@ export function BagTypePicker() {
             onClick={handleNext}
             className={cn(
               'inline-flex items-center gap-2 px-6 py-3',
-              'bg-accent text-background font-heading font-bold rounded-lg',
+              'bg-accent text-accent-foreground font-heading font-bold rounded-lg',
               'hover:brightness-110 transition-all duration-200 btn-lift'
             )}
           >

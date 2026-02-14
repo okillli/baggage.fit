@@ -1,26 +1,31 @@
+import { Link } from 'react-router-dom';
 import { cn, scrollToPinCenter } from '@/lib/utils';
 import { useAppStore } from '@/store/appStore';
 import { ScrollReveal } from '@/components/ScrollReveal';
-import { Plane, Github, Twitter, Mail } from 'lucide-react';
+import { CURRENT_YEAR } from '@/lib/format';
+import { siteConfig } from '@/lib/siteConfig';
+import { Plane, Mail } from 'lucide-react';
 
 export function Footer() {
-  const { setCurrentView } = useAppStore();
+  const { setCurrentView, setCheckPanelOpen, resetInputs } = useAppStore();
 
   const handleCheckAnother = () => {
-    setCurrentView('hero');
-    scrollToPinCenter('hero');
+    resetInputs();
+    setCheckPanelOpen(true);
+    setCurrentView('browse');
+    scrollToPinCenter('bag-type');
   };
 
   return (
-    <footer className="section-flowing py-20 z-50">
+    <footer className="section-flowing py-20">
       <div className="max-w-2xl mx-auto px-6 text-center">
         <ScrollReveal>
           {/* Logo */}
-          <h2 className="font-heading font-bold text-3xl mb-6">baggage.fit</h2>
+          <p className="font-heading font-bold text-h3 mb-6">{siteConfig.name}</p>
 
           {/* Disclaimer */}
           <p className="text-muted-foreground mb-8 leading-relaxed">
-            Airline rules change and vary by route, fare, and enforcement. 
+            Airline rules change and vary by route, fare, and enforcement.
             Always confirm on the airline&apos;s official page before you fly.
           </p>
 
@@ -29,7 +34,7 @@ export function Footer() {
             onClick={handleCheckAnother}
             className={cn(
               'inline-flex items-center gap-2 px-8 py-4 mb-10',
-              'bg-accent text-background font-heading font-bold text-lg rounded-lg',
+              'bg-accent text-accent-foreground font-heading font-bold text-lg rounded-lg',
               'hover:brightness-110 transition-all duration-200 btn-lift'
             )}
           >
@@ -37,56 +42,45 @@ export function Footer() {
             Check another bag
           </button>
 
-          {/* Links */}
-          <div className="flex items-center justify-center gap-6 mb-10">
+          {/* Social links */}
+          <div className="flex items-center justify-center gap-4 mb-6">
             <a
-              href="#"
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              href={siteConfig.social.x}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-foreground transition-colors text-sm"
             >
-              About
+              X
             </a>
+            <span className="text-muted-foreground/30">·</span>
             <a
-              href="#"
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              href={siteConfig.social.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-foreground transition-colors text-sm"
             >
-              Data sources
+              Instagram
             </a>
+            <span className="text-muted-foreground/30">·</span>
             <a
-              href="#"
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              href={`mailto:${siteConfig.email}`}
+              className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors text-sm"
             >
+              <Mail className="w-3.5 h-3.5" />
               Contact
             </a>
           </div>
 
-          {/* Social */}
-          <div className="flex items-center justify-center gap-4 mb-10">
-            <a
-              href="#"
-              aria-label="Twitter"
-              className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-white/10 transition-all"
-            >
-              <Twitter className="w-5 h-5" />
-            </a>
-            <a
-              href="#"
-              aria-label="GitHub"
-              className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-white/10 transition-all"
-            >
-              <Github className="w-5 h-5" />
-            </a>
-            <a
-              href="#"
-              aria-label="Email"
-              className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-white/10 transition-all"
-            >
-              <Mail className="w-5 h-5" />
-            </a>
+          {/* Footer links */}
+          <div className="flex items-center justify-center gap-4 mb-4 text-xs">
+            <Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors">About</Link>
+            <span className="text-muted-foreground/30">·</span>
+            <Link to="/data-sources" className="text-muted-foreground hover:text-foreground transition-colors">Data Sources</Link>
           </div>
 
           {/* Copyright */}
           <p className="text-xs text-muted-foreground/60">
-            © {new Date().getFullYear()} baggage.fit — Built for travelers
+            &copy; {CURRENT_YEAR} {siteConfig.name} &mdash; Built for travelers
           </p>
         </ScrollReveal>
       </div>

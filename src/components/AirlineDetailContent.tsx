@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils';
+import { countryToFlag } from '@/lib/format';
 import type { Airline, BagType, Dimensions, FitResult, Unit, WeightUnit } from '@/types';
 import { BagTypeAllowanceCard } from './BagTypeAllowanceCard';
 import { OutcomeBadge } from './OutcomeBadge';
@@ -13,6 +14,7 @@ interface AirlineDetailContentProps {
   activeBagType?: BagType;
   unit: Unit;
   weightUnit: WeightUnit;
+  headingLevel?: 'h1' | 'h2';
   className?: string;
 }
 
@@ -24,6 +26,7 @@ export function AirlineDetailContent({
   activeBagType = 'cabin',
   unit,
   weightUnit,
+  headingLevel = 'h2',
   className,
 }: AirlineDetailContentProps) {
   const countryFlag = countryToFlag(airline.country);
@@ -34,7 +37,11 @@ export function AirlineDetailContent({
       <div className="flex items-center gap-3">
         <span className="text-3xl">{countryFlag}</span>
         <div>
-          <h2 className="font-heading font-bold text-xl">{airline.name}</h2>
+          {headingLevel === 'h1' ? (
+            <h1 className="font-heading font-bold text-xl">{airline.name}</h1>
+          ) : (
+            <h2 className="font-heading font-bold text-xl">{airline.name}</h2>
+          )}
           <p className="text-sm font-mono text-muted-foreground">{airline.code}</p>
         </div>
       </div>
@@ -70,7 +77,7 @@ export function AirlineDetailContent({
           href={airline.links.policy}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 text-sm text-accent hover:underline"
+          className="inline-flex items-center gap-2 text-sm text-accent-on-light hover:underline"
         >
           <ExternalLink className="w-4 h-4" />
           Official baggage policy
@@ -80,7 +87,7 @@ export function AirlineDetailContent({
             href={airline.links.calculator}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm text-accent hover:underline ml-4"
+            className="inline-flex items-center gap-2 text-sm text-accent-on-light hover:underline ml-4"
           >
             <ExternalLink className="w-4 h-4" />
             Size calculator
@@ -89,7 +96,7 @@ export function AirlineDetailContent({
       </div>
 
       {/* Trust footer */}
-      <div className="flex items-center gap-2 pt-4 border-t border-white/10 text-xs text-muted-foreground/60">
+      <div className="flex items-center gap-2 pt-4 border-t border-border text-xs text-muted-foreground/60">
         <Shield className="w-3.5 h-3.5" />
         <span>Last verified: {airline.lastVerified}</span>
         <span className="mx-1">&middot;</span>
@@ -103,7 +110,7 @@ function FitResultSummary({ result, unit, weightUnit }: { result: FitResult; uni
   const maxDims = result.maxDimensions as [number, number, number] | null;
 
   return (
-    <div className="bg-white/5 border border-white/10 rounded-xl p-4 space-y-3">
+    <div className="bg-secondary border border-border rounded-xl p-4 space-y-3">
       <div className="flex items-center justify-between">
         <span className="section-label">Your fit result</span>
         <OutcomeBadge outcome={result.outcome} />
@@ -127,9 +134,3 @@ function FitResultSummary({ result, unit, weightUnit }: { result: FitResult; uni
   );
 }
 
-function countryToFlag(countryCode: string): string {
-  const code = countryCode.toUpperCase();
-  return String.fromCodePoint(
-    ...code.split('').map((c) => c.charCodeAt(0) + 0x1F1A5)
-  );
-}

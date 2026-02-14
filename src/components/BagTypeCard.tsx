@@ -32,6 +32,7 @@ export function BagTypeCard({
   return (
     <button
       onClick={onClick}
+      aria-pressed={isSelected}
       className={cn(
         'relative group text-left rounded-xl overflow-hidden transition-all duration-300',
         'border-2',
@@ -66,7 +67,7 @@ export function BagTypeCard({
         {/* Selected indicator */}
         {isSelected && (
           <div className="absolute top-3 right-3 w-6 h-6 rounded-full bg-accent flex items-center justify-center">
-            <svg className="w-4 h-4 text-background" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-4 h-4 text-accent-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
             </svg>
           </div>

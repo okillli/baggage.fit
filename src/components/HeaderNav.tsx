@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { cn, scrollToPinCenter, gsapScrollTo } from '@/lib/utils';
 import { useAppStore } from '@/store/appStore';
-import { Plane, List } from 'lucide-react';
+import { useTheme } from '@/lib/useTheme';
+import { Plane, List, Sun, Moon } from 'lucide-react';
 
 export function HeaderNav() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const { currentView, setCurrentView, setCheckPanelOpen } = useAppStore();
+  const { currentView, checkPanelOpen, setCurrentView, setCheckPanelOpen } = useAppStore();
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,9 +40,9 @@ export function HeaderNav() {
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+        'fixed top-0 left-0 right-0 z-nav transition-all duration-300',
         isScrolled
-          ? 'bg-background/90 backdrop-blur-md border-b border-white/10'
+          ? 'bg-background/90 backdrop-blur-md border-b border-border'
           : 'bg-transparent'
       )}
     >
@@ -56,51 +58,66 @@ export function HeaderNav() {
           baggage.fit
         </button>
 
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-1">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = item.id === 'browse' ? currentView === 'browse' : false;
-            return (
-              <button
-                key={item.id}
-                onClick={() => handleNavClick(item.id)}
-                className={cn(
-                  'flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all',
-                  isActive
-                    ? 'text-accent bg-accent/10'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-white/5'
-                )}
-              >
-                <Icon className="w-4 h-4" />
-                {item.label}
-              </button>
-            );
-          })}
-        </nav>
+        <div className="flex items-center gap-1">
+          {/* Desktop Nav */}
+          <nav aria-label="Main navigation" className="hidden md:flex items-center gap-1">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = item.id === 'check'
+                ? checkPanelOpen && currentView === 'browse'
+                : item.id === 'browse' ? currentView === 'browse' && !checkPanelOpen : false;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => handleNavClick(item.id)}
+                  className={cn(
+                    'flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-colors',
+                    isActive
+                      ? 'text-accent bg-accent/10'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
+                  )}
+                >
+                  <Icon className="w-4 h-4" />
+                  {item.label}
+                </button>
+              );
+            })}
+          </nav>
 
-        {/* Mobile Nav */}
-        <nav className="md:hidden flex items-center gap-1">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = item.id === 'browse' ? currentView === 'browse' : false;
-            return (
-              <button
-                key={item.id}
-                onClick={() => handleNavClick(item.id)}
-                className={cn(
-                  'flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all',
-                  isActive
-                    ? 'text-accent bg-accent/10'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-white/5'
-                )}
-              >
-                <Icon className="w-3.5 h-3.5" />
-                {item.label}
-              </button>
-            );
-          })}
-        </nav>
+          {/* Mobile Nav */}
+          <nav aria-label="Main navigation mobile" className="md:hidden flex items-center gap-1">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = item.id === 'check'
+                ? checkPanelOpen && currentView === 'browse'
+                : item.id === 'browse' ? currentView === 'browse' && !checkPanelOpen : false;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => handleNavClick(item.id)}
+                  className={cn(
+                    'flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] rounded-md text-xs font-medium transition-colors',
+                    isActive
+                      ? 'text-accent bg-accent/10'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
+                  )}
+                >
+                  <Icon className="w-3.5 h-3.5" />
+                  {item.label}
+                </button>
+              );
+            })}
+          </nav>
+
+          {/* Theme Toggle */}
+          <button
+            onClick={toggleTheme}
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            className="flex items-center justify-center w-11 h-11 min-h-[44px] rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors ml-1"
+          >
+            {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          </button>
+        </div>
       </div>
     </header>
   );

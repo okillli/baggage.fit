@@ -1,9 +1,6 @@
 import { useRef, useEffect } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { gsap, ScrollTrigger } from '@/lib/gsap-setup';
 import { cn } from '@/lib/utils';
-
-gsap.registerPlugin(ScrollTrigger);
 
 interface ScrollRevealProps {
   children: React.ReactNode;
@@ -27,6 +24,13 @@ export function ScrollReveal({
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReducedMotion) {
+      gsap.set(el, { opacity: 1 });
+      return;
+    }
 
     const getFromValues = () => {
       switch (direction) {
@@ -71,7 +75,7 @@ export function ScrollReveal({
   }, [direction, delay, duration, distance]);
 
   return (
-    <div ref={ref} className={cn(className)} style={{ opacity: 0 }}>
+    <div ref={ref} className={cn('scroll-reveal-init', className)}>
       {children}
     </div>
   );

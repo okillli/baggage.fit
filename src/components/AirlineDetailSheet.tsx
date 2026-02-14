@@ -31,6 +31,7 @@ export function AirlineDetailSheet() {
     ? results.find((r) => r.airline.code === selectedAirlineDetail) ?? null
     : null;
 
+  const hasChecked = results.length > 0;
   const userWeightKg = weight != null && weight > 0
     ? convertWeightToKg(weight, weightUnit)
     : null;
@@ -47,7 +48,7 @@ export function AirlineDetailSheet() {
     >
       <SheetContent
         side="right"
-        className="w-full md:w-[600px] md:max-w-[90vw] sm:max-w-none z-[60] overflow-y-auto"
+        className="w-full md:w-[600px] md:max-w-[90vw] sm:max-w-none z-sheet overflow-y-auto"
       >
         {airline && (
           <>
@@ -60,8 +61,8 @@ export function AirlineDetailSheet() {
             <AirlineDetailContent
               airline={airline}
               result={result}
-              userDimensions={dimensions}
-              userWeightKg={userWeightKg}
+              userDimensions={hasChecked ? dimensions : null}
+              userWeightKg={hasChecked ? userWeightKg : null}
               activeBagType={bagType}
               unit={unit}
               weightUnit={weightUnit}

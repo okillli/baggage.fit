@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import type { AppState, Airline, BagType, Dimensions, FitResult, FitOutcome, Unit, WeightUnit } from '@/types';
-import { isTotalDimensionLimit, calculateTotalDimension, checkWeightFit, combinedOutcome, convertWeightToKg } from '@/lib/fitLogic';
+import { isTotalDimensionLimit, calculateTotalDimension, checkWeightFit, combinedOutcome, convertWeightToKg, convertKgToLb, convertToCm, convertToIn } from '@/lib/fitLogic';
 
 const initialDimensions: Dimensions = {
   l: 55,
@@ -19,6 +19,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   // Centralized airline data
   airlines: [],
   airlinesLoading: true,
+  airlinesError: null,
 
   // Results
   results: [],
@@ -31,8 +32,9 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   // Actions
   loadAirlines: async () => {
-    // Only fetch once
+    // Only fetch once (unless previous attempt errored)
     if (get().airlines.length > 0) return;
+    set({ airlinesError: null, airlinesLoading: true });
     try {
       const res = await fetch('/data/airlines.json');
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -40,7 +42,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       set({ airlines: data, airlinesLoading: false });
     } catch (err) {
       console.error('Failed to load airlines:', err);
-      set({ airlinesLoading: false });
+      set({ airlinesLoading: false, airlinesError: 'Failed to load airline data. Please try again.' });
     }
   },
 
@@ -63,11 +65,12 @@ export const useAppStore = create<AppState>((set, get) => ({
   setUnit: (newUnit: Unit) => {
     const { unit: oldUnit, dimensions } = get();
     if (newUnit === oldUnit) return;
-    const factor = newUnit === 'in' ? 1 / 2.54 : 2.54;
-    const convert = (v: number) => Math.round(v * factor * 10) / 10;
+    const dims = [dimensions.l, dimensions.w, dimensions.h];
+    const converted = newUnit === 'in' ? convertToIn(dims) : convertToCm(dims);
     set({
       unit: newUnit,
-      dimensions: { l: convert(dimensions.l), w: convert(dimensions.w), h: convert(dimensions.h) },
+      dimensions: { l: converted[0], w: converted[1], h: converted[2] },
+      results: [],
     });
   },
 
@@ -78,11 +81,11 @@ export const useAppStore = create<AppState>((set, get) => ({
     if (newUnit === oldUnit) return;
     if (weight !== null && weight > 0) {
       const converted = newUnit === 'lb'
-        ? Math.round((weight / 0.453592) * 10) / 10
-        : Math.round(weight * 0.453592 * 10) / 10;
-      set({ weightUnit: newUnit, weight: converted });
+        ? convertKgToLb(weight)
+        : convertWeightToKg(weight, 'lb');
+      set({ weightUnit: newUnit, weight: converted, results: [] });
     } else {
-      set({ weightUnit: newUnit });
+      set({ weightUnit: newUnit, results: [] });
     }
   },
 
@@ -90,9 +93,8 @@ export const useAppStore = create<AppState>((set, get) => ({
     const { dimensions, unit, bagType, weight, weightUnit } = get();
 
     // Convert to cm if needed
-    const userDims = unit === 'in'
-      ? [dimensions.l, dimensions.w, dimensions.h].map(d => Math.round(d * 2.54 * 10) / 10)
-      : [dimensions.l, dimensions.w, dimensions.h];
+    const rawDims = [dimensions.l, dimensions.w, dimensions.h];
+    const userDims = unit === 'in' ? convertToCm(rawDims) : rawDims;
 
     // Convert user weight to kg
     const userWeightKg = weight !== null && weight > 0
@@ -146,6 +148,14 @@ export const useAppStore = create<AppState>((set, get) => ({
   },
 
   clearResults: () => set({ results: [] }),
+
+  resetInputs: () => set({
+    dimensions: { ...initialDimensions },
+    unit: 'cm',
+    weight: null,
+    weightUnit: 'kg',
+    results: [],
+  }),
 
   setCurrentView: (view) => set({ currentView: view }),
 

@@ -3,16 +3,18 @@ import { useParams, Link } from 'react-router-dom';
 import { useAppStore } from '@/store/appStore';
 import { findAirlineBySlug } from '@/lib/slugs';
 import { useSEO } from '@/lib/useSEO';
-import { formatDimensions } from '@/lib/fitLogic';
+import { formatDimensions, convertWeightToKg } from '@/lib/fitLogic';
+import { CURRENT_YEAR } from '@/lib/format';
+import { siteConfig } from '@/lib/siteConfig';
 import { PageLayout } from '@/components/PageLayout';
 import { AirlineDetailContent } from '@/components/AirlineDetailContent';
 import { ArrowRight } from 'lucide-react';
 
 export function AirlinePage() {
   const { slug } = useParams<{ slug: string }>();
-  const { airlines, airlinesLoading, loadAirlines, dimensions, unit, weight, weightUnit, bagType } = useAppStore();
+  const { airlines, airlinesLoading, airlinesError, loadAirlines, dimensions, unit, weight, weightUnit, bagType } = useAppStore();
   const userWeightKg = weight != null && weight > 0
-    ? (weightUnit === 'lb' ? Math.round(weight * 0.453592 * 100) / 100 : weight)
+    ? convertWeightToKg(weight, weightUnit)
     : undefined;
 
   useEffect(() => {
@@ -23,7 +25,7 @@ export function AirlinePage() {
 
   // SEO
   const title = airline
-    ? `${airline.name} Baggage Size & Weight Limits ${new Date().getFullYear()} | baggage.fit`
+    ? `${airline.name} Baggage Size & Weight Limits ${CURRENT_YEAR} | baggage.fit`
     : 'Airline Baggage Limits | baggage.fit';
 
   const cabinDims = airline?.allowances.cabin?.maxCm;
@@ -35,16 +37,32 @@ export function AirlinePage() {
   useSEO({
     title,
     description,
-    canonical: airline ? `https://baggage.fit/airlines/${slug}` : undefined,
-    ogTitle: airline ? `${airline.name} Baggage Limits ${new Date().getFullYear()}` : undefined,
-    ogUrl: airline ? `https://baggage.fit/airlines/${slug}` : undefined,
+    canonical: airline ? `${siteConfig.url}/airlines/${slug}` : undefined,
+    ogTitle: airline ? `${airline.name} Baggage Limits ${CURRENT_YEAR}` : undefined,
+    ogUrl: airline ? `${siteConfig.url}/airlines/${slug}` : undefined,
   });
 
   if (airlinesLoading) {
     return (
       <PageLayout>
-        <div className="flex items-center justify-center py-20">
+        <div className="flex items-center justify-center py-20" role="status" aria-label="Loading airline details">
           <div className="w-8 h-8 border-4 border-accent/30 border-t-accent rounded-full animate-spin" />
+        </div>
+      </PageLayout>
+    );
+  }
+
+  if (airlinesError) {
+    return (
+      <PageLayout>
+        <div className="text-center py-20">
+          <p className="text-muted-foreground mb-6">{airlinesError}</p>
+          <button
+            onClick={() => loadAirlines()}
+            className="inline-flex items-center gap-2 px-6 py-3 bg-accent text-accent-foreground font-heading font-bold rounded-lg hover:brightness-110 transition-all"
+          >
+            Try again
+          </button>
         </div>
       </PageLayout>
     );
@@ -60,7 +78,7 @@ export function AirlinePage() {
           </p>
           <Link
             to="/airlines"
-            className="inline-flex items-center gap-2 text-accent hover:underline"
+            className="inline-flex items-center gap-2 text-accent-on-light hover:underline"
           >
             Browse all airlines
             <ArrowRight className="w-4 h-4" />
@@ -81,13 +99,19 @@ export function AirlinePage() {
             '@type': 'WebPage',
             name: title,
             description,
-            url: `https://baggage.fit/airlines/${slug}`,
+            url: `${siteConfig.url}/airlines/${slug}`,
+            dateModified: airline.lastVerified,
+            publisher: {
+              '@type': 'Organization',
+              name: siteConfig.name,
+              url: siteConfig.url,
+            },
             breadcrumb: {
               '@type': 'BreadcrumbList',
               itemListElement: [
-                { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://baggage.fit' },
-                { '@type': 'ListItem', position: 2, name: 'Airlines', item: 'https://baggage.fit/airlines' },
-                { '@type': 'ListItem', position: 3, name: airline.name },
+                { '@type': 'ListItem', position: 1, name: 'Home', item: siteConfig.url },
+                { '@type': 'ListItem', position: 2, name: 'Airlines', item: `${siteConfig.url}/airlines` },
+                { '@type': 'ListItem', position: 3, name: airline.name, item: `${siteConfig.url}/airlines/${slug}` },
               ],
             },
           }),
@@ -95,12 +119,14 @@ export function AirlinePage() {
       />
 
       {/* Breadcrumbs */}
-      <nav className="text-sm text-muted-foreground mb-8">
-        <Link to="/" className="hover:text-foreground transition-colors">Home</Link>
-        <span className="mx-2">/</span>
-        <Link to="/airlines" className="hover:text-foreground transition-colors">Airlines</Link>
-        <span className="mx-2">/</span>
-        <span className="text-foreground">{airline.name}</span>
+      <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground mb-8">
+        <ol className="flex items-center">
+          <li><Link to="/" className="hover:text-foreground transition-colors">Home</Link></li>
+          <li aria-hidden="true" className="mx-2">/</li>
+          <li><Link to="/airlines" className="hover:text-foreground transition-colors">Airlines</Link></li>
+          <li aria-hidden="true" className="mx-2">/</li>
+          <li aria-current="page" className="text-foreground">{airline.name}</li>
+        </ol>
       </nav>
 
       <AirlineDetailContent
@@ -110,6 +136,7 @@ export function AirlinePage() {
         unit={unit}
         weightUnit={weightUnit}
         userWeightKg={userWeightKg}
+        headingLevel="h1"
         className="max-w-4xl"
       />
 
@@ -117,7 +144,8 @@ export function AirlinePage() {
       <div className="mt-10 max-w-4xl">
         <Link
           to="/"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-accent text-background font-heading font-bold rounded-lg hover:brightness-110 transition-all btn-lift"
+          state={{ focusAirline: airline.code }}
+          className="inline-flex items-center gap-2 px-6 py-3 bg-accent text-accent-foreground font-heading font-bold rounded-lg hover:brightness-110 transition-all btn-lift"
         >
           Check your bag against {airline.name}
           <ArrowRight className="w-5 h-5" />

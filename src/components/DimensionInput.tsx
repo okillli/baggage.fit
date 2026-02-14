@@ -31,7 +31,7 @@ export function DimensionInput({
     <div className={cn('space-y-4', className)}>
       <div className="flex items-center justify-between">
         <span className="section-label">Dimensions</span>
-        <UnitToggle value={unit} options={['cm', 'in']} onChange={onUnitChange} />
+        <UnitToggle value={unit} options={['cm', 'in']} onChange={onUnitChange} label="Dimension unit" />
       </div>
 
       <div className="flex items-center gap-3">
@@ -47,6 +47,7 @@ export function DimensionInput({
               <input
                 id={`${id}-${field.key}`}
                 type="number"
+                inputMode="decimal"
                 min="0"
                 step="0.1"
                 value={dimensions[field.key] ?? ''}
@@ -55,7 +56,7 @@ export function DimensionInput({
                 }
                 placeholder={field.placeholder}
                 className={cn(
-                  'w-full bg-white/5 border border-white/10 rounded-lg px-3 py-3',
+                  'w-full bg-secondary border border-border rounded-lg px-3 py-3',
                   'text-foreground placeholder:text-muted-foreground/50',
                   'input-focus transition-all'
                 )}
