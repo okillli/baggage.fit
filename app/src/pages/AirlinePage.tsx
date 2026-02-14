@@ -8,7 +8,8 @@ import { CURRENT_YEAR } from '@/lib/format';
 import { siteConfig } from '@/lib/siteConfig';
 import { PageLayout } from '@/components/PageLayout';
 import { AirlineDetailContent } from '@/components/AirlineDetailContent';
-import { ArrowRight } from 'lucide-react';
+import { AirlineSearch } from '@/components/AirlineSearch';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 export function AirlinePage() {
   const { slug } = useParams<{ slug: string }>();
@@ -137,18 +138,20 @@ export function AirlinePage() {
         weightUnit={weightUnit}
         userWeightKg={userWeightKg}
         headingLevel="h1"
+        showFitChecker
         className="max-w-4xl"
       />
 
-      {/* CTA */}
-      <div className="mt-10 max-w-4xl">
+      {/* Compare with another airline */}
+      <div className="mt-10 max-w-4xl space-y-4">
+        <h3 className="section-label">Compare with another airline</h3>
+        <AirlineSearch airlines={airlines} placeholder="Search another airline..." />
         <Link
-          to="/"
-          state={{ focusAirline: airline.code }}
-          className="inline-flex items-center gap-2 px-6 py-3 bg-accent text-accent-foreground font-heading font-bold rounded-lg hover:brightness-110 transition-all btn-lift"
+          to="/airlines"
+          className="inline-flex items-center gap-2 text-sm text-accent-on-light hover:underline"
         >
-          Check your bag against {airline.name}
-          <ArrowRight className="w-5 h-5" />
+          <ArrowLeft className="w-4 h-4" />
+          Back to all airlines
         </Link>
       </div>
     </PageLayout>

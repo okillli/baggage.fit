@@ -27,10 +27,6 @@ export function AirlineDetailSheet() {
     ? airlines.find((a) => a.code === selectedAirlineDetail)
     : null;
 
-  const result = selectedAirlineDetail
-    ? results.find((r) => r.airline.code === selectedAirlineDetail) ?? null
-    : null;
-
   const hasChecked = results.length > 0;
   const userWeightKg = weight != null && weight > 0
     ? convertWeightToKg(weight, weightUnit)
@@ -60,12 +56,12 @@ export function AirlineDetailSheet() {
             </SheetHeader>
             <AirlineDetailContent
               airline={airline}
-              result={result}
               userDimensions={hasChecked ? dimensions : null}
               userWeightKg={hasChecked ? userWeightKg : null}
               activeBagType={bagType}
               unit={unit}
               weightUnit={weightUnit}
+              showFitChecker
               className="pt-2"
             />
           </>

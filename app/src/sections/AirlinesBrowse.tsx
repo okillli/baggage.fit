@@ -5,15 +5,9 @@ import { CompareTable } from '@/components/CompareTable';
 import { CheckYourBagPanel } from '@/components/CheckYourBagPanel';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { regions, regionMap } from '@/lib/regions';
-import type { BagType, FitFilter, FitResult, SortOption } from '@/types';
+import type { FitFilter, FitResult, SortOption } from '@/types';
 import { convertWeightToKg } from '@/lib/fitLogic';
-import { ArrowUpDown, Ruler, Backpack, Package, Globe, Check, X } from 'lucide-react';
-
-const bagTypeOptions: { type: BagType; label: string; icon: typeof Ruler }[] = [
-  { type: 'cabin', label: 'Cabin', icon: Ruler },
-  { type: 'underseat', label: 'Underseat', icon: Backpack },
-  { type: 'checked', label: 'Checked', icon: Package },
-];
+import { ArrowUpDown, Globe, Check, X } from 'lucide-react';
 
 const sortOptions: { value: SortOption; label: string }[] = [
   { value: 'largest', label: 'Largest allowance' },
@@ -31,43 +25,27 @@ export function AirlinesBrowse() {
   const [fitFilter, setFitFilter] = useState<FitFilter>('all');
 
   const {
-    airlines,
-    airlinesLoading,
-    airlinesError,
-    loadAirlines,
-    bagType,
-    setBagType,
-    compareSort,
-    setCompareSort,
-    unit,
-    weight,
-    weightUnit,
-    results,
+    airlines, airlinesLoading, airlinesError, loadAirlines,
+    bagType, compareSort, setCompareSort,
+    unit, weight, weightUnit, results,
     setSelectedAirlineDetail,
   } = useAppStore();
 
-  useEffect(() => {
-    loadAirlines();
-  }, [loadAirlines]);
+  useEffect(() => { loadAirlines(); }, [loadAirlines]);
 
-  // Build fit map for filtering
   const fitMap = useMemo(() => {
     if (results.length === 0) return null;
     const map = new Map<string, FitResult>();
-    for (const r of results) {
-      map.set(r.airline.code, r);
-    }
+    for (const r of results) map.set(r.airline.code, r);
     return map;
   }, [results]);
 
-  // Region-filtered airlines (before fit filter)
   const regionFiltered = useMemo(() => {
     if (regionFilter === 'all') return airlines;
-    const regionCountries = regionMap[regionFilter] || [];
-    return airlines.filter((airline) => regionCountries.includes(airline.country));
+    const countries = regionMap[regionFilter] || [];
+    return airlines.filter((a) => countries.includes(a.country));
   }, [airlines, regionFilter]);
 
-  // Fit counts from region-filtered airlines only
   const fitCounts = useMemo(() => {
     if (!fitMap) return { all: 0, fits: 0, doesntFit: 0 };
     let all = 0, fits = 0, doesntFit = 0;
@@ -82,7 +60,6 @@ export function AirlinesBrowse() {
     return { all, fits, doesntFit };
   }, [regionFiltered, fitMap]);
 
-  // Apply fit filter on region-filtered airlines
   const filteredAirlines = useMemo(() => {
     if (fitFilter === 'all' || !fitMap) return regionFiltered;
     return regionFiltered.filter((airline) => {
@@ -93,7 +70,6 @@ export function AirlinesBrowse() {
   }, [regionFiltered, fitFilter, fitMap]);
 
   const hasResults = results.length > 0;
-
   const userWeightKg = weight != null && weight > 0 ? convertWeightToKg(weight, weightUnit) : null;
 
   if (airlinesLoading) {
@@ -141,7 +117,7 @@ export function AirlinesBrowse() {
                 BROWSE AIRLINES
               </h2>
               <p className="text-foreground/70 mt-2">
-                See every airline&apos;s size and weight limits at a glance.
+                Compare cabin, underseat, and checked limits across all airlines.
               </p>
             </div>
 
@@ -155,9 +131,7 @@ export function AirlinesBrowse() {
                 className="bg-white border border-foreground/20 rounded-lg px-4 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent"
               >
                 {sortOptions.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </option>
+                  <option key={opt.value} value={opt.value}>{opt.label}</option>
                 ))}
               </select>
             </div>
@@ -169,96 +143,44 @@ export function AirlinesBrowse() {
           <CheckYourBagPanel airlines={airlines} />
         </ScrollReveal>
 
-        {/* Fit summary + filter chips (only when results exist) */}
+        {/* Fit filter chips (only when results exist) */}
         {hasResults && (
           <ScrollReveal delay={0.05} className="mb-6">
             <div className="flex flex-wrap items-center gap-3">
               <span className="text-sm font-medium text-foreground/70">Filter:</span>
-              <button
-                onClick={() => setFitFilter('all')}
-                aria-pressed={fitFilter === 'all'}
-                className={cn(
-                  'inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] rounded-full text-sm font-medium transition-all',
-                  fitFilter === 'all'
-                    ? 'bg-foreground text-white'
-                    : 'bg-white border border-foreground/20 text-foreground/70 hover:bg-foreground/5'
-                )}
-              >
+              <button onClick={() => setFitFilter('all')} aria-pressed={fitFilter === 'all'}
+                className={cn('inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] rounded-full text-sm font-medium transition-all',
+                  fitFilter === 'all' ? 'bg-foreground text-white' : 'bg-white border border-foreground/20 text-foreground/70 hover:bg-foreground/5')}>
                 All ({fitCounts.all})
               </button>
-              <button
-                onClick={() => setFitFilter('fits')}
-                aria-pressed={fitFilter === 'fits'}
-                className={cn(
-                  'inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] rounded-full text-sm font-medium transition-all',
-                  fitFilter === 'fits'
-                    ? 'bg-accent text-foreground'
-                    : 'bg-white border border-foreground/20 text-foreground/70 hover:bg-foreground/5'
-                )}
-              >
-                <Check className="w-3.5 h-3.5" />
-                Fits ({fitCounts.fits})
+              <button onClick={() => setFitFilter('fits')} aria-pressed={fitFilter === 'fits'}
+                className={cn('inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] rounded-full text-sm font-medium transition-all',
+                  fitFilter === 'fits' ? 'bg-accent text-foreground' : 'bg-white border border-foreground/20 text-foreground/70 hover:bg-foreground/5')}>
+                <Check className="w-3.5 h-3.5" /> Fits ({fitCounts.fits})
               </button>
-              <button
-                onClick={() => setFitFilter('doesnt-fit')}
-                aria-pressed={fitFilter === 'doesnt-fit'}
-                className={cn(
-                  'inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] rounded-full text-sm font-medium transition-all',
-                  fitFilter === 'doesnt-fit'
-                    ? 'bg-red-500 text-white'
-                    : 'bg-white border border-foreground/20 text-foreground/70 hover:bg-foreground/5'
-                )}
-              >
-                <X className="w-3.5 h-3.5" />
-                Doesn&apos;t fit ({fitCounts.doesntFit})
+              <button onClick={() => setFitFilter('doesnt-fit')} aria-pressed={fitFilter === 'doesnt-fit'}
+                className={cn('inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] rounded-full text-sm font-medium transition-all',
+                  fitFilter === 'doesnt-fit' ? 'bg-red-500 text-white' : 'bg-white border border-foreground/20 text-foreground/70 hover:bg-foreground/5')}>
+                <X className="w-3.5 h-3.5" /> Doesn&apos;t fit ({fitCounts.doesntFit})
               </button>
             </div>
           </ScrollReveal>
         )}
 
-        {/* Filters: bag type + region */}
+        {/* Region filter */}
         <ScrollReveal delay={0.1} className="mb-8">
-          <div className="flex flex-col lg:flex-row gap-4">
-            {/* Bag Type Toggle */}
-            <div className="flex flex-wrap gap-2">
-              {bagTypeOptions.map((opt) => {
-                const Icon = opt.icon;
-                const isActive = bagType === opt.type;
-                return (
-                  <button
-                    key={opt.type}
-                    onClick={() => setBagType(opt.type)}
-                    aria-pressed={isActive}
-                    className={cn(
-                      'inline-flex items-center gap-2 px-4 py-2 min-h-[44px] rounded-lg text-sm font-medium transition-all',
-                      isActive
-                        ? 'bg-accent text-foreground'
-                        : 'bg-white border border-foreground/20 text-foreground/70 hover:bg-foreground/5'
-                    )}
-                  >
-                    <Icon className="w-4 h-4" />
-                    {opt.label}
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Region Filter */}
-            <div className="flex items-center gap-2">
-              <Globe className="w-4 h-4 text-foreground/60" />
-              <select
-                value={regionFilter}
-                onChange={(e) => setRegionFilter(e.target.value)}
-                aria-label="Filter by region"
-                className="bg-white border border-foreground/20 rounded-lg px-4 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent"
-              >
-                {regionOptions.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
-            </div>
+          <div className="flex items-center gap-2">
+            <Globe className="w-4 h-4 text-foreground/60" />
+            <select
+              value={regionFilter}
+              onChange={(e) => setRegionFilter(e.target.value)}
+              aria-label="Filter by region"
+              className="bg-white border border-foreground/20 rounded-lg px-4 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent"
+            >
+              {regionOptions.map((opt) => (
+                <option key={opt.value} value={opt.value}>{opt.label}</option>
+              ))}
+            </select>
           </div>
         </ScrollReveal>
 
@@ -271,7 +193,7 @@ export function AirlinesBrowse() {
           </p>
         </ScrollReveal>
 
-        {/* Table */}
+        {/* Table — now shows all 3 bag types */}
         <ScrollReveal delay={0.2}>
           <CompareTable
             airlines={filteredAirlines}

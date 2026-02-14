@@ -2,19 +2,29 @@ import { create } from 'zustand';
 import type { AppState, Airline, BagType, Dimensions, FitResult, FitOutcome, Unit, WeightUnit } from '@/types';
 import { isTotalDimensionLimit, calculateTotalDimension, checkWeightFit, combinedOutcome, convertWeightToKg, convertKgToLb, convertToCm, convertToIn } from '@/lib/fitLogic';
 
-const initialDimensions: Dimensions = {
-  l: 55,
-  w: 40,
-  h: 20,
-};
+// --- localStorage persistence ---
+const STORAGE_KEY = 'baggage-fit-prefs';
+interface PersistedPrefs { dimensions: Dimensions; unit: Unit; weight: number | null; weightUnit: WeightUnit; bagType: BagType }
+function loadPrefs(): Partial<PersistedPrefs> {
+  try { const raw = localStorage.getItem(STORAGE_KEY); return raw ? JSON.parse(raw) : {}; } catch { return {}; }
+}
+function savePrefs(p: PersistedPrefs) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); } catch { /* ignore */ }
+}
+function persistState(s: AppState) {
+  savePrefs({ dimensions: s.dimensions, unit: s.unit, weight: s.weight, weightUnit: s.weightUnit, bagType: s.bagType });
+}
+
+const defaultDimensions: Dimensions = { l: 55, w: 40, h: 20 };
+const saved = loadPrefs();
 
 export const useAppStore = create<AppState>((set, get) => ({
-  // User inputs
-  bagType: 'cabin',
-  dimensions: { ...initialDimensions },
-  unit: 'cm',
-  weight: null,
-  weightUnit: 'kg',
+  // User inputs (restored from localStorage)
+  bagType: saved.bagType ?? 'cabin',
+  dimensions: saved.dimensions ?? { ...defaultDimensions },
+  unit: saved.unit ?? 'cm',
+  weight: saved.weight ?? null,
+  weightUnit: saved.weightUnit ?? 'kg',
 
   // Centralized airline data
   airlines: [],
@@ -49,6 +59,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   setBagType: (type: BagType) => {
     const state = get();
     set({ bagType: type });
+    persistState(get());
     if (state.results.length > 0 && state.airlines.length > 0) {
       get().checkFit(state.airlines);
     } else {
@@ -56,11 +67,13 @@ export const useAppStore = create<AppState>((set, get) => ({
     }
   },
 
-  setDimensions: (dims: Partial<Dimensions>) =>
+  setDimensions: (dims: Partial<Dimensions>) => {
     set((state) => ({
       dimensions: { ...state.dimensions, ...dims },
       results: [],
-    })),
+    }));
+    persistState(get());
+  },
 
   setUnit: (newUnit: Unit) => {
     const { unit: oldUnit, dimensions } = get();
@@ -72,9 +85,13 @@ export const useAppStore = create<AppState>((set, get) => ({
       dimensions: { l: converted[0], w: converted[1], h: converted[2] },
       results: [],
     });
+    persistState(get());
   },
 
-  setWeight: (weight: number | null) => set({ weight, results: [] }),
+  setWeight: (weight: number | null) => {
+    set({ weight, results: [] });
+    persistState(get());
+  },
 
   setWeightUnit: (newUnit: WeightUnit) => {
     const { weightUnit: oldUnit, weight } = get();
@@ -87,6 +104,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     } else {
       set({ weightUnit: newUnit, results: [] });
     }
+    persistState(get());
   },
 
   checkFit: (airlines) => {
@@ -149,13 +167,16 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   clearResults: () => set({ results: [] }),
 
-  resetInputs: () => set({
-    dimensions: { ...initialDimensions },
-    unit: 'cm',
-    weight: null,
-    weightUnit: 'kg',
-    results: [],
-  }),
+  resetInputs: () => {
+    set({
+      dimensions: { ...defaultDimensions },
+      unit: 'cm',
+      weight: null,
+      weightUnit: 'kg',
+      results: [],
+    });
+    persistState(get());
+  },
 
   setCurrentView: (view) => set({ currentView: view }),
 

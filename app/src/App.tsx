@@ -3,7 +3,6 @@ import { ScrollTrigger } from '@/lib/gsap-setup';
 import { DotGridBackground } from '@/components/DotGridBackground';
 import { HeaderNav } from '@/components/HeaderNav';
 import { Hero } from '@/sections/Hero';
-import { BagTypePicker } from '@/sections/BagTypePicker';
 import { AirlinesBrowse } from '@/sections/AirlinesBrowse';
 import { Footer } from '@/sections/Footer';
 import { AirlineDetailSheet } from '@/components/AirlineDetailSheet';
@@ -135,9 +134,8 @@ function App() {
 
       {/* Main Content */}
       <main id="main-content" className="relative">
-        {/* Pinned Sections (z-index stacking) */}
+        {/* Pinned Hero */}
         <Hero />
-        <BagTypePicker />
 
         {/* Flowing Sections */}
         <AirlinesBrowse />
