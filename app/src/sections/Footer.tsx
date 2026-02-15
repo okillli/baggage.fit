@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { cn, scrollToPinCenter } from '@/lib/utils';
+import { cn, gsapScrollTo } from '@/lib/utils';
 import { useAppStore } from '@/store/appStore';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { CURRENT_YEAR } from '@/lib/format';
@@ -13,7 +13,7 @@ export function Footer() {
     resetInputs();
     setCheckPanelOpen(true);
     setCurrentView('browse');
-    scrollToPinCenter('bag-type');
+    gsapScrollTo('#airlines');
   };
 
   return (
@@ -38,7 +38,7 @@ export function Footer() {
               'hover:brightness-110 transition-all duration-200 btn-lift'
             )}
           >
-            <Plane className="w-5 h-5" />
+            <Plane className="w-5 h-5" aria-hidden="true" />
             Check another bag
           </button>
 
@@ -48,6 +48,7 @@ export function Footer() {
               href={siteConfig.social.x}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="X (opens in new tab)"
               className="text-muted-foreground hover:text-foreground transition-colors text-sm"
             >
               X
@@ -57,6 +58,7 @@ export function Footer() {
               href={siteConfig.social.instagram}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Instagram (opens in new tab)"
               className="text-muted-foreground hover:text-foreground transition-colors text-sm"
             >
               Instagram
@@ -66,7 +68,7 @@ export function Footer() {
               href={`mailto:${siteConfig.email}`}
               className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors text-sm"
             >
-              <Mail className="w-3.5 h-3.5" />
+              <Mail className="w-3.5 h-3.5" aria-hidden="true" />
               Contact
             </a>
           </div>

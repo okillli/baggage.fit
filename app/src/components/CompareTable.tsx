@@ -1,10 +1,11 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { useNavigate } from 'react-router-dom';
 import { airlineToSlug } from '@/lib/slugs';
 import { countryToFlag } from '@/lib/format';
 import type { Airline, BagType, FitResult, SortOption, Unit, WeightUnit } from '@/types';
 import { calculateSizeMetric, formatDimensions, formatWeight } from '@/lib/fitLogic';
+import { useFitMap } from '@/lib/hooks';
 import { OutcomeBadge } from '@/components/OutcomeBadge';
 import { Search, Crown } from 'lucide-react';
 
@@ -14,7 +15,6 @@ interface CompareTableProps {
   sort: SortOption;
   unit: Unit;
   weightUnit?: WeightUnit;
-  userWeightKg?: number | null;
   fitResults?: FitResult[];
   onAirlineClick?: (code: string) => void;
   className?: string;
@@ -26,7 +26,6 @@ export function CompareTable({
   sort,
   unit,
   weightUnit = 'kg',
-  userWeightKg: _userWeightKg,
   fitResults,
   onAirlineClick,
   className,
@@ -34,12 +33,7 @@ export function CompareTable({
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
 
-  const fitMap = useMemo(() => {
-    if (!fitResults || fitResults.length === 0) return null;
-    const map = new Map<string, FitResult>();
-    for (const r of fitResults) map.set(r.airline.code, r);
-    return map;
-  }, [fitResults]);
+  const fitMap = useFitMap(fitResults);
 
   const sortedAirlines = useMemo(() => {
     let list = [...airlines];
@@ -71,13 +65,13 @@ export function CompareTable({
     });
   }, [airlines, bagType, sort, searchQuery]);
 
-  const handleClick = (airline: Airline) => {
+  const handleClick = useCallback((airline: Airline) => {
     if (onAirlineClick) {
       onAirlineClick(airline.code);
     } else {
       navigate(`/airlines/${airlineToSlug(airline.name)}`);
     }
-  };
+  }, [onAirlineClick, navigate]);
 
   if (sortedAirlines.length === 0) {
     const message = searchQuery
@@ -96,28 +90,28 @@ export function CompareTable({
     <div className={cn('space-y-4', className)}>
       {/* Search */}
       <div className="relative mb-4">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/40" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/40" aria-hidden="true" />
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search airline..."
           aria-label="Search airlines in table"
-          className="w-full max-w-md bg-white border border-foreground/20 rounded-lg pl-10 pr-4 py-2 text-sm text-foreground placeholder:text-foreground/40 focus:outline-none focus:ring-2 focus:ring-accent"
+          className="w-full max-w-md bg-card border border-border rounded-lg pl-10 pr-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/50 input-focus transition-colors"
         />
       </div>
 
       {/* Desktop Table — all 3 bag types */}
-      <div className="hidden lg:block overflow-x-auto rounded-xl border border-foreground/10 bg-white">
+      <div className="hidden lg:block overflow-x-auto rounded-xl border border-foreground/10 bg-card">
         <table className="w-full">
           <caption className="sr-only">Airline baggage size and weight limits</caption>
           <thead className="bg-foreground/5">
             <tr className="border-b border-foreground/10">
-              <th className="text-left py-3 px-4 font-heading text-sm font-semibold">Airline</th>
-              <th className="text-left py-3 px-3 font-heading text-xs font-semibold">Underseat</th>
-              <th className="text-left py-3 px-3 font-heading text-xs font-semibold">Cabin</th>
-              <th className="text-left py-3 px-3 font-heading text-xs font-semibold">Checked</th>
-              {fitMap && <th className="text-left py-3 px-3 font-heading text-xs font-semibold">Fit</th>}
+              <th scope="col" className="text-left py-3 px-4 font-heading text-sm font-semibold">Airline</th>
+              <th scope="col" className="text-left py-3 px-3 font-heading text-xs font-semibold">Underseat</th>
+              <th scope="col" className="text-left py-3 px-3 font-heading text-xs font-semibold">Cabin</th>
+              <th scope="col" className="text-left py-3 px-3 font-heading text-xs font-semibold">Checked</th>
+              {fitMap && <th scope="col" className="text-left py-3 px-3 font-heading text-xs font-semibold">Fit</th>}
             </tr>
           </thead>
           <tbody>
@@ -127,18 +121,27 @@ export function CompareTable({
               return (
                 <tr
                   key={airline.code}
+                  tabIndex={0}
+                  aria-label={`View ${airline.name} baggage details`}
                   className={cn(
-                    'border-b border-foreground/5 transition-colors hover:bg-foreground/5 cursor-pointer',
+                    'border-b border-foreground/5 transition-colors hover:bg-foreground/5 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent',
                     isBest && 'bg-accent/10 hover:bg-accent/15'
                   )}
                   onClick={() => handleClick(airline)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleClick(airline);
+                    }
+                  }}
                 >
                   <td className="py-3 px-4">
                     <div className="flex items-center gap-2">
                       <span className="text-base">{countryToFlag(airline.country)}</span>
                       {isBest && (
-                        <span className="flex items-center gap-1 px-1.5 py-0.5 bg-accent text-foreground text-xs font-bold rounded">
-                          <Crown className="w-3 h-3" />
+                        <span className="flex items-center gap-1 px-1.5 py-0.5 bg-accent text-accent-foreground text-xs font-bold rounded">
+                          <Crown className="w-3 h-3" aria-hidden="true" />
+                          <span className="sr-only">Most generous</span>
                         </span>
                       )}
                       <div>
@@ -173,7 +176,7 @@ export function CompareTable({
               type="button"
               onClick={() => handleClick(airline)}
               className={cn(
-                'w-full text-left bg-white border border-foreground/10 rounded-lg p-4',
+                'w-full text-left bg-card border border-foreground/10 rounded-lg p-4',
                 isBest && 'border-accent/50 bg-accent/5'
               )}
             >
@@ -181,8 +184,9 @@ export function CompareTable({
                 <div className="flex items-center gap-2">
                   <span className="text-lg">{countryToFlag(airline.country)}</span>
                   {isBest && (
-                    <span className="flex items-center gap-1 px-1.5 py-0.5 bg-accent text-foreground text-xs font-bold rounded">
-                      <Crown className="w-3 h-3" />
+                    <span className="flex items-center gap-1 px-1.5 py-0.5 bg-accent text-accent-foreground text-xs font-bold rounded">
+                      <Crown className="w-3 h-3" aria-hidden="true" />
+                      <span className="sr-only">Most generous</span>
                     </span>
                   )}
                   <div>

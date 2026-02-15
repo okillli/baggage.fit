@@ -41,8 +41,8 @@ export function BagTypeAllowanceCard({
         className
       )}>
         <div className="flex items-center gap-2 mb-2">
-          <Icon className="w-5 h-5 text-muted-foreground" />
-          <h4 className="font-heading font-bold text-sm">{config.label}</h4>
+          <Icon className="w-5 h-5 text-muted-foreground" aria-hidden="true" />
+          <p className="font-heading font-bold text-sm">{config.label}</p>
         </div>
         <p className="text-sm text-muted-foreground">No data available</p>
       </div>
@@ -72,8 +72,8 @@ export function BagTypeAllowanceCard({
       {/* Header */}
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <Icon className="w-5 h-5 text-accent" />
-          <h4 className="font-heading font-bold text-sm">{config.label}</h4>
+          <Icon className="w-5 h-5 text-accent" aria-hidden="true" />
+          <p className="font-heading font-bold text-sm">{config.label}</p>
         </div>
         {dimOutcome && <OutcomeBadge outcome={dimOutcome} className="text-xs py-0.5 px-2" />}
       </div>
@@ -81,7 +81,7 @@ export function BagTypeAllowanceCard({
       {/* Dimensions */}
       <div className="space-y-2">
         <div className="flex items-center gap-2 text-sm">
-          <Ruler className="w-4 h-4 text-muted-foreground shrink-0" />
+          <Ruler className="w-4 h-4 text-muted-foreground shrink-0" aria-hidden="true" />
           <span className="font-mono">
             {formatDimensions(allowance.maxCm, unit)}
           </span>
@@ -89,11 +89,11 @@ export function BagTypeAllowanceCard({
 
         {/* Weight */}
         <div className="flex items-center gap-2 text-sm">
-          <Weight className="w-4 h-4 text-muted-foreground shrink-0" />
+          <Weight className="w-4 h-4 text-muted-foreground shrink-0" aria-hidden="true" />
           <span className={cn(
             'font-mono',
             wOutcome === 'fits' && 'text-accent',
-            wOutcome === 'doesnt-fit' && 'text-red-500',
+            wOutcome === 'doesnt-fit' && 'text-destructive',
           )}>
             {formatWeight(allowance.maxKg, weightUnit)}
           </span>
@@ -102,7 +102,7 @@ export function BagTypeAllowanceCard({
         {/* Notes */}
         {allowance.notes && (
           <div className="flex items-start gap-2 text-sm mt-2 pt-2 border-t border-border/50">
-            <StickyNote className="w-4 h-4 text-muted-foreground shrink-0 mt-0.5" />
+            <StickyNote className="w-4 h-4 text-muted-foreground shrink-0 mt-0.5" aria-hidden="true" />
             <p className="text-muted-foreground text-xs leading-relaxed">
               {allowance.notes}
             </p>

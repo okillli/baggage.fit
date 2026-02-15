@@ -64,6 +64,7 @@ export function useSEO({
 }
 
 function setMeta(name: string, content: string | undefined) {
+  if (!content && name === 'description') content = siteConfig.description;
   if (!content) return;
   const attr = name.startsWith('og:') ? 'property' : 'name';
   let el = document.querySelector(`meta[${attr}="${name}"]`) as HTMLMetaElement | null;

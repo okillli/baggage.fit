@@ -15,7 +15,11 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ErrorBoundary>
       <BrowserRouter>
-        <Suspense fallback={<div className="min-h-screen bg-background" />}>
+        <Suspense fallback={
+          <div className="min-h-screen bg-background flex items-center justify-center" role="status" aria-label="Loading">
+            <div className="w-8 h-8 border-4 border-accent/30 border-t-accent rounded-full animate-spin" />
+          </div>
+        }>
           <Routes>
             <Route path="/" element={<App />} />
             <Route path="/airlines" element={<AirlinesListPage />} />

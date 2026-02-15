@@ -23,7 +23,8 @@ const airlines = JSON.parse(
 const airlineRoutes = airlines.map(
   (a) => `/airlines/${a.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}`
 );
-const routes = ['/', '/airlines', ...airlineRoutes];
+const staticRoutes = ['/', '/airlines', '/about', '/data-sources'];
+const routes = [...staticRoutes, ...airlineRoutes];
 
 // Minimal static file server for dist/
 function startServer() {
@@ -93,8 +94,13 @@ async function renderRoute(browser, route) {
 function generateSitemap(baseUrl) {
   const today = new Date().toISOString().split('T')[0];
   const urls = routes.map((route) => {
-    const priority = route === '/' ? '1.0' : route === '/airlines' ? '0.8' : '0.6';
-    const changefreq = route === '/' ? 'weekly' : 'monthly';
+    const priority = route === '/' ? '1.0'
+      : route === '/airlines' ? '0.8'
+      : route.startsWith('/airlines/') ? '0.7'
+      : '0.5';
+    const changefreq = route === '/' ? 'weekly'
+      : route === '/airlines' ? 'weekly'
+      : 'monthly';
     return `  <url>
     <loc>${baseUrl}${route}</loc>
     <lastmod>${today}</lastmod>

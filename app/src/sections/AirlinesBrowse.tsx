@@ -5,8 +5,9 @@ import { CompareTable } from '@/components/CompareTable';
 import { CheckYourBagPanel } from '@/components/CheckYourBagPanel';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { regions, regionMap } from '@/lib/regions';
-import type { FitFilter, FitResult, SortOption } from '@/types';
-import { convertWeightToKg } from '@/lib/fitLogic';
+import type { FitFilter, SortOption } from '@/types';
+
+import { useFitMap } from '@/lib/hooks';
 import { ArrowUpDown, Globe, Check, X } from 'lucide-react';
 
 const sortOptions: { value: SortOption; label: string }[] = [
@@ -27,18 +28,13 @@ export function AirlinesBrowse() {
   const {
     airlines, airlinesLoading, airlinesError, loadAirlines,
     bagType, compareSort, setCompareSort,
-    unit, weight, weightUnit, results,
+    unit, weightUnit, results,
     setSelectedAirlineDetail,
   } = useAppStore();
 
   useEffect(() => { loadAirlines(); }, [loadAirlines]);
 
-  const fitMap = useMemo(() => {
-    if (results.length === 0) return null;
-    const map = new Map<string, FitResult>();
-    for (const r of results) map.set(r.airline.code, r);
-    return map;
-  }, [results]);
+  const fitMap = useFitMap(results.length > 0 ? results : undefined);
 
   const regionFiltered = useMemo(() => {
     if (regionFilter === 'all') return airlines;
@@ -70,7 +66,6 @@ export function AirlinesBrowse() {
   }, [regionFiltered, fitFilter, fitMap]);
 
   const hasResults = results.length > 0;
-  const userWeightKg = weight != null && weight > 0 ? convertWeightToKg(weight, weightUnit) : null;
 
   if (airlinesLoading) {
     return (
@@ -93,7 +88,7 @@ export function AirlinesBrowse() {
             <p className="text-foreground/70">{airlinesError}</p>
             <button
               onClick={() => loadAirlines()}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-accent text-foreground font-heading font-bold rounded-lg hover:brightness-110 transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-accent text-accent-foreground font-heading font-bold rounded-lg hover:brightness-110 transition-all"
             >
               Try again
             </button>
@@ -123,12 +118,12 @@ export function AirlinesBrowse() {
 
             {/* Sort dropdown */}
             <div className="flex items-center gap-2">
-              <ArrowUpDown className="w-4 h-4 text-foreground/60" />
+              <ArrowUpDown className="w-4 h-4 text-foreground/60" aria-hidden="true" />
               <select
                 value={compareSort}
                 onChange={(e) => setCompareSort(e.target.value as SortOption)}
                 aria-label="Sort airlines by"
-                className="bg-white border border-foreground/20 rounded-lg px-4 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent"
+                className="bg-card border border-border rounded-lg px-4 py-2 text-sm text-foreground input-focus transition-colors"
               >
                 {sortOptions.map((opt) => (
                   <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -150,18 +145,18 @@ export function AirlinesBrowse() {
               <span className="text-sm font-medium text-foreground/70">Filter:</span>
               <button onClick={() => setFitFilter('all')} aria-pressed={fitFilter === 'all'}
                 className={cn('inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] rounded-full text-sm font-medium transition-all',
-                  fitFilter === 'all' ? 'bg-foreground text-white' : 'bg-white border border-foreground/20 text-foreground/70 hover:bg-foreground/5')}>
+                  fitFilter === 'all' ? 'bg-foreground text-background' : 'bg-card border border-border text-foreground/70 hover:bg-foreground/5')}>
                 All ({fitCounts.all})
               </button>
               <button onClick={() => setFitFilter('fits')} aria-pressed={fitFilter === 'fits'}
                 className={cn('inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] rounded-full text-sm font-medium transition-all',
-                  fitFilter === 'fits' ? 'bg-accent text-foreground' : 'bg-white border border-foreground/20 text-foreground/70 hover:bg-foreground/5')}>
-                <Check className="w-3.5 h-3.5" /> Fits ({fitCounts.fits})
+                  fitFilter === 'fits' ? 'bg-accent text-accent-foreground' : 'bg-card border border-border text-foreground/70 hover:bg-foreground/5')}>
+                <Check className="w-3.5 h-3.5" aria-hidden="true" /> Fits ({fitCounts.fits})
               </button>
               <button onClick={() => setFitFilter('doesnt-fit')} aria-pressed={fitFilter === 'doesnt-fit'}
                 className={cn('inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] rounded-full text-sm font-medium transition-all',
-                  fitFilter === 'doesnt-fit' ? 'bg-red-500 text-white' : 'bg-white border border-foreground/20 text-foreground/70 hover:bg-foreground/5')}>
-                <X className="w-3.5 h-3.5" /> Doesn&apos;t fit ({fitCounts.doesntFit})
+                  fitFilter === 'doesnt-fit' ? 'bg-destructive text-destructive-foreground' : 'bg-card border border-border text-foreground/70 hover:bg-foreground/5')}>
+                <X className="w-3.5 h-3.5" aria-hidden="true" /> Doesn&apos;t fit ({fitCounts.doesntFit})
               </button>
             </div>
           </ScrollReveal>
@@ -170,12 +165,12 @@ export function AirlinesBrowse() {
         {/* Region filter */}
         <ScrollReveal delay={0.1} className="mb-8">
           <div className="flex items-center gap-2">
-            <Globe className="w-4 h-4 text-foreground/60" />
+            <Globe className="w-4 h-4 text-foreground/60" aria-hidden="true" />
             <select
               value={regionFilter}
               onChange={(e) => setRegionFilter(e.target.value)}
               aria-label="Filter by region"
-              className="bg-white border border-foreground/20 rounded-lg px-4 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent"
+              className="bg-card border border-border rounded-lg px-4 py-2 text-sm text-foreground input-focus transition-colors"
             >
               {regionOptions.map((opt) => (
                 <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -201,7 +196,6 @@ export function AirlinesBrowse() {
             sort={compareSort}
             unit={unit}
             weightUnit={weightUnit}
-            userWeightKg={userWeightKg}
             fitResults={hasResults ? results : undefined}
             onAirlineClick={(code) => setSelectedAirlineDetail(code)}
           />

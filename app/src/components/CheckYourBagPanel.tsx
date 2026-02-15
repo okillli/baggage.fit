@@ -62,22 +62,23 @@ export function CheckYourBagPanel({ airlines, className }: CheckYourBagPanelProp
     <Collapsible.Root
       open={checkPanelOpen}
       onOpenChange={handleOpenChange}
-      className={cn('bg-white border border-foreground/15 rounded-xl', className)}
+      className={cn('bg-card border border-foreground/15 rounded-xl', className)}
     >
       <Collapsible.Trigger asChild>
-        <button className="flex items-center justify-between w-full px-5 py-4 text-left group">
+        <button className="flex items-center justify-between w-full px-6 py-4 text-left group" aria-controls="check-panel-content">
           <div className="flex items-center gap-3">
             <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-accent/10">
-              <Ruler className="w-4 h-4 text-accent" />
+              <Ruler className="w-4 h-4 text-accent" aria-hidden="true" />
             </div>
             <span className="font-heading font-bold text-foreground">Check your bag</span>
             {hasResults && (
-              <span className="text-sm text-foreground/60">
+              <span className="text-sm text-foreground/60" aria-live="polite" aria-atomic="true">
                 {fitsCount} fit, {doesntFitCount} don&apos;t
               </span>
             )}
           </div>
           <ChevronDown
+            aria-hidden="true"
             className={cn(
               'w-5 h-5 text-foreground/40 transition-transform duration-200',
               checkPanelOpen && 'rotate-180'
@@ -86,8 +87,8 @@ export function CheckYourBagPanel({ airlines, className }: CheckYourBagPanelProp
         </button>
       </Collapsible.Trigger>
 
-      <Collapsible.Content className="overflow-hidden data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up">
-        <div className="px-5 pb-5 border-t border-foreground/10 pt-5">
+      <Collapsible.Content id="check-panel-content" className="overflow-hidden data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up">
+        <div className="px-6 pb-6 border-t border-foreground/10 pt-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Input column — dark bg to match input component styling */}
             <div className="section-dark-inset bg-background rounded-xl p-5 space-y-5">
@@ -113,7 +114,7 @@ export function CheckYourBagPanel({ airlines, className }: CheckYourBagPanelProp
                   !isValid && 'opacity-50 cursor-not-allowed hover:brightness-100'
                 )}
               >
-                <Search className="w-4 h-4" />
+                <Search className="w-4 h-4" aria-hidden="true" />
                 Check fit
               </button>
             </div>

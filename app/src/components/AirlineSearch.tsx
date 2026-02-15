@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
+import { useState, useRef, useEffect, useMemo, useCallback, useId } from 'react';
 import Fuse from 'fuse.js';
 import { cn } from '@/lib/utils';
 import { countryToFlag } from '@/lib/format';
@@ -32,6 +32,9 @@ export function AirlineSearch({
   const listRef = useRef<HTMLUListElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  const instanceId = useId();
+  const listId = `${instanceId}-list`;
+  const instructionsId = `${instanceId}-instructions`;
 
   const fuse = useMemo(
     () =>
@@ -115,8 +118,12 @@ export function AirlineSearch({
 
   return (
     <div ref={containerRef} className={cn('relative z-10', className)}>
+      <p id={instructionsId} className="sr-only">
+        Type to search. Use arrow keys to navigate, Enter to select, Escape to close.
+      </p>
       <div className="relative">
         <Search
+          aria-hidden="true"
           className={cn(
             'absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground',
             isLarge ? 'w-5 h-5 left-4' : 'w-4 h-4'
@@ -127,9 +134,10 @@ export function AirlineSearch({
           type="text"
           role="combobox"
           aria-expanded={isOpen && results.length > 0}
-          aria-controls="airline-search-list"
-          aria-activedescendant={isOpen && results.length > 0 ? `airline-option-${activeIndex}` : undefined}
+          aria-controls={listId}
+          aria-activedescendant={isOpen && results.length > 0 ? `${instanceId}-option-${activeIndex}` : undefined}
           aria-label="Search airlines"
+          aria-describedby={instructionsId}
           autoFocus={autoFocus}
           value={query}
           onChange={(e) => {
@@ -140,7 +148,7 @@ export function AirlineSearch({
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
           className={cn(
-            'w-full bg-white/10 border border-white/20 text-foreground placeholder:text-muted-foreground rounded-xl focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-all',
+            'w-full bg-foreground/10 border border-foreground/20 text-foreground placeholder:text-muted-foreground rounded-xl focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-all',
             isLarge ? 'pl-12 pr-10 py-4 text-lg' : 'pl-10 pr-10 py-2.5 text-sm'
           )}
         />
@@ -154,7 +162,7 @@ export function AirlineSearch({
             )}
             aria-label="Clear search"
           >
-            <X className={isLarge ? 'w-5 h-5' : 'w-4 h-4'} />
+            <X className={isLarge ? 'w-5 h-5' : 'w-4 h-4'} aria-hidden="true" />
           </button>
         )}
       </div>
@@ -162,17 +170,17 @@ export function AirlineSearch({
       {/* Dropdown */}
       {isOpen && results.length > 0 && (
         <ul
-          id="airline-search-list"
+          id={listId}
           ref={listRef}
           role="listbox"
-          className="absolute z-50 w-full mt-2 bg-white dark:bg-gray-900 border border-border rounded-xl shadow-lg overflow-hidden max-h-[360px] overflow-y-auto"
+          className="absolute z-50 w-full mt-2 bg-card border border-border rounded-xl shadow-lg overflow-hidden max-h-[360px] overflow-y-auto"
         >
           {results.map((airline, i) => {
             const cabinDims = airline.allowances.cabin?.maxCm;
             return (
               <li
                 key={airline.code}
-                id={`airline-option-${i}`}
+                id={`${instanceId}-option-${i}`}
                 role="option"
                 aria-selected={i === activeIndex}
                 onMouseEnter={() => setActiveIndex(i)}
@@ -202,7 +210,7 @@ export function AirlineSearch({
 
       {/* No results */}
       {isOpen && query.trim().length > 1 && results.length === 0 && (
-        <div className="absolute z-50 w-full mt-2 bg-white dark:bg-gray-900 border border-border rounded-xl shadow-lg p-4 text-center text-sm text-muted-foreground">
+        <div className="absolute z-50 w-full mt-2 bg-card border border-border rounded-xl shadow-lg p-4 text-center text-sm text-muted-foreground">
           No airlines found for &ldquo;{query}&rdquo;
         </div>
       )}

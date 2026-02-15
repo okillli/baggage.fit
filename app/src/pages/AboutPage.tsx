@@ -42,7 +42,7 @@ export function AboutPage() {
             className="inline-flex items-center gap-2 px-6 py-3 bg-accent text-accent-foreground font-heading font-bold rounded-lg hover:brightness-110 transition-colors btn-lift"
           >
             Check your bag
-            <ArrowRight className="w-5 h-5" />
+            <ArrowRight className="w-5 h-5" aria-hidden="true" />
           </Link>
           <Link
             to="/data-sources"

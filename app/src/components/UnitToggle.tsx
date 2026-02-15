@@ -28,10 +28,11 @@ export function UnitToggle<T extends string>({
     if (!buttons[idx]) return;
 
     const btn = buttons[idx];
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     gsap.to(pillRef.current, {
       x: btn.offsetLeft,
       width: btn.offsetWidth,
-      duration: 0.25,
+      duration: reducedMotion ? 0 : 0.25,
       ease: 'power2.out',
     });
   }, [value, options]);
@@ -73,7 +74,7 @@ export function UnitToggle<T extends string>({
           aria-checked={value === option}
           onClick={() => onChange(option)}
           className={cn(
-            'relative px-4 py-1.5 text-sm font-medium rounded-md transition-colors',
+            'relative px-4 py-1.5 min-h-[44px] text-sm font-medium rounded-md transition-colors',
             value === option ? 'text-accent-foreground' : 'text-muted-foreground hover:text-foreground'
           )}
         >

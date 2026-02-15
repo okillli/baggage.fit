@@ -6,6 +6,7 @@ import { useSEO } from '@/lib/useSEO';
 import { formatDimensions, convertWeightToKg } from '@/lib/fitLogic';
 import { CURRENT_YEAR } from '@/lib/format';
 import { siteConfig } from '@/lib/siteConfig';
+import { safeJsonLd } from '@/lib/utils';
 import { PageLayout } from '@/components/PageLayout';
 import { AirlineDetailContent } from '@/components/AirlineDetailContent';
 import { AirlineSearch } from '@/components/AirlineSearch';
@@ -82,7 +83,7 @@ export function AirlinePage() {
             className="inline-flex items-center gap-2 text-accent-on-light hover:underline"
           >
             Browse all airlines
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4" aria-hidden="true" />
           </Link>
         </div>
       </PageLayout>
@@ -95,7 +96,7 @@ export function AirlinePage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
+          __html: safeJsonLd({
             '@context': 'https://schema.org',
             '@type': 'WebPage',
             name: title,
@@ -144,13 +145,13 @@ export function AirlinePage() {
 
       {/* Compare with another airline */}
       <div className="mt-10 max-w-4xl space-y-4">
-        <h3 className="section-label">Compare with another airline</h3>
+        <h2 className="section-label">Compare with another airline</h2>
         <AirlineSearch airlines={airlines} placeholder="Search another airline..." />
         <Link
           to="/airlines"
           className="inline-flex items-center gap-2 text-sm text-accent-on-light hover:underline"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <ArrowLeft className="w-4 h-4" aria-hidden="true" />
           Back to all airlines
         </Link>
       </div>

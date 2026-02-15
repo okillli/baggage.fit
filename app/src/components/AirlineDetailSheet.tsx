@@ -48,9 +48,12 @@ export function AirlineDetailSheet() {
       >
         {airline && (
           <>
-            <SheetHeader className="sr-only">
-              <SheetTitle>{airline.name} Baggage Details</SheetTitle>
-              <SheetDescription>
+            <SheetHeader>
+              <SheetTitle className="text-lg font-heading font-bold flex items-center gap-2">
+                {airline.name}
+                <span className="text-xs text-muted-foreground font-mono font-normal">{airline.code}</span>
+              </SheetTitle>
+              <SheetDescription className="sr-only">
                 View baggage allowances for {airline.name}
               </SheetDescription>
             </SheetHeader>
@@ -62,6 +65,7 @@ export function AirlineDetailSheet() {
               unit={unit}
               weightUnit={weightUnit}
               showFitChecker
+              hideHeader
               className="pt-2"
             />
           </>

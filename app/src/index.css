@@ -134,15 +134,15 @@
 @layer components {
   /* Dot grid background pattern */
   .dot-grid {
-    background-image: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
+    background-image: radial-gradient(circle, hsl(var(--foreground) / 0.08) 1px, transparent 1px);
     background-size: 24px 24px;
   }
   
   /* Light section grid lines */
   .grid-lines {
-    background-image: 
-      linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
+    background-image:
+      linear-gradient(hsl(var(--foreground) / 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--foreground) / 0.04) 1px, transparent 1px);
     background-size: 40px 40px;
   }
   
@@ -169,15 +169,15 @@
     @apply bg-accent text-accent-foreground font-semibold;
   }
   .badge-doesnt-fit {
-    @apply bg-transparent border-2 border-red-500 text-white;
+    @apply bg-transparent border-2 border-destructive text-foreground;
   }
   .badge-unknown {
-    @apply bg-transparent border-2 border-white/30 text-white/70;
+    @apply bg-transparent border-2 border-foreground/30 text-foreground/70;
   }
 
   /* Outcome badge styles — light background */
   .badge-doesnt-fit-light {
-    @apply bg-transparent border-2 border-red-500 text-red-600;
+    @apply bg-transparent border-2 border-destructive text-destructive;
   }
   .badge-unknown-light {
     @apply bg-transparent border-2 border-muted-foreground/30 text-muted-foreground/50;
@@ -255,42 +255,26 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-/* Custom scrollbar for webkit browsers */
+/* Custom scrollbar — uses theme-aware CSS vars */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
+  background: hsl(var(--muted) / 0.15);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
+  background: hsl(var(--muted-foreground) / 0.25);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: hsl(var(--muted-foreground) / 0.4);
 }
 
-/* Selection color */
+/* Selection color — uses accent token */
 ::selection {
-  background: rgba(215, 255, 59, 0.3);
+  background: hsl(var(--accent) / 0.3);
   color: inherit;
-}
-.light ::selection {
-  background: rgba(100, 160, 30, 0.25);
-  color: inherit;
-}
-
-/* Light mode scrollbar */
-.light ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.03);
-}
-.light ::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.15);
-  border-radius: 4px;
-}
-.light ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.25);
 }
 
 /* Mobile touch improvements */

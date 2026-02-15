@@ -14,6 +14,7 @@ interface AirlineDetailContentProps {
   weightUnit: WeightUnit;
   headingLevel?: 'h1' | 'h2';
   showFitChecker?: boolean;
+  hideHeader?: boolean;
   className?: string;
 }
 
@@ -26,6 +27,7 @@ export function AirlineDetailContent({
   weightUnit,
   headingLevel = 'h2',
   showFitChecker = false,
+  hideHeader = false,
   className,
 }: AirlineDetailContentProps) {
   const countryFlag = countryToFlag(airline.country);
@@ -33,21 +35,27 @@ export function AirlineDetailContent({
   return (
     <div className={cn('space-y-6', className)}>
       {/* Header */}
-      <div className="flex items-center gap-3">
-        <span className="text-3xl">{countryFlag}</span>
-        <div>
-          {headingLevel === 'h1' ? (
-            <h1 className="font-heading font-bold text-xl">{airline.name}</h1>
-          ) : (
-            <h2 className="font-heading font-bold text-xl">{airline.name}</h2>
-          )}
-          <p className="text-sm font-mono text-muted-foreground">{airline.code}</p>
+      {!hideHeader && (
+        <div className="flex items-center gap-3">
+          <span className="text-3xl">{countryFlag}</span>
+          <div>
+            {headingLevel === 'h1' ? (
+              <h1 className="font-heading font-bold text-xl">{airline.name}</h1>
+            ) : (
+              <h2 className="font-heading font-bold text-xl">{airline.name}</h2>
+            )}
+            <p className="text-sm font-mono text-muted-foreground">{airline.code}</p>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* All 3 bag types */}
       <div>
-        <h3 className="section-label mb-3">Bag allowances</h3>
+        {headingLevel === 'h1' ? (
+          <h2 className="section-label mb-3">Bag allowances</h2>
+        ) : (
+          <h3 className="section-label mb-3">Bag allowances</h3>
+        )}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {(['cabin', 'underseat', 'checked'] as BagType[]).map((bt) => (
             <BagTypeAllowanceCard
@@ -71,7 +79,11 @@ export function AirlineDetailContent({
 
       {/* Policy links */}
       <div className="space-y-2">
-        <h3 className="section-label mb-2">Official links</h3>
+        {headingLevel === 'h1' ? (
+          <h2 className="section-label mb-2">Official links</h2>
+        ) : (
+          <h3 className="section-label mb-2">Official links</h3>
+        )}
         <div className="flex flex-wrap gap-4">
           <a
             href={airline.links.policy}
@@ -79,7 +91,7 @@ export function AirlineDetailContent({
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-sm text-accent-on-light hover:underline"
           >
-            <ExternalLink className="w-4 h-4" />
+            <ExternalLink className="w-4 h-4" aria-hidden="true" />
             Official baggage policy
           </a>
           {airline.links.calculator && (
@@ -89,7 +101,7 @@ export function AirlineDetailContent({
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-sm text-accent-on-light hover:underline"
             >
-              <ExternalLink className="w-4 h-4" />
+              <ExternalLink className="w-4 h-4" aria-hidden="true" />
               Size calculator
             </a>
           )}
@@ -98,7 +110,7 @@ export function AirlineDetailContent({
 
       {/* Trust footer */}
       <div className="flex items-center gap-2 pt-4 border-t border-border text-xs text-muted-foreground/60">
-        <Shield className="w-3.5 h-3.5" />
+        <Shield className="w-3.5 h-3.5" aria-hidden="true" />
         <span>Last verified: {airline.lastVerified}</span>
         <span className="mx-1">&middot;</span>
         <span>Sizes are published limits; enforcement varies.</span>

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { PageLayout } from '@/components/PageLayout';
 import { useSEO } from '@/lib/useSEO';
 import { siteConfig } from '@/lib/siteConfig';
-import { ExternalLink, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 export function DataSourcesPage() {
   useSEO({
@@ -53,13 +53,13 @@ export function DataSourcesPage() {
             className="inline-flex items-center gap-2 px-6 py-3 bg-accent text-accent-foreground font-heading font-bold rounded-lg hover:brightness-110 transition-colors btn-lift"
           >
             Check your bag
-            <ArrowRight className="w-5 h-5" />
+            <ArrowRight className="w-5 h-5" aria-hidden="true" />
           </Link>
           <Link
             to="/airlines"
             className="inline-flex items-center gap-2 text-accent-on-light hover:underline"
           >
-            <ExternalLink className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4" aria-hidden="true" />
             Browse all airlines
           </Link>
         </div>

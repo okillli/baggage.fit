@@ -22,14 +22,14 @@ export function NotFoundPage() {
             className="inline-flex items-center gap-2 px-6 py-3 bg-accent text-accent-foreground font-heading font-bold rounded-lg hover:brightness-110 transition-all btn-lift"
           >
             Check your bag
-            <ArrowRight className="w-5 h-5" />
+            <ArrowRight className="w-5 h-5" aria-hidden="true" />
           </Link>
           <Link
             to="/airlines"
             className="inline-flex items-center gap-2 px-6 py-3 bg-secondary border border-border text-foreground font-heading font-bold rounded-lg hover:border-accent/30 transition-all"
           >
             Browse airlines
-            <ArrowRight className="w-5 h-5" />
+            <ArrowRight className="w-5 h-5" aria-hidden="true" />
           </Link>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { useRef, useEffect, useLayoutEffect } from 'react';
+import { useRef, useEffect, useLayoutEffect, useMemo } from 'react';
 import { gsap } from '@/lib/gsap-setup';
 import { cn, gsapScrollTo } from '@/lib/utils';
 import { useAppStore } from '@/store/appStore';
@@ -24,7 +24,10 @@ export function Hero() {
 
   useEffect(() => { loadAirlines(); }, [loadAirlines]);
 
-  const popularAirlines = airlines.filter((a) => POPULAR_CODES.includes(a.code));
+  const popularAirlines = useMemo(
+    () => airlines.filter((a) => POPULAR_CODES.includes(a.code)),
+    [airlines]
+  );
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
@@ -117,7 +120,7 @@ export function Hero() {
       <div
         ref={frameRef}
         className="absolute left-1/2 top-[46%] -translate-x-1/2 -translate-y-1/2
-                   w-[72vw] h-[44vh] border border-white/20 rounded-xl pointer-events-none"
+                   w-[72vw] h-[44vh] border border-foreground/20 rounded-xl pointer-events-none"
       />
 
       {/* Content */}
@@ -146,13 +149,13 @@ export function Hero() {
         </div>
 
         {/* Popular airline chips */}
-        <div ref={chipsRef} className="flex flex-wrap justify-center gap-2 mb-8">
-          <span className="text-xs text-muted-foreground/60 self-center mr-1">Popular:</span>
+        <div ref={chipsRef} className="flex flex-wrap justify-center gap-2 mb-8" role="group" aria-label="Popular airlines">
+          <span className="text-xs text-muted-foreground/60 self-center mr-1" aria-hidden="true">Popular:</span>
           {popularAirlines.map((airline) => (
             <button
               key={airline.code}
               onClick={() => navigate(`/airlines/${airlineToSlug(airline.name)}`)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/8 border border-white/15 rounded-full text-sm text-foreground/80 hover:bg-white/15 hover:text-foreground transition-all"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] bg-foreground/8 border border-foreground/15 rounded-full text-sm text-foreground/80 hover:bg-foreground/15 hover:text-foreground transition-all"
             >
               <span className="text-sm">{countryToFlag(airline.country)}</span>
               {airline.name}
@@ -170,19 +173,19 @@ export function Hero() {
               'hover:brightness-110 transition-all duration-200 btn-lift'
             )}
           >
-            <SearchIcon className="w-4 h-4" />
+            <SearchIcon className="w-4 h-4" aria-hidden="true" />
             Check your bag
           </button>
           <button
             onClick={handleBrowse}
             className={cn(
               'inline-flex items-center gap-2 px-6 py-3',
-              'bg-white/10 border border-white/20 text-foreground font-heading font-bold rounded-lg',
-              'hover:bg-white/15 transition-all duration-200'
+              'bg-foreground/10 border border-foreground/20 text-foreground font-heading font-bold rounded-lg',
+              'hover:bg-foreground/15 transition-all duration-200'
             )}
           >
             Browse all airlines
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4" aria-hidden="true" />
           </button>
         </div>
       </div>
@@ -195,7 +198,7 @@ export function Hero() {
         <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
           Scroll to explore
         </span>
-        <ChevronDown className="w-5 h-5 text-muted-foreground animate-bounce" />
+        <ChevronDown className="w-5 h-5 text-muted-foreground animate-bounce" aria-hidden="true" />
       </div>
     </section>
   );

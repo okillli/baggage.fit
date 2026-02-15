@@ -28,13 +28,14 @@ export function HeaderNav() {
           : 'bg-transparent'
       )}
     >
-      <div className="flex items-center justify-between px-6 lg:px-10 py-3">
+      <nav aria-label="Main navigation" className="flex items-center justify-between px-6 lg:px-10 py-3">
         {/* Logo */}
         <button
           onClick={() => {
             setCurrentView('hero');
             gsapScrollTo(0);
           }}
+          aria-label="baggage.fit — scroll to top"
           className="font-heading font-bold text-xl tracking-tight text-foreground hover:text-accent transition-colors shrink-0"
         >
           baggage.fit
@@ -58,7 +59,7 @@ export function HeaderNav() {
             className="md:hidden flex items-center justify-center w-11 h-11 min-h-[44px] rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
             aria-label="Toggle search"
           >
-            <Search className="w-4 h-4" />
+            <Search className="w-4 h-4" aria-hidden="true" />
           </button>
 
           {/* Browse link */}
@@ -67,9 +68,10 @@ export function HeaderNav() {
               setCurrentView('browse');
               gsapScrollTo('#airlines');
             }}
+            aria-label="Browse airlines"
             className="flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
           >
-            <List className="w-4 h-4" />
+            <List className="w-4 h-4" aria-hidden="true" />
             <span className="hidden sm:inline">Airlines</span>
           </button>
 
@@ -79,10 +81,10 @@ export function HeaderNav() {
             aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
             className="flex items-center justify-center w-11 h-11 min-h-[44px] rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
           >
-            {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            {theme === 'dark' ? <Sun className="w-4 h-4" aria-hidden="true" /> : <Moon className="w-4 h-4" aria-hidden="true" />}
           </button>
         </div>
-      </div>
+      </nav>
 
       {/* Mobile search dropdown */}
       {showSearch && (
@@ -92,7 +94,6 @@ export function HeaderNav() {
             placeholder="Search airline..."
             size="default"
             autoFocus
-            onSelect={() => setShowSearch(false)}
           />
         </div>
       )}

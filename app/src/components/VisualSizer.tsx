@@ -74,7 +74,7 @@ export function VisualSizer({
         ease: 'power2.out',
       });
       gsap.to(frame, {
-        boxShadow: '0 0 30px rgba(215, 255, 59, 0.4)',
+        boxShadow: '0 0 30px hsl(var(--accent) / 0.4)',
         duration: 0.3,
       });
     } else if (outcome === 'doesnt-fit') {
@@ -87,7 +87,7 @@ export function VisualSizer({
         ease: 'power2.out',
       });
       gsap.to(frame, {
-        boxShadow: '0 0 30px rgba(239, 68, 68, 0.4)',
+        boxShadow: '0 0 30px hsl(var(--destructive) / 0.4)',
         duration: 0.3,
       });
     } else {
@@ -104,7 +104,7 @@ export function VisualSizer({
         duration: 0.3,
       });
     }
-  }, [outcome, animate]);
+  }, [outcome, animate, dimensions]);
 
   const displayUnit = unit;
   const displayMaxL = unit === 'in' ? Math.round(maxDims[0] / 2.54 * 10) / 10 : maxDims[0];
@@ -121,7 +121,7 @@ export function VisualSizer({
       <div
         ref={frameRef}
         className={cn(
-          'absolute border-2 border-white/30 rounded-xl',
+          'absolute border-2 border-foreground/30 rounded-xl',
           'flex items-center justify-center'
         )}
         style={{
@@ -149,8 +149,8 @@ export function VisualSizer({
         className={cn(
           'absolute rounded-lg border-2 transition-colors',
           outcome === 'fits' && 'bg-accent/20 border-accent',
-          outcome === 'doesnt-fit' && 'bg-red-500/20 border-red-500',
-          outcome === 'unknown' && 'bg-white/10 border-white/40'
+          outcome === 'doesnt-fit' && 'bg-destructive/20 border-destructive',
+          outcome === 'unknown' && 'bg-foreground/10 border-foreground/40'
         )}
         style={{
           width: bagWidth,
@@ -174,10 +174,10 @@ export function VisualSizer({
       {/* Depth indicator (3D effect) */}
       <div
         className={cn(
-          'absolute rounded-lg border border-white/20',
+          'absolute rounded-lg border border-foreground/20',
           outcome === 'fits' && 'bg-accent/10',
-          outcome === 'doesnt-fit' && 'bg-red-500/10',
-          outcome === 'unknown' && 'bg-white/5'
+          outcome === 'doesnt-fit' && 'bg-destructive/10',
+          outcome === 'unknown' && 'bg-foreground/5'
         )}
         style={{
           width: bagWidth * 0.7,
@@ -222,14 +222,14 @@ function WeightGauge({
 
   return (
     <div className="absolute -bottom-14 left-1/2 -translate-x-1/2 w-3/4 space-y-1">
-      <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
+      <div className="h-2 w-full bg-foreground/10 rounded-full overflow-hidden">
         {fillPercent > 0 && (
           <div
             className={cn(
               'h-full rounded-full transition-all duration-500',
               weightOutcome === 'fits' && 'bg-accent',
-              weightOutcome === 'doesnt-fit' && 'bg-red-500',
-              weightOutcome === 'unknown' && 'bg-white/30'
+              weightOutcome === 'doesnt-fit' && 'bg-destructive',
+              weightOutcome === 'unknown' && 'bg-foreground/30'
             )}
             style={{ width: `${fillPercent}%` }}
           />

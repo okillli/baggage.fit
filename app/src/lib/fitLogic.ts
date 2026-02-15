@@ -165,6 +165,60 @@ export function combinedOutcome(
   return 'unknown';
 }
 
+/**
+ * Per-dimension fit check returning breakdown (used by InlineFitChecker).
+ * Single source of truth — avoids duplicating logic in components.
+ */
+export interface DimCheckResult {
+  label: string;
+  user: number;
+  max: number;
+  fits: boolean;
+}
+
+export interface BagTypeFitResult {
+  dimResults: DimCheckResult[];
+  dimFits: boolean;
+  wOutcome: FitOutcome;
+  userWeightKg: number | null;
+  maxKg: number | null;
+  overall: FitOutcome;
+}
+
+export function checkBagTypeFit(
+  rawDims: number[],
+  userUnit: Unit,
+  userWeight: number | null,
+  userWeightUnit: WeightUnit,
+  allowance: { maxCm: number[] | null; maxKg: number | null } | undefined,
+): BagTypeFitResult | null {
+  if (!allowance?.maxCm) return null;
+
+  const userCm = userUnit === 'in' ? convertToCm(rawDims) : rawDims;
+  const maxCm = allowance.maxCm;
+
+  const dimResults: DimCheckResult[] = isTotalDimensionLimit(maxCm)
+    ? [{ label: 'Total (L+W+H)', user: calculateTotalDimension(userCm), max: maxCm[0], fits: calculateTotalDimension(userCm) <= maxCm[0] }]
+    : (() => {
+        const userSorted = [...userCm].sort((a, b) => b - a);
+        const maxSorted = [...maxCm].sort((a, b) => b - a);
+        return [
+          { label: 'Height', user: userSorted[0], max: maxSorted[0], fits: userSorted[0] <= maxSorted[0] },
+          { label: 'Width', user: userSorted[1], max: maxSorted[1], fits: userSorted[1] <= maxSorted[1] },
+          { label: 'Depth', user: userSorted[2], max: maxSorted[2], fits: userSorted[2] <= maxSorted[2] },
+        ];
+      })();
+
+  const dimFits = dimResults.every((d) => d.fits);
+  const userWeightKg = userWeight != null && userWeight > 0
+    ? convertWeightToKg(userWeight, userWeightUnit)
+    : null;
+  const wOutcome = checkWeightFit(userWeightKg, allowance.maxKg);
+  const overall = combinedOutcome(dimFits ? 'fits' : 'doesnt-fit', wOutcome);
+
+  return { dimResults, dimFits, wOutcome, userWeightKg, maxKg: allowance.maxKg, overall };
+}
+
 const KG_PER_LB = 0.453592;
 
 /**

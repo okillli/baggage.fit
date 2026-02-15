@@ -6,6 +6,11 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+/** Safely serialize data for JSON-LD script tags (escapes </script> sequences). */
+export function safeJsonLd(data: Record<string, unknown>): string {
+  return JSON.stringify(data).replace(/<\/script/gi, '<\\/script');
+}
+
 // --- Snap pause (used to prevent snap during overlay open/close) ---
 
 let _snapPaused = false;

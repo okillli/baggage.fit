@@ -27,7 +27,7 @@ export function OutcomeBadge({ outcome, variant = 'dark', className, showIcon = 
         className
       )}
     >
-      {showIcon && <Icon className="w-4 h-4" />}
+      {showIcon && <Icon className="w-4 h-4" aria-hidden="true" />}
       {getOutcomeText(outcome)}
     </span>
   );

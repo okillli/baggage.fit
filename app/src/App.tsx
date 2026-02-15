@@ -9,7 +9,7 @@ import { AirlineDetailSheet } from '@/components/AirlineDetailSheet';
 import { useAppStore } from '@/store/appStore';
 import { useSEO } from '@/lib/useSEO';
 import { siteConfig } from '@/lib/siteConfig';
-import { isSnapPaused } from '@/lib/utils';
+import { isSnapPaused, safeJsonLd } from '@/lib/utils';
 import './App.css';
 
 function App() {
@@ -19,6 +19,9 @@ function App() {
     title: `${siteConfig.name} — ${siteConfig.tagline}`,
     description: siteConfig.description,
     canonical: siteConfig.url,
+    ogTitle: `${siteConfig.name} — ${siteConfig.tagline}`,
+    ogDescription: siteConfig.description,
+    ogUrl: siteConfig.url,
   });
 
   // Global scroll snap configuration — computes ranges dynamically
@@ -108,7 +111,7 @@ function App() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
+          __html: safeJsonLd({
             '@context': 'https://schema.org',
             '@type': 'WebSite',
             name: siteConfig.name,

@@ -9,7 +9,7 @@ import { countryToFlag, CURRENT_YEAR } from '@/lib/format';
 import { regions } from '@/lib/regions';
 import { PageLayout } from '@/components/PageLayout';
 import { Search, ArrowRight } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn, safeJsonLd } from '@/lib/utils';
 import type { Airline } from '@/types';
 
 export function AirlinesListPage() {
@@ -73,7 +73,7 @@ export function AirlinesListPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
+          __html: safeJsonLd({
             '@context': 'https://schema.org',
             '@type': 'ItemList',
             name: `All Airline Baggage Limits ${CURRENT_YEAR}`,
@@ -98,7 +98,7 @@ export function AirlinesListPage() {
 
       {/* Search */}
       <div className="relative mb-8 max-w-md">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" aria-hidden="true" />
         <input
           type="text"
           value={search}
@@ -162,7 +162,7 @@ function AirlineCard({ airline }: { airline: Airline }) {
 
       <span className="inline-flex items-center gap-1 text-xs text-accent-on-light group-hover:underline">
         View details
-        <ArrowRight className="w-3 h-3" />
+        <ArrowRight className="w-3 h-3" aria-hidden="true" />
       </span>
     </Link>
   );
