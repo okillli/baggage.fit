@@ -4,4 +4,4 @@ import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-export { gsap, ScrollTrigger, ScrollToPlugin };
+export { gsap, ScrollTrigger };

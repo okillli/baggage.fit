@@ -49,24 +49,24 @@ export function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="X (opens in new tab)"
-              className="text-muted-foreground hover:text-foreground transition-colors text-sm"
+              className="inline-flex items-center min-h-[44px] px-2 text-muted-foreground hover:text-foreground transition-colors text-sm"
             >
               X
             </a>
-            <span className="text-muted-foreground/30">·</span>
+            <span className="text-muted-foreground/30" aria-hidden="true">·</span>
             <a
               href={siteConfig.social.instagram}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram (opens in new tab)"
-              className="text-muted-foreground hover:text-foreground transition-colors text-sm"
+              className="inline-flex items-center min-h-[44px] px-2 text-muted-foreground hover:text-foreground transition-colors text-sm"
             >
               Instagram
             </a>
-            <span className="text-muted-foreground/30">·</span>
+            <span className="text-muted-foreground/30" aria-hidden="true">·</span>
             <a
               href={`mailto:${siteConfig.email}`}
-              className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors text-sm"
+              className="inline-flex items-center gap-1 min-h-[44px] px-2 text-muted-foreground hover:text-foreground transition-colors text-sm"
             >
               <Mail className="w-3.5 h-3.5" aria-hidden="true" />
               Contact
@@ -75,13 +75,13 @@ export function Footer() {
 
           {/* Footer links */}
           <div className="flex items-center justify-center gap-4 mb-4 text-xs">
-            <Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors">About</Link>
-            <span className="text-muted-foreground/30">·</span>
-            <Link to="/data-sources" className="text-muted-foreground hover:text-foreground transition-colors">Data Sources</Link>
+            <Link to="/about" className="inline-flex items-center min-h-[44px] px-2 text-muted-foreground hover:text-foreground transition-colors">About</Link>
+            <span className="text-muted-foreground/30" aria-hidden="true">·</span>
+            <Link to="/data-sources" className="inline-flex items-center min-h-[44px] px-2 text-muted-foreground hover:text-foreground transition-colors">Data Sources</Link>
           </div>
 
           {/* Copyright */}
-          <p className="text-xs text-muted-foreground/60">
+          <p className="text-xs text-muted-foreground">
             &copy; {CURRENT_YEAR} {siteConfig.name} &mdash; Built for travelers
           </p>
         </ScrollReveal>

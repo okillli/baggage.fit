@@ -19,14 +19,14 @@
     --muted-foreground: 0 0% 72%;
     --accent: 78 100% 62%;
     --accent-foreground: 0 0% 10%;
-    --destructive: 0 84% 60%;
+    --destructive: 0 84% 62%;
     --destructive-foreground: 0 0% 98%;
     --border: 0 0% 20%;
     --input: 0 0% 15%;
     --ring: 78 100% 62%;
     --radius: 0.625rem;
     --surface-light: 0 0% 95%;
-    --accent-on-light: 78 80% 32%;
+    --accent-on-light: 78 80% 25%;
   }
 
   /* Light theme */
@@ -37,21 +37,21 @@
     --card-foreground: 0 0% 10%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 10%;
-    --primary: 78 100% 40%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 78 100% 32%;
+    --primary-foreground: 0 0% 10%;
     --secondary: 0 0% 94%;
     --secondary-foreground: 0 0% 10%;
     --muted: 0 0% 94%;
     --muted-foreground: 0 0% 40%;
-    --accent: 78 100% 40%;
+    --accent: 78 100% 32%;
     --accent-foreground: 0 0% 10%;
-    --destructive: 0 84% 50%;
+    --destructive: 0 84% 45%;
     --destructive-foreground: 0 0% 100%;
     --border: 0 0% 85%;
     --input: 0 0% 94%;
-    --ring: 78 100% 40%;
+    --ring: 78 100% 32%;
     --surface-light: 0 0% 94%;
-    --accent-on-light: 78 80% 32%;
+    --accent-on-light: 78 80% 25%;
   }
 
   /* Pinned sections always use dark theme (brand identity) */
@@ -60,12 +60,18 @@
     --foreground: 0 0% 96%;
     --card: 0 0% 10%;
     --card-foreground: 0 0% 96%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 96%;
+    --primary: 78 100% 62%;
+    --primary-foreground: 0 0% 10%;
     --secondary: 0 0% 15%;
     --secondary-foreground: 0 0% 96%;
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 72%;
     --accent: 78 100% 62%;
     --accent-foreground: 0 0% 10%;
+    --destructive: 0 84% 62%;
+    --destructive-foreground: 0 0% 98%;
     --border: 0 0% 20%;
     --input: 0 0% 15%;
     --ring: 78 100% 62%;
@@ -78,24 +84,40 @@
     --muted-foreground: 0 0% 40%;
     --border: 0 0% 80%;
     --secondary: 0 0% 90%;
+    --secondary-foreground: 0 0% 10%;
     --input: 0 0% 90%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 10%;
-    --accent: 78 100% 40%;
-    --accent-on-light: 78 80% 32%;
-    --ring: 78 100% 40%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 10%;
+    --primary: 78 100% 32%;
+    --primary-foreground: 0 0% 10%;
+    --accent: 78 100% 32%;
+    --accent-foreground: 0 0% 10%;
+    --accent-on-light: 78 80% 25%;
+    --destructive: 0 84% 45%;
+    --destructive-foreground: 0 0% 100%;
+    --ring: 78 100% 32%;
   }
 
   /* Dark inset within a light section (e.g., input container) */
   .section-dark-inset {
     --background: 0 0% 10%;
     --foreground: 0 0% 96%;
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 96%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 96%;
+    --muted: 0 0% 15%;
     --muted-foreground: 0 0% 72%;
-    --border: 0 0% 20%;
     --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 96%;
+    --border: 0 0% 20%;
     --input: 0 0% 15%;
     --accent: 78 100% 62%;
     --accent-foreground: 0 0% 10%;
+    --destructive: 0 84% 62%;
+    --destructive-foreground: 0 0% 98%;
     --ring: 78 100% 62%;
   }
 }
@@ -180,7 +202,7 @@
     @apply bg-transparent border-2 border-destructive text-destructive;
   }
   .badge-unknown-light {
-    @apply bg-transparent border-2 border-muted-foreground/30 text-muted-foreground/50;
+    @apply bg-transparent border-2 border-muted-foreground/40 text-muted-foreground;
   }
 }
 

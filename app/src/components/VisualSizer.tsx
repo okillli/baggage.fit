@@ -2,7 +2,7 @@ import { useRef, useEffect } from 'react';
 import { gsap } from '@/lib/gsap-setup';
 import { cn } from '@/lib/utils';
 import type { Dimensions, Unit, WeightUnit } from '@/types';
-import { formatWeight } from '@/lib/fitLogic';
+import { formatWeight, convertToCm, convertToIn } from '@/lib/fitLogic';
 
 interface VisualSizerProps {
   dimensions: Dimensions;
@@ -36,8 +36,9 @@ export function VisualSizer({
   const maxDims = maxDimensions || [55, 40, 20];
 
   // Convert user dimensions to cm for consistent visualization
-  const userL = unit === 'in' ? dimensions.l * 2.54 : dimensions.l;
-  const userW = unit === 'in' ? dimensions.w * 2.54 : dimensions.w;
+  const userCm = unit === 'in' ? convertToCm([dimensions.l, dimensions.w]) : [dimensions.l, dimensions.w];
+  const userL = userCm[0];
+  const userW = userCm[1];
 
   const scale = Math.min(
     200 / maxDims[0],
@@ -107,11 +108,14 @@ export function VisualSizer({
   }, [outcome, animate, dimensions]);
 
   const displayUnit = unit;
-  const displayMaxL = unit === 'in' ? Math.round(maxDims[0] / 2.54 * 10) / 10 : maxDims[0];
-  const displayMaxW = unit === 'in' ? Math.round(maxDims[1] / 2.54 * 10) / 10 : maxDims[1];
+  const displayMax = unit === 'in' ? convertToIn([maxDims[0], maxDims[1]]) : [maxDims[0], maxDims[1]];
+  const displayMaxL = displayMax[0];
+  const displayMaxW = displayMax[1];
 
   return (
     <div
+      role="img"
+      aria-label={`Visual comparison: your bag ${dimensions.l}×${dimensions.w}×${dimensions.h} ${unit} vs airline max ${maxDims[0]}×${maxDims[1]}×${maxDims[2]} cm`}
       className={cn(
         'relative flex items-center justify-center',
         className
@@ -222,7 +226,14 @@ function WeightGauge({
 
   return (
     <div className="absolute -bottom-14 left-1/2 -translate-x-1/2 w-3/4 space-y-1">
-      <div className="h-2 w-full bg-foreground/10 rounded-full overflow-hidden">
+      <div
+        className="h-2 w-full bg-foreground/10 rounded-full overflow-hidden"
+        role="progressbar"
+        aria-valuenow={Math.round(fillPercent)}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-label="Weight gauge"
+      >
         {fillPercent > 0 && (
           <div
             className={cn(

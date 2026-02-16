@@ -49,8 +49,7 @@ After the pinned section, **flowing sections** (AirlinesBrowse, Footer) scroll n
 
 ### Programmatic Scroll Navigation
 
-- **Pinned sections**: Use `scrollToPinCenter(sectionId)` from `src/lib/utils.ts`.
-- **Flowing sections**: Use `gsap.to(window, { scrollTo: '#section-id' })` directly.
+- **All sections**: Use `gsapScrollTo(target)` from `src/lib/utils.ts` (handles snap pause + pointer-events guard).
 - **Never use native `behavior: 'smooth'`** — it competes with the GSAP snap system.
 
 ### State Management (Zustand)
@@ -100,7 +99,7 @@ Key action: `checkFit(airlines)` compares user dimensions against ALL passed air
 ### Key Files
 
 - `src/App.tsx` — Section composition + global snap config
-- `src/lib/utils.ts` — `cn()`, `scrollToPinCenter()`
+- `src/lib/utils.ts` — `cn()`, `gsapScrollTo()`, `safeJsonLd()`
 - `src/lib/fitLogic.ts` — Dimension comparison, unit conversion, fit checking
 - `src/lib/hooks.ts` — Shared hooks (`useFitMap`)
 - `src/lib/useSEO.ts` — Lightweight SEO hook (meta, OG, canonical, Twitter)

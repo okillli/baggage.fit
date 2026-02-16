@@ -1,13 +1,16 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { CURRENT_YEAR } from '@/lib/format';
-import { ArrowLeft } from 'lucide-react';
+import { useTheme } from '@/lib/useTheme';
+import { ArrowLeft, Sun, Moon } from 'lucide-react';
 
 interface PageLayoutProps {
   children: React.ReactNode;
 }
 
 export function PageLayout({ children }: PageLayoutProps) {
+  const { theme, toggleTheme } = useTheme();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -22,14 +25,23 @@ export function PageLayout({ children }: PageLayoutProps) {
         <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+            className="inline-flex items-center gap-2 min-h-[44px] text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft className="w-4 h-4" aria-hidden="true" />
             Back to checker
           </Link>
-          <Link to="/" className="font-heading font-bold text-lg text-accent">
-            baggage.fit
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link to="/" className="font-heading font-bold text-lg text-foreground">
+              baggage.fit
+            </Link>
+            <button
+              onClick={toggleTheme}
+              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              className="flex items-center justify-center w-10 h-10 min-h-[44px] min-w-[44px] rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+            >
+              {theme === 'dark' ? <Sun className="w-4 h-4" aria-hidden="true" /> : <Moon className="w-4 h-4" aria-hidden="true" />}
+            </button>
+          </div>
         </div>
       </header>
 
@@ -40,7 +52,7 @@ export function PageLayout({ children }: PageLayoutProps) {
 
       {/* Footer */}
       <footer className="border-t border-border py-8">
-        <div className="max-w-6xl mx-auto px-6 text-center text-xs text-muted-foreground/60">
+        <div className="max-w-6xl mx-auto px-6 text-center text-xs text-muted-foreground">
           <p>Sizes are published limits; enforcement varies by route and staff.</p>
           <p className="mt-1">
             &copy; {CURRENT_YEAR} baggage.fit

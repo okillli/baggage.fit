@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useId } from 'react';
 import * as Collapsible from '@radix-ui/react-collapsible';
 import { ScrollTrigger } from '@/lib/gsap-setup';
 import { cn } from '@/lib/utils';
@@ -22,6 +22,8 @@ const defaultMaxDims: Record<BagType, [number, number, number]> = {
 };
 
 export function CheckYourBagPanel({ airlines, className }: CheckYourBagPanelProps) {
+  const panelId = useId();
+  const contentId = `${panelId}-content`;
   const {
     checkPanelOpen,
     setCheckPanelOpen,
@@ -65,14 +67,14 @@ export function CheckYourBagPanel({ airlines, className }: CheckYourBagPanelProp
       className={cn('bg-card border border-foreground/15 rounded-xl', className)}
     >
       <Collapsible.Trigger asChild>
-        <button className="flex items-center justify-between w-full px-6 py-4 text-left group" aria-controls="check-panel-content">
+        <button className="flex items-center justify-between w-full px-6 py-4 text-left group" aria-controls={contentId}>
           <div className="flex items-center gap-3">
             <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-accent/10">
               <Ruler className="w-4 h-4 text-accent" aria-hidden="true" />
             </div>
             <span className="font-heading font-bold text-foreground">Check your bag</span>
             {hasResults && (
-              <span className="text-sm text-foreground/60" aria-live="polite" aria-atomic="true">
+              <span className="text-sm text-muted-foreground" aria-live="polite" aria-atomic="true">
                 {fitsCount} fit, {doesntFitCount} don&apos;t
               </span>
             )}
@@ -87,7 +89,7 @@ export function CheckYourBagPanel({ airlines, className }: CheckYourBagPanelProp
         </button>
       </Collapsible.Trigger>
 
-      <Collapsible.Content id="check-panel-content" className="overflow-hidden data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up">
+      <Collapsible.Content id={contentId} className="overflow-hidden data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up">
         <div className="px-6 pb-6 border-t border-foreground/10 pt-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Input column — dark bg to match input component styling */}

@@ -11,7 +11,9 @@ const AboutPage = lazy(() => import('./pages/AboutPage.tsx').then(m => ({ defaul
 const DataSourcesPage = lazy(() => import('./pages/DataSourcesPage.tsx').then(m => ({ default: m.DataSourcesPage })))
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage.tsx').then(m => ({ default: m.NotFoundPage })))
 
-createRoot(document.getElementById('root')!).render(
+const rootEl = document.getElementById('root');
+if (!rootEl) throw new Error('Root element not found');
+createRoot(rootEl).render(
   <StrictMode>
     <ErrorBoundary>
       <BrowserRouter>

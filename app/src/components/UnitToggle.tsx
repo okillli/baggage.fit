@@ -74,7 +74,7 @@ export function UnitToggle<T extends string>({
           aria-checked={value === option}
           onClick={() => onChange(option)}
           className={cn(
-            'relative px-4 py-1.5 min-h-[44px] text-sm font-medium rounded-md transition-colors',
+            'relative px-4 py-1.5 min-h-[44px] text-sm font-medium rounded-md transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
             value === option ? 'text-accent-foreground' : 'text-muted-foreground hover:text-foreground'
           )}
         >

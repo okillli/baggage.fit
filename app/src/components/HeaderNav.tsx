@@ -36,7 +36,7 @@ export function HeaderNav() {
             gsapScrollTo(0);
           }}
           aria-label="baggage.fit — scroll to top"
-          className="font-heading font-bold text-xl tracking-tight text-foreground hover:text-accent transition-colors shrink-0"
+          className="font-heading font-bold text-xl tracking-tight text-foreground hover:text-accent transition-colors shrink-0 min-h-[44px] inline-flex items-center"
         >
           baggage.fit
         </button>
@@ -56,7 +56,7 @@ export function HeaderNav() {
           {/* Mobile search toggle */}
           <button
             onClick={() => setShowSearch(!showSearch)}
-            className="md:hidden flex items-center justify-center w-11 h-11 min-h-[44px] rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+            className="md:hidden flex items-center justify-center w-11 h-11 min-h-[44px] rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
             aria-label="Toggle search"
           >
             <Search className="w-4 h-4" aria-hidden="true" />
@@ -69,7 +69,7 @@ export function HeaderNav() {
               gsapScrollTo('#airlines');
             }}
             aria-label="Browse airlines"
-            className="flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
           >
             <List className="w-4 h-4" aria-hidden="true" />
             <span className="hidden sm:inline">Airlines</span>
@@ -79,7 +79,7 @@ export function HeaderNav() {
           <button
             onClick={toggleTheme}
             aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-            className="flex items-center justify-center w-11 h-11 min-h-[44px] rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+            className="flex items-center justify-center w-11 h-11 min-h-[44px] rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
           >
             {theme === 'dark' ? <Sun className="w-4 h-4" aria-hidden="true" /> : <Moon className="w-4 h-4" aria-hidden="true" />}
           </button>

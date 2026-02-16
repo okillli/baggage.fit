@@ -157,7 +157,7 @@ export function Hero() {
               onClick={() => navigate(`/airlines/${airlineToSlug(airline.name)}`)}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] bg-foreground/8 border border-foreground/15 rounded-full text-sm text-foreground/80 hover:bg-foreground/15 hover:text-foreground transition-all"
             >
-              <span className="text-sm">{countryToFlag(airline.country)}</span>
+              <span className="text-sm" aria-hidden="true">{countryToFlag(airline.country)}</span>
               {airline.name}
             </button>
           ))}

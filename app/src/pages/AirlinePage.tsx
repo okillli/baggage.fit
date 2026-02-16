@@ -123,9 +123,9 @@ export function AirlinePage() {
       {/* Breadcrumbs */}
       <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground mb-8">
         <ol className="flex items-center">
-          <li><Link to="/" className="hover:text-foreground transition-colors">Home</Link></li>
+          <li><Link to="/" className="inline-flex items-center min-h-[44px] hover:text-foreground transition-colors">Home</Link></li>
           <li aria-hidden="true" className="mx-2">/</li>
-          <li><Link to="/airlines" className="hover:text-foreground transition-colors">Airlines</Link></li>
+          <li><Link to="/airlines" className="inline-flex items-center min-h-[44px] hover:text-foreground transition-colors">Airlines</Link></li>
           <li aria-hidden="true" className="mx-2">/</li>
           <li aria-current="page" className="text-foreground">{airline.name}</li>
         </ol>

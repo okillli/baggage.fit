@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { formatDimensions, formatWeight, checkFit, checkWeightFit } from '@/lib/fitLogic';
+import { formatDimensions, formatWeight, checkFit, checkWeightFit, convertToCm } from '@/lib/fitLogic';
 import { OutcomeBadge } from './OutcomeBadge';
 import type { BagAllowance, BagType, Dimensions, Unit, WeightUnit } from '@/types';
 import { Ruler, Weight, StickyNote, Luggage, Backpack, Package } from 'lucide-react';
@@ -50,13 +50,11 @@ export function BagTypeAllowanceCard({
   }
 
   // Inline fit check if user has dimensions
-  const dimOutcome = userDimensions
-    ? checkFit(
-        unit === 'in'
-          ? [userDimensions.l * 2.54, userDimensions.w * 2.54, userDimensions.h * 2.54]
-          : [userDimensions.l, userDimensions.w, userDimensions.h],
-        allowance.maxCm
-      )
+  const rawDims = userDimensions
+    ? [userDimensions.l, userDimensions.w, userDimensions.h]
+    : null;
+  const dimOutcome = rawDims
+    ? checkFit(unit === 'in' ? convertToCm(rawDims) : rawDims, allowance.maxCm)
     : null;
 
   const wOutcome = userWeightKg != null
@@ -96,6 +94,7 @@ export function BagTypeAllowanceCard({
             wOutcome === 'doesnt-fit' && 'text-destructive',
           )}>
             {formatWeight(allowance.maxKg, weightUnit)}
+            {wOutcome && <span className="sr-only"> — {wOutcome === 'fits' ? 'within limit' : 'over limit'}</span>}
           </span>
         </div>
 

@@ -51,28 +51,3 @@ export function gsapScrollTo(target: string | number, options?: { duration?: num
   });
 }
 
-/**
- * Smooth-scroll to a pinned section's settled position (center of its pin range)
- * so the entrance animation has completed and content is visible.
- * Disables pointer-events on <main> during animation to prevent click-through.
- */
-export function scrollToPinCenter(sectionId: string, _retried = false) {
-  const section = document.getElementById(sectionId);
-  if (!section) return;
-  const spacer = section.closest('.pin-spacer');
-  if (!spacer) {
-    // Pin-spacer may not exist yet if GSAP hasn't initialized — retry once
-    if (!_retried) {
-      setTimeout(() => scrollToPinCenter(sectionId, true), 100);
-    }
-    return;
-  }
-  const spacerTop = spacer.getBoundingClientRect().top + window.scrollY;
-  const pinScroll = spacer.clientHeight - window.innerHeight;
-  const target = spacerTop + pinScroll * 0.5;
-  const distance = Math.abs(target - window.scrollY);
-  const duration = Math.min(Math.max(1.0, (distance / window.innerHeight) * 0.55), 2.0);
-  pauseSnap((duration + 0.4) * 1000);
-  const restore = withPointerGuard();
-  gsap.to(window, { scrollTo: { y: target, autoKill: false }, duration, ease: 'power2.inOut', onComplete: restore });
-}

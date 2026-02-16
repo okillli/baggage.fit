@@ -36,7 +36,7 @@ export function WeightInput({
     <div className={cn('space-y-3', className)}>
       <div className="flex items-center justify-between">
         <label htmlFor={id} className="section-label">
-          Weight <span className="text-muted-foreground/50">(optional)</span>
+          Weight <span className="text-muted-foreground">(optional)</span>
         </label>
         <UnitToggle
           value={weightUnit}

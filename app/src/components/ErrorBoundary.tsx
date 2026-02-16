@@ -36,13 +36,13 @@ export class ErrorBoundary extends Component<Props, State> {
               An unexpected error occurred. Please try again.
             </p>
             {this.state.error && (
-              <p className="text-xs text-muted-foreground/60 font-mono mb-6 break-words">
+              <p className="text-xs text-muted-foreground font-mono mb-6 break-words">
                 {this.state.error.message}
               </p>
             )}
             <button
               onClick={this.handleRetry}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-accent text-accent-foreground font-heading font-bold rounded-lg hover:brightness-110 transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-accent text-accent-foreground font-heading font-bold rounded-lg hover:brightness-110 transition-all focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
             >
               Try again
             </button>

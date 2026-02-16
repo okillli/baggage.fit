@@ -105,7 +105,7 @@ export function AirlinesListPage() {
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search airlines..."
           aria-label="Search airlines"
-          className="w-full bg-secondary border border-border rounded-lg pl-10 pr-4 py-3 text-foreground placeholder:text-muted-foreground/50 input-focus"
+          className="w-full bg-secondary border border-border rounded-lg pl-10 pr-4 py-3 min-h-[44px] text-foreground placeholder:text-muted-foreground/50 input-focus"
         />
       </div>
 
@@ -146,7 +146,7 @@ function AirlineCard({ airline }: { airline: Airline }) {
       )}
     >
       <div className="flex items-center gap-3 mb-3">
-        <span className="text-xl">{flag}</span>
+        <span className="text-xl" aria-hidden="true">{flag}</span>
         <div className="min-w-0">
           <p className="font-heading font-bold text-sm truncate">{airline.name}</p>
           <p className="text-xs font-mono text-muted-foreground">{airline.code}</p>

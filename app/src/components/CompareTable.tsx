@@ -81,7 +81,7 @@ export function CompareTable({
       : 'No airlines found.';
     return (
       <div className={cn('text-center py-10', className)}>
-        <p className="text-foreground/60">{message}</p>
+        <p className="text-muted-foreground">{message}</p>
       </div>
     );
   }
@@ -97,7 +97,7 @@ export function CompareTable({
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search airline..."
           aria-label="Search airlines in table"
-          className="w-full max-w-md bg-card border border-border rounded-lg pl-10 pr-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/50 input-focus transition-colors"
+          className="w-full max-w-md bg-card border border-border rounded-lg pl-10 pr-4 py-2.5 min-h-[44px] text-sm text-foreground placeholder:text-muted-foreground/50 input-focus transition-colors"
         />
       </div>
 
@@ -124,7 +124,7 @@ export function CompareTable({
                   tabIndex={0}
                   aria-label={`View ${airline.name} baggage details`}
                   className={cn(
-                    'border-b border-foreground/5 transition-colors hover:bg-foreground/5 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent',
+                    'border-b border-foreground/5 transition-colors hover:bg-foreground/5 cursor-pointer focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset focus-visible:outline-none',
                     isBest && 'bg-accent/10 hover:bg-accent/15'
                   )}
                   onClick={() => handleClick(airline)}
@@ -137,7 +137,7 @@ export function CompareTable({
                 >
                   <td className="py-3 px-4">
                     <div className="flex items-center gap-2">
-                      <span className="text-base">{countryToFlag(airline.country)}</span>
+                      <span className="text-base" aria-hidden="true">{countryToFlag(airline.country)}</span>
                       {isBest && (
                         <span className="flex items-center gap-1 px-1.5 py-0.5 bg-accent text-accent-foreground text-xs font-bold rounded">
                           <Crown className="w-3 h-3" aria-hidden="true" />
@@ -146,7 +146,7 @@ export function CompareTable({
                       )}
                       <div>
                         <p className="font-medium text-foreground text-sm">{airline.name}</p>
-                        <p className="text-xs text-foreground/50 font-mono">{airline.code}</p>
+                        <p className="text-xs text-muted-foreground font-mono">{airline.code}</p>
                       </div>
                     </div>
                   </td>
@@ -182,7 +182,7 @@ export function CompareTable({
             >
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <span className="text-lg">{countryToFlag(airline.country)}</span>
+                  <span className="text-lg" aria-hidden="true">{countryToFlag(airline.country)}</span>
                   {isBest && (
                     <span className="flex items-center gap-1 px-1.5 py-0.5 bg-accent text-accent-foreground text-xs font-bold rounded">
                       <Crown className="w-3 h-3" aria-hidden="true" />
@@ -191,7 +191,7 @@ export function CompareTable({
                   )}
                   <div>
                     <p className="font-heading font-bold text-foreground">{airline.name}</p>
-                    <p className="text-xs text-foreground/50 font-mono">{airline.code}</p>
+                    <p className="text-xs text-muted-foreground font-mono">{airline.code}</p>
                   </div>
                 </div>
                 {fit && <OutcomeBadge outcome={fit.outcome} variant="light" className="text-xs px-2 py-1" />}
@@ -219,7 +219,7 @@ function BagTypeCell({ allowance, unit, weightUnit }: {
   return (
     <td className="py-3 px-3">
       <p className="font-mono text-xs text-foreground/80">{formatDimensions(allowance.maxCm, unit)}</p>
-      <p className="text-xs text-foreground/50">{allowance.maxKg ? formatWeight(allowance.maxKg, weightUnit) : 'No limit'}</p>
+      <p className="text-xs text-muted-foreground">{allowance.maxKg ? formatWeight(allowance.maxKg, weightUnit) : 'No limit'}</p>
     </td>
   );
 }
@@ -239,7 +239,7 @@ function BagTypeMobileRow({ label, allowance, unit, weightUnit }: {
   }
   return (
     <div className="flex justify-between items-baseline">
-      <span className="text-xs font-medium text-foreground/60">{label}</span>
+      <span className="text-xs font-medium text-muted-foreground">{label}</span>
       <span className="font-mono text-xs text-foreground/80">
         {formatDimensions(allowance.maxCm, unit)}
         {allowance.maxKg ? ` / ${formatWeight(allowance.maxKg, weightUnit)}` : ''}

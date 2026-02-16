@@ -73,7 +73,7 @@ export function AirlinesBrowse() {
         <div className="max-w-6xl mx-auto px-6 text-center">
           <div className="flex flex-col items-center gap-4" role="status" aria-label="Loading airlines">
             <div className="w-8 h-8 border-4 border-foreground/30 border-t-foreground rounded-full animate-spin" />
-            <span className="text-foreground/60">Loading airlines...</span>
+            <span className="text-muted-foreground">Loading airlines...</span>
           </div>
         </div>
       </section>
@@ -105,7 +105,7 @@ export function AirlinesBrowse() {
         <ScrollReveal className="mb-10">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <div>
-              <span className="font-mono text-xs uppercase tracking-wider text-foreground/60 block mb-4">
+              <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground block mb-4">
                 AIRLINE LIMITS
               </span>
               <h2 className="text-h2 font-heading font-bold text-foreground">
@@ -123,7 +123,7 @@ export function AirlinesBrowse() {
                 value={compareSort}
                 onChange={(e) => setCompareSort(e.target.value as SortOption)}
                 aria-label="Sort airlines by"
-                className="bg-card border border-border rounded-lg px-4 py-2 text-sm text-foreground input-focus transition-colors"
+                className="bg-card border border-border rounded-lg px-4 py-2 min-h-[44px] text-sm text-foreground input-focus transition-colors"
               >
                 {sortOptions.map((opt) => (
                   <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -170,7 +170,7 @@ export function AirlinesBrowse() {
               value={regionFilter}
               onChange={(e) => setRegionFilter(e.target.value)}
               aria-label="Filter by region"
-              className="bg-card border border-border rounded-lg px-4 py-2 text-sm text-foreground input-focus transition-colors"
+              className="bg-card border border-border rounded-lg px-4 py-2 min-h-[44px] text-sm text-foreground input-focus transition-colors"
             >
               {regionOptions.map((opt) => (
                 <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -181,7 +181,7 @@ export function AirlinesBrowse() {
 
         {/* Results count */}
         <ScrollReveal delay={0.15} className="mb-4">
-          <p className="text-sm text-foreground/60" aria-live="polite">
+          <p className="text-sm text-muted-foreground" aria-live="polite">
             Showing {filteredAirlines.length} airline{filteredAirlines.length !== 1 ? 's' : ''}
             {regionFilter !== 'all' && ` in ${regionOptions.find(r => r.value === regionFilter)?.label}`}
             {hasResults && fitFilter !== 'all' && ` (${fitFilter === 'fits' ? 'fits' : "doesn't fit"})`}
@@ -203,7 +203,7 @@ export function AirlinesBrowse() {
 
         {/* Disclaimer */}
         <ScrollReveal delay={0.3} className="mt-10">
-          <p className="text-sm text-foreground/50 text-center">
+          <p className="text-sm text-muted-foreground text-center">
             Sizes are published limits; enforcement varies by route and staff.
             Always confirm on the airline&apos;s official page before you fly.
           </p>

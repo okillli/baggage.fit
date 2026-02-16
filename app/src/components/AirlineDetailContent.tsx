@@ -37,7 +37,7 @@ export function AirlineDetailContent({
       {/* Header */}
       {!hideHeader && (
         <div className="flex items-center gap-3">
-          <span className="text-3xl">{countryFlag}</span>
+          <span className="text-3xl" aria-hidden="true">{countryFlag}</span>
           <div>
             {headingLevel === 'h1' ? (
               <h1 className="font-heading font-bold text-xl">{airline.name}</h1>
@@ -93,6 +93,7 @@ export function AirlineDetailContent({
           >
             <ExternalLink className="w-4 h-4" aria-hidden="true" />
             Official baggage policy
+            <span className="sr-only">(opens in new tab)</span>
           </a>
           {airline.links.calculator && (
             <a
@@ -103,13 +104,14 @@ export function AirlineDetailContent({
             >
               <ExternalLink className="w-4 h-4" aria-hidden="true" />
               Size calculator
+              <span className="sr-only">(opens in new tab)</span>
             </a>
           )}
         </div>
       </div>
 
       {/* Trust footer */}
-      <div className="flex items-center gap-2 pt-4 border-t border-border text-xs text-muted-foreground/60">
+      <div className="flex items-center gap-2 pt-4 border-t border-border text-xs text-muted-foreground">
         <Shield className="w-3.5 h-3.5" aria-hidden="true" />
         <span>Last verified: {airline.lastVerified}</span>
         <span className="mx-1">&middot;</span>

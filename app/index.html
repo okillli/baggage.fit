@@ -32,6 +32,10 @@
     <title>baggage.fit — Will your bag fit?</title>
   </head>
   <body>
+    <!-- Prevent flash of wrong theme (FOWT) — runs before first paint -->
+    <script>
+      (function(){var t=localStorage.getItem('baggage-fit-theme');if(!t){t=window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'}if(t==='light'){document.documentElement.classList.add('light');var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content','#FAFAFA')}})();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

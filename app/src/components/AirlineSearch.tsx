@@ -157,7 +157,7 @@ export function AirlineSearch({
             type="button"
             onClick={() => { setQuery(''); setIsOpen(false); inputRef.current?.focus(); }}
             className={cn(
-              'absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors',
+              'absolute right-3 top-1/2 -translate-y-1/2 min-h-[44px] min-w-[44px] flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors',
               isLarge && 'right-4'
             )}
             aria-label="Clear search"
@@ -190,7 +190,7 @@ export function AirlineSearch({
                   i === activeIndex ? 'bg-accent/10' : 'hover:bg-secondary'
                 )}
               >
-                <span className="text-xl shrink-0">{countryToFlag(airline.country)}</span>
+                <span className="text-xl shrink-0" aria-hidden="true">{countryToFlag(airline.country)}</span>
                 <div className="flex-1 min-w-0">
                   <p className="font-medium text-foreground truncate">{airline.name}</p>
                   <p className="text-xs text-muted-foreground font-mono">
