@@ -71,7 +71,8 @@ test.describe('/airlines/ryanair page', () => {
   });
 
   test('Loads Ryanair detail page', async ({ page }) => {
-    await expect(page.getByRole('heading', { name: 'Ryanair' })).toBeVisible();
+    // Use first() since RecommendedBags also adds a heading containing "Ryanair"
+    await expect(page.getByRole('heading', { name: 'Ryanair' }).first()).toBeVisible();
   });
 
   test('Shows breadcrumbs (Home / Airlines / Ryanair)', async ({ page }) => {
@@ -86,10 +87,10 @@ test.describe('/airlines/ryanair page', () => {
     // The AirlineDetailContent shows "Bag allowances" heading
     await expect(page.locator('text=Bag allowances')).toBeVisible();
 
-    // Should have cards for all three bag types (h4 headings from BagTypeAllowanceCard)
-    await expect(page.getByRole('heading', { name: 'Cabin Bag' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Under-Seat Bag' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Checked Bag' })).toBeVisible();
+    // Bag type labels are <p> tags with font-bold class in BagTypeAllowanceCard
+    await expect(page.locator('p.font-bold', { hasText: 'Cabin Bag' })).toBeVisible();
+    await expect(page.locator('p.font-bold', { hasText: 'Under-Seat Bag' })).toBeVisible();
+    await expect(page.locator('p.font-bold', { hasText: 'Checked Bag' })).toBeVisible();
   });
 
   test('Shows "Official baggage policy" link', async ({ page }) => {
@@ -104,21 +105,15 @@ test.describe('/airlines/ryanair page', () => {
     await expect(page.locator('text=/Last verified/')).toBeVisible();
   });
 
-  test('Has CTA "Check your bag against Ryanair"', async ({ page }) => {
-    const cta = page.locator('a', { hasText: 'Check your bag against Ryanair' });
-    await expect(cta).toBeVisible();
+  test('Has inline fit checker section', async ({ page }) => {
+    const checker = page.getByRole('heading', { name: 'Check your bag' });
+    await expect(checker).toBeVisible();
   });
 
-  test('CTA navigates to home page', async ({ page }) => {
-    const cta = page.locator('a', { hasText: 'Check your bag against Ryanair' });
-    await cta.click();
-    await page.waitForTimeout(1500);
-
-    // Should navigate to home
-    expect(page.url()).toContain('localhost:5173');
-    // The path should be "/" (root)
-    const path = new URL(page.url()).pathname;
-    expect(path).toBe('/');
+  test('Fit checker has dimension inputs', async ({ page }) => {
+    // The InlineFitChecker should have input fields for bag dimensions
+    const inputs = page.locator('input[type="number"]');
+    await expect(inputs.first()).toBeVisible();
   });
 });
 
