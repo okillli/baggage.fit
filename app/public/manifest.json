@@ -1,7 +1,7 @@
 {
   "name": "baggage.fit",
   "short_name": "baggage.fit",
-  "description": "Check cabin, underseat, and checked baggage limits for 30+ airlines.",
+  "description": "Check cabin, underseat, and checked baggage limits for 41 airlines.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#1A1A1A",

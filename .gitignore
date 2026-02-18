@@ -22,6 +22,9 @@ app/.vite/
 
 # Screenshots (dev artifacts)
 *.png
+# But allow public PWA icons and social images
+!app/public/*.png
+!app/public/images/*.png
 
 # Claude internal
 .claude/

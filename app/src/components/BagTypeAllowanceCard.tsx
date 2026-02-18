@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils';
 import { formatDimensions, formatWeight, checkFit, checkWeightFit, convertToCm } from '@/lib/fitLogic';
 import { OutcomeBadge } from './OutcomeBadge';
 import type { BagAllowance, BagType, Dimensions, Unit, WeightUnit } from '@/types';
-import { Ruler, Weight, StickyNote, Luggage, Backpack, Package } from 'lucide-react';
+import { Ruler, Weight, StickyNote, Luggage, Backpack, Package, CheckCircle2, Tag } from 'lucide-react';
 
 const bagTypeConfig: Record<BagType, { label: string; icon: typeof Luggage }> = {
   cabin: { label: 'Cabin Bag', icon: Luggage },
@@ -19,6 +19,27 @@ interface BagTypeAllowanceCardProps {
   unit: Unit;
   weightUnit: WeightUnit;
   className?: string;
+}
+
+function InclusionBadge({ allowance }: { allowance: BagAllowance }) {
+  if (allowance.included === true) {
+    return (
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-bold bg-accent/15 text-accent border border-accent/30">
+        <CheckCircle2 className="w-3 h-3" aria-hidden="true" />
+        FREE
+      </span>
+    );
+  }
+  if (allowance.included === false && allowance.fee) {
+    const { min, currency } = allowance.fee;
+    return (
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-bold bg-amber-500/10 text-amber-400 border border-amber-500/30">
+        <Tag className="w-3 h-3" aria-hidden="true" />
+        From {currency === 'GBP' ? '£' : currency === 'USD' ? '$' : currency === 'NZD' ? 'NZ$' : currency === 'AUD' ? 'A$' : '€'}{min}
+      </span>
+    );
+  }
+  return null;
 }
 
 export function BagTypeAllowanceCard({
@@ -75,6 +96,13 @@ export function BagTypeAllowanceCard({
         </div>
         {dimOutcome && <OutcomeBadge outcome={dimOutcome} className="text-xs py-0.5 px-2" />}
       </div>
+
+      {/* Inclusion badge */}
+      {allowance.included !== undefined && (
+        <div className="mb-3">
+          <InclusionBadge allowance={allowance} />
+        </div>
+      )}
 
       {/* Dimensions */}
       <div className="space-y-2">

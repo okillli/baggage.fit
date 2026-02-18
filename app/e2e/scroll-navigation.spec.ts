@@ -17,6 +17,7 @@ async function scrollToNormalized(page: Page, fraction: number) {
 }
 
 /** Get the vertical center of an element in the viewport */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function getElementViewportCenter(page: Page, selector: string) {
   return page.evaluate((sel) => {
     const el = document.querySelector(sel);
@@ -148,6 +149,7 @@ test.describe('Header navigation', () => {
 
   test('Header gets background on scroll', async ({ page }) => {
     // Initially transparent
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const headerInitial = await page.locator('header').evaluate((el) =>
       getComputedStyle(el).backdropFilter
     );
@@ -250,6 +252,7 @@ test.describe('Footer navigation', () => {
     await page.waitForTimeout(1500);
 
     // Should be back near top
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const scrollY = await page.evaluate(() => window.scrollY);
     // Because it scrolls to center of Hero pin, it might not be exactly 0
     // but should be well above airlines section

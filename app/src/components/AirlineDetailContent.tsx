@@ -3,6 +3,7 @@ import { countryToFlag } from '@/lib/format';
 import type { Airline, BagType, Dimensions, Unit, WeightUnit } from '@/types';
 import { BagTypeAllowanceCard } from './BagTypeAllowanceCard';
 import { InlineFitChecker } from './InlineFitChecker';
+import { RecommendedBags } from './RecommendedBags';
 import { ExternalLink, Shield } from 'lucide-react';
 
 interface AirlineDetailContentProps {
@@ -75,6 +76,11 @@ export function AirlineDetailContent({
       {/* Inline fit checker */}
       {showFitChecker && (
         <InlineFitChecker airline={airline} />
+      )}
+
+      {/* Recommended bags (affiliate) */}
+      {showFitChecker && (
+        <RecommendedBags airline={airline} bagType={activeBagType} className="pt-2" />
       )}
 
       {/* Policy links */}

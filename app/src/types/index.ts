@@ -5,10 +5,19 @@ export type FitOutcome = 'fits' | 'doesnt-fit' | 'unknown';
 export type SortOption = 'largest' | 'strictest' | 'alphabetical';
 export type FitFilter = 'all' | 'fits' | 'doesnt-fit';
 
+export interface BagAllowanceFee {
+  min: number;
+  max: number;
+  currency: string;
+}
+
 export interface BagAllowance {
   maxCm: number[] | null;
   maxKg: number | null;
   notes?: string;
+  included?: boolean;   // does cheapest/base fare include this bag type free?
+  fee?: BagAllowanceFee; // fee range if not included (or for gate charges)
+  quantity?: number;    // how many of this type allowed (default 1)
 }
 
 export interface Airline {

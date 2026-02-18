@@ -6,11 +6,11 @@
     "links": {
       "policy": "https://www.ryanair.com/gb/en/useful-info/help-centre/terms-and-conditions/regulations-and-policies/baggage-policy"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [55, 40, 20], "maxKg": 10, "notes": "Priority boarding includes 1 cabin bag. Non-priority limited to small bag." },
-      "underseat": { "maxCm": [40, 25, 20], "maxKg": null, "notes": "Small bag must fit under seat." },
-      "checked": { "maxCm": null, "maxKg": 20, "notes": "Size varies by fare. 10kg and 20kg options available." }
+      "cabin": { "maxCm": [55, 40, 20], "maxKg": 10, "included": false, "fee": { "min": 6, "max": 40, "currency": "EUR" }, "notes": "Priority boarding includes 1 cabin bag (55×40×20cm). Value fare limited to small underseat bag only. Add priority online from ~€6, gate fee up to €40." },
+      "underseat": { "maxCm": [40, 25, 20], "maxKg": null, "included": true, "notes": "Small bag (40×25×20cm) included FREE with all fare types. Must fit under seat." },
+      "checked": { "maxCm": null, "maxKg": 20, "included": false, "fee": { "min": 13, "max": 70, "currency": "EUR" }, "notes": "Not included in any fare. From €13 online, up to €70 at gate. Ryanair enforces weight limit (not dimensions) for hold baggage." }
     }
   },
   {
@@ -20,11 +20,11 @@
     "links": {
       "policy": "https://www.easyjet.com/en/help/baggage/cabin-bag-and-hold-luggage"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [45, 36, 20], "maxKg": 15, "notes": "Large cabin bag for Plus/Flexi fares. Standard fare includes smaller bag." },
-      "underseat": { "maxCm": [36, 20, 15], "maxKg": 15, "notes": "Standard small cabin bag included for all fares." },
-      "checked": { "maxCm": [275], "maxKg": 23, "notes": "Total dimensions up to 275cm (L+W+H). 15kg, 23kg, 26kg, 29kg options." }
+      "cabin": { "maxCm": [56, 45, 25], "maxKg": 15, "included": false, "fee": { "min": 6, "max": 48, "currency": "GBP" }, "notes": "Large cabin bag (56×45×25cm) requires purchase or easyJet Plus/Flexi fare. From ~£6 online, £48 at gate. Standard fares only include small underseat bag." },
+      "underseat": { "maxCm": [45, 36, 20], "maxKg": 15, "included": true, "notes": "Small cabin bag (45×36×20cm) included FREE with all fares — must fit under seat." },
+      "checked": { "maxCm": [275], "maxKg": 23, "included": false, "fee": { "min": 7, "max": 48, "currency": "GBP" }, "notes": "Total dimensions up to 275cm (L+W+H). Not included. From ~£7 online, £48 at airport. 15kg, 23kg, 26kg, 29kg options available." }
     }
   },
   {
@@ -34,11 +34,11 @@
     "links": {
       "policy": "https://www.britishairways.com/en-gb/information/baggage-essentials/hand-baggage"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [56, 45, 25], "maxKg": 23, "notes": "1 cabin bag plus 1 handbag/laptop bag." },
-      "underseat": { "maxCm": [40, 30, 15], "maxKg": 23, "notes": "Handbag or laptop bag must fit under seat." },
-      "checked": { "maxCm": [90, 75, 43], "maxKg": 23, "notes": "Up to 32kg depending on fare class." }
+      "cabin": { "maxCm": [56, 45, 25], "maxKg": 23, "included": true, "notes": "1 cabin bag plus 1 handbag/laptop bag included on all fares including Hand Baggage Only." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 23, "included": true, "notes": "Handbag or laptop bag must fit under seat. Included with cabin bag allowance." },
+      "checked": { "maxCm": [90, 75, 43], "maxKg": 23, "included": false, "fee": { "min": 35, "max": 80, "currency": "GBP" }, "notes": "Not included on Hand Baggage Only fares. From £35 to add online. Up to 32kg depending on fare class." }
     }
   },
   {
@@ -48,11 +48,11 @@
     "links": {
       "policy": "https://www.lufthansa.com/de/en/baggage"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [55, 40, 23], "maxKg": 8, "notes": "1 cabin bag plus 1 foldable garment bag or laptop bag." },
-      "underseat": { "maxCm": [40, 30, 10], "maxKg": 8, "notes": "Additional small item must fit under seat." },
-      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm (L+W+H). 23kg in Economy, 32kg in Premium." }
+      "cabin": { "maxCm": [55, 40, 23], "maxKg": 8, "included": true, "notes": "1 cabin bag included on Economy Classic/Flex. Economy Light fares may exclude cabin bag on some routes — check at booking." },
+      "underseat": { "maxCm": [40, 30, 10], "maxKg": 8, "included": true, "notes": "Additional small item must fit under seat. Included on all fares." },
+      "checked": { "maxCm": [158], "maxKg": 23, "included": false, "fee": { "min": 30, "max": 80, "currency": "EUR" }, "notes": "Total dimensions 158cm. Not included on Economy Light. From ~€30 online. 23kg in Economy, 32kg in Premium." }
     }
   },
   {
@@ -62,11 +62,11 @@
     "links": {
       "policy": "https://www.klm.com/travel/nl_en/prepare_for_travel/baggage/baggage_allowance/index.htm"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [55, 35, 25], "maxKg": 12, "notes": "1 cabin bag plus 1 small accessory." },
-      "underseat": { "maxCm": [40, 30, 15], "maxKg": 12, "notes": "Small accessory must fit under seat." },
-      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy, 32kg in Business." }
+      "cabin": { "maxCm": [55, 35, 25], "maxKg": 12, "included": true, "notes": "1 cabin bag plus 1 small accessory included on most fares. Economy Light may vary by route." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 12, "included": true, "notes": "Small accessory must fit under seat. Included on all fares." },
+      "checked": { "maxCm": [158], "maxKg": 23, "included": false, "fee": { "min": 20, "max": 50, "currency": "EUR" }, "notes": "Total dimensions 158cm. Not included on Economy Light. From ~€20 online. 23kg in Economy, 32kg in Business." }
     }
   },
   {
@@ -76,11 +76,11 @@
     "links": {
       "policy": "https://www.airfrance.fr/FR/en/common/guidevoyageur/pratique/bagages.htm"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [55, 35, 25], "maxKg": 12, "notes": "1 cabin bag plus 1 accessory." },
-      "underseat": { "maxCm": [40, 30, 15], "maxKg": 12, "notes": "Accessory must fit under seat." },
-      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. Weight varies by fare." }
+      "cabin": { "maxCm": [55, 35, 25], "maxKg": 12, "included": true, "notes": "1 cabin bag plus 1 accessory included on most fares. Not included on Light/Basic Economy." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 12, "included": true, "notes": "Accessory must fit under seat. Included on all fares." },
+      "checked": { "maxCm": [158], "maxKg": 23, "included": false, "fee": { "min": 20, "max": 50, "currency": "EUR" }, "notes": "Total dimensions 158cm. Not included on Basic Economy. Weight varies by fare and route." }
     }
   },
   {
@@ -90,11 +90,11 @@
     "links": {
       "policy": "https://www.delta.com/us/en/baggage"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [56, 35, 23], "maxKg": null, "notes": "1 cabin bag plus 1 personal item. No weight limit specified." },
-      "underseat": { "maxCm": [43, 33, 20], "maxKg": null, "notes": "Personal item must fit under seat." },
-      "checked": { "maxCm": [157], "maxKg": 23, "notes": "Total dimensions 157cm (62 inches). 23kg in Economy." }
+      "cabin": { "maxCm": [56, 35, 23], "maxKg": null, "included": true, "notes": "1 carry-on bag included FREE for all passengers. No weight limit. Plus 1 personal item." },
+      "underseat": { "maxCm": [43, 33, 20], "maxKg": null, "included": true, "notes": "Personal item must fit under seat. Included FREE for all passengers." },
+      "checked": { "maxCm": [157], "maxKg": 23, "included": false, "fee": { "min": 35, "max": 80, "currency": "USD" }, "notes": "Total dimensions 157cm (62 inches). Not included in Main Cabin Economy. First bag ~$35, second ~$45." }
     }
   },
   {
@@ -104,11 +104,11 @@
     "links": {
       "policy": "https://www.united.com/en/us/fly/travel/baggage.html"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [56, 35, 22], "maxKg": null, "notes": "1 cabin bag plus 1 personal item." },
-      "underseat": { "maxCm": [43, 25, 22], "maxKg": null, "notes": "Personal item must fit under seat." },
-      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+      "cabin": { "maxCm": [56, 35, 22], "maxKg": null, "included": true, "notes": "1 carry-on bag included FREE for all passengers. No weight limit. Plus 1 personal item." },
+      "underseat": { "maxCm": [43, 25, 22], "maxKg": null, "included": true, "notes": "Personal item must fit under seat. Included FREE for all passengers." },
+      "checked": { "maxCm": [158], "maxKg": 23, "included": false, "fee": { "min": 40, "max": 100, "currency": "USD" }, "notes": "Total dimensions 158cm. Not included in Economy. First bag ~$40, second ~$50." }
     }
   },
   {
@@ -118,11 +118,11 @@
     "links": {
       "policy": "https://www.aa.com/i18n/travel-info/baggage/carry-on-baggage.jsp"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [56, 36, 23], "maxKg": null, "notes": "1 cabin bag plus 1 personal item." },
-      "underseat": { "maxCm": [45, 35, 20], "maxKg": null, "notes": "Personal item must fit under seat." },
-      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. Fees apply for most routes." }
+      "cabin": { "maxCm": [56, 36, 23], "maxKg": null, "included": true, "notes": "1 carry-on bag included FREE for all passengers. No weight limit. Plus 1 personal item." },
+      "underseat": { "maxCm": [45, 35, 20], "maxKg": null, "included": true, "notes": "Personal item must fit under seat. Included FREE for all passengers." },
+      "checked": { "maxCm": [158], "maxKg": 23, "included": false, "fee": { "min": 35, "max": 80, "currency": "USD" }, "notes": "Total dimensions 158cm. Not included in Main Cabin. First bag ~$35, second ~$45." }
     }
   },
   {
@@ -132,11 +132,11 @@
     "links": {
       "policy": "https://www.emirates.com/english/help/baggage/"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [55, 38, 20], "maxKg": 7, "notes": "1 cabin bag plus 1 handbag or laptop bag." },
-      "underseat": { "maxCm": [45, 35, 20], "maxKg": 7, "notes": "Handbag or laptop bag must fit under seat." },
-      "checked": { "maxCm": [300], "maxKg": 23, "notes": "Total dimensions 300cm. 23-35kg depending on fare." }
+      "cabin": { "maxCm": [55, 38, 20], "maxKg": 7, "included": true, "notes": "1 cabin bag plus 1 handbag or laptop bag included on all fares. 7kg combined." },
+      "underseat": { "maxCm": [45, 35, 20], "maxKg": 7, "included": true, "notes": "Handbag or laptop bag must fit under seat. Included on all fares." },
+      "checked": { "maxCm": [300], "maxKg": 23, "included": true, "notes": "Total dimensions 300cm. Included on most fares: 25-35kg depending on fare and route." }
     }
   },
   {
@@ -146,11 +146,11 @@
     "links": {
       "policy": "https://www.qatarairways.com/en/baggage/allowance.html"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [50, 37, 25], "maxKg": 7, "notes": "1 cabin bag plus 1 personal item." },
-      "underseat": { "maxCm": [40, 30, 15], "maxKg": 7, "notes": "Personal item must fit under seat." },
-      "checked": { "maxCm": [158], "maxKg": 30, "notes": "Total dimensions 158cm. 30kg in Economy, 40kg in Business." }
+      "cabin": { "maxCm": [50, 37, 25], "maxKg": 7, "included": true, "notes": "1 cabin bag plus 1 personal item included on all fares. 7kg combined weight." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 7, "included": true, "notes": "Personal item must fit under seat. Included on all fares." },
+      "checked": { "maxCm": [158], "maxKg": 30, "included": true, "notes": "Total dimensions 158cm. Included on most fares: 23-30kg in Economy, 30-40kg in Business." }
     }
   },
   {
@@ -160,11 +160,11 @@
     "links": {
       "policy": "https://www.singaporeair.com/en_UK/us/travel-info/baggage/"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [56, 36, 23], "maxKg": 7, "notes": "1 cabin bag plus 1 small item." },
-      "underseat": { "maxCm": [40, 30, 15], "maxKg": 7, "notes": "Small item must fit under seat." },
-      "checked": { "maxCm": [158], "maxKg": 30, "notes": "Total dimensions 158cm. 30kg in Economy, 40kg in Business." }
+      "cabin": { "maxCm": [56, 36, 23], "maxKg": 7, "included": true, "notes": "1 cabin bag plus 1 small item included on all fares. 7kg cabin bag." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 7, "included": true, "notes": "Small item must fit under seat. Included on all fares." },
+      "checked": { "maxCm": [158], "maxKg": 30, "included": true, "notes": "Total dimensions 158cm. Included on most Economy fares: 25-30kg depending on route and fare." }
     }
   },
   {
@@ -174,11 +174,11 @@
     "links": {
       "policy": "https://www.cathaypacific.com/cx/en_US/travel-information/baggage.html"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [56, 36, 23], "maxKg": 7, "notes": "1 cabin bag plus 1 small item." },
-      "underseat": { "maxCm": [40, 30, 15], "maxKg": 7, "notes": "Small item must fit under seat." },
-      "checked": { "maxCm": [203], "maxKg": 30, "notes": "Total dimensions 203cm. 30kg in Economy, 40kg in Business." }
+      "cabin": { "maxCm": [56, 36, 23], "maxKg": 7, "included": true, "notes": "1 cabin bag plus 1 small item included on all fares." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 7, "included": true, "notes": "Small item must fit under seat. Included on all fares." },
+      "checked": { "maxCm": [203], "maxKg": 30, "included": true, "notes": "Total dimensions 203cm. Included on most Economy fares: 23-30kg depending on route." }
     }
   },
   {
@@ -188,11 +188,11 @@
     "links": {
       "policy": "https://www.jal.co.jp/jp/en/inter/baggage/"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [55, 40, 25], "maxKg": 10, "notes": "1 cabin bag plus 1 personal item." },
-      "underseat": { "maxCm": [40, 30, 15], "maxKg": 10, "notes": "Personal item must fit under seat." },
-      "checked": { "maxCm": [203], "maxKg": 23, "notes": "Total dimensions 203cm. 23kg in Economy, 32kg in Business." }
+      "cabin": { "maxCm": [55, 40, 25], "maxKg": 10, "included": true, "notes": "1 cabin bag plus 1 personal item included on all fares. 10kg total." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 10, "included": true, "notes": "Personal item must fit under seat. Included on all fares." },
+      "checked": { "maxCm": [203], "maxKg": 23, "included": true, "notes": "Total dimensions 203cm. Included on International Economy (23kg / 1-2 pieces by route)." }
     }
   },
   {
@@ -202,11 +202,11 @@
     "links": {
       "policy": "https://www.ana.co.jp/en/us/travel-information/baggage/"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [55, 40, 25], "maxKg": 10, "notes": "1 cabin bag plus 1 personal item." },
-      "underseat": { "maxCm": [40, 30, 15], "maxKg": 10, "notes": "Personal item must fit under seat." },
-      "checked": { "maxCm": [203], "maxKg": 23, "notes": "Total dimensions 203cm. 23kg in Economy, 32kg in Business." }
+      "cabin": { "maxCm": [55, 40, 25], "maxKg": 10, "included": true, "notes": "1 cabin bag plus 1 personal item included on all fares. 10kg total." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 10, "included": true, "notes": "Personal item must fit under seat. Included on all fares." },
+      "checked": { "maxCm": [203], "maxKg": 23, "included": true, "notes": "Total dimensions 203cm. Included on International Economy (23kg)." }
     }
   },
   {
@@ -216,11 +216,11 @@
     "links": {
       "policy": "https://www.qantas.com/au/en/travel-info/baggage.html"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [56, 36, 23], "maxKg": 7, "notes": "1 cabin bag plus 1 small item." },
-      "underseat": { "maxCm": [40, 30, 15], "maxKg": 7, "notes": "Small item must fit under seat." },
-      "checked": { "maxCm": [140], "maxKg": 30, "notes": "Total dimensions 140cm. 30kg in Economy, 40kg in Business." }
+      "cabin": { "maxCm": [56, 36, 23], "maxKg": 7, "included": true, "notes": "1 cabin bag plus 1 small item included on Economy fares. 7kg combined." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 7, "included": true, "notes": "Small item must fit under seat. Included on all fares." },
+      "checked": { "maxCm": [140], "maxKg": 30, "included": false, "fee": { "min": 30, "max": 80, "currency": "AUD" }, "notes": "Total dimensions 140cm. Included on Economy standard fares. Not included on Basic Economy. From ~AUD$30 to add." }
     }
   },
   {
@@ -230,11 +230,11 @@
     "links": {
       "policy": "https://www.virgin-atlantic.com/gb/en/travel-information/baggage.html"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [56, 36, 23], "maxKg": 10, "notes": "1 cabin bag plus 1 handbag or laptop bag." },
-      "underseat": { "maxCm": [40, 30, 15], "maxKg": 10, "notes": "Handbag or laptop bag must fit under seat." },
-      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+      "cabin": { "maxCm": [56, 36, 23], "maxKg": 10, "included": true, "notes": "1 cabin bag plus 1 handbag or laptop bag included on all fares." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 10, "included": true, "notes": "Handbag or laptop bag must fit under seat. Included on all fares." },
+      "checked": { "maxCm": [158], "maxKg": 23, "included": false, "fee": { "min": 35, "max": 75, "currency": "GBP" }, "notes": "Total dimensions 158cm. Not included on Economy Light fares. From ~£35 to add online." }
     }
   },
   {
@@ -244,11 +244,11 @@
     "links": {
       "policy": "https://www.southwest.com/html/customer-service/baggage/index.html"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [60, 40, 25], "maxKg": null, "notes": "2 free checked bags. 1 cabin bag plus 1 personal item." },
-      "underseat": { "maxCm": [46, 34, 19], "maxKg": null, "notes": "Personal item must fit under seat." },
-      "checked": { "maxCm": [157], "maxKg": 23, "notes": "Total dimensions 157cm. 2 free checked bags up to 23kg each." }
+      "cabin": { "maxCm": [60, 40, 25], "maxKg": null, "included": true, "notes": "1 carry-on bag included FREE. No weight limit. Industry-leading policy — most other US carriers charge for this." },
+      "underseat": { "maxCm": [46, 34, 19], "maxKg": null, "included": true, "notes": "Personal item must fit under seat. Included FREE." },
+      "checked": { "maxCm": [157], "maxKg": 23, "included": true, "notes": "Total dimensions 157cm. 2 FREE checked bags per person up to 23kg each — the most generous US carrier policy!" }
     }
   },
   {
@@ -258,11 +258,11 @@
     "links": {
       "policy": "https://www.icelandair.com/support/baggage/"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [55, 40, 20], "maxKg": 10, "notes": "1 cabin bag plus 1 small personal item." },
-      "underseat": { "maxCm": [40, 30, 15], "maxKg": 10, "notes": "Personal item must fit under seat." },
-      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+      "cabin": { "maxCm": [55, 40, 20], "maxKg": 10, "included": true, "notes": "1 cabin bag plus 1 small personal item included on most fares. 10kg combined." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 10, "included": true, "notes": "Personal item must fit under seat. Included on all fares." },
+      "checked": { "maxCm": [158], "maxKg": 23, "included": false, "fee": { "min": 25, "max": 60, "currency": "EUR" }, "notes": "Total dimensions 158cm. Not included on Tern/Light fares. From ~€25 online." }
     }
   },
   {
@@ -272,11 +272,11 @@
     "links": {
       "policy": "https://www.norwegian.com/uk/travel-info/baggage/"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [55, 40, 23], "maxKg": 10, "notes": "1 cabin bag plus 1 small personal item. LowFare requires purchase." },
-      "underseat": { "maxCm": [38, 30, 20], "maxKg": 10, "notes": "Small personal item must fit under seat." },
-      "checked": { "maxCm": [250], "maxKg": 23, "notes": "Total dimensions 250cm. 23kg or 32kg options." }
+      "cabin": { "maxCm": [55, 40, 23], "maxKg": 10, "included": false, "fee": { "min": 6, "max": 14, "currency": "EUR" }, "notes": "Cabin bag NOT included on LowFare. Must purchase separately from ~€6 per leg. Included on LowFare+ and Flex fares. Combined weight with personal item: 10kg." },
+      "underseat": { "maxCm": [38, 30, 20], "maxKg": 10, "included": true, "notes": "Small personal item (underseat) included FREE with ALL fares including LowFare." },
+      "checked": { "maxCm": [250], "maxKg": 23, "included": false, "fee": { "min": 20, "max": 60, "currency": "EUR" }, "notes": "Total dimensions 250cm. Not included on LowFare. From ~€20 online." }
     }
   },
   {
@@ -286,11 +286,11 @@
     "links": {
       "policy": "https://wizzair.com/en-gb/information-and-services/travel-information/baggage"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [55, 40, 20], "maxKg": 10, "notes": "WIZZ Priority cabin bag. Free small bag is 40x30x20cm." },
-      "underseat": { "maxCm": [40, 30, 20], "maxKg": 10, "notes": "Free small bag must fit under seat." },
-      "checked": { "maxCm": [149], "maxKg": 20, "notes": "Total dimensions 149cm (L+W+H). 10kg, 20kg, 26kg, 32kg options." }
+      "cabin": { "maxCm": [55, 40, 23], "maxKg": 10, "included": false, "fee": { "min": 10, "max": 59, "currency": "EUR" }, "notes": "Trolley bag (up to 55×40×23cm) NOT free — requires WIZZ Priority add-on from ~€10-€59 depending on route. Only WIZZ Priority passengers may use overhead bin with large bag." },
+      "underseat": { "maxCm": [40, 30, 20], "maxKg": 10, "included": true, "notes": "Free carry-on bag (max 40×30×20cm) included FREE with ALL fares — must fit under seat." },
+      "checked": { "maxCm": [149], "maxKg": 20, "included": false, "fee": { "min": 9, "max": 50, "currency": "EUR" }, "notes": "Total dimensions 149cm. Not included in base fare. From ~€9 online. 10kg, 20kg, 26kg, 32kg options." }
     }
   },
   {
@@ -300,11 +300,11 @@
     "links": {
       "policy": "https://www.flytap.com/en-pt/baggage"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [55, 40, 20], "maxKg": 8, "notes": "1 cabin bag plus 1 personal item." },
-      "underseat": { "maxCm": [40, 30, 15], "maxKg": 8, "notes": "Personal item must fit under seat." },
-      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+      "cabin": { "maxCm": [55, 40, 20], "maxKg": 8, "included": true, "notes": "1 cabin bag plus 1 personal item included on most fares. 8kg combined. Not included on Discount fares — personal item only." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 8, "included": true, "notes": "Personal item must fit under seat. Included on all fares." },
+      "checked": { "maxCm": [158], "maxKg": 23, "included": false, "fee": { "min": 25, "max": 55, "currency": "EUR" }, "notes": "Total dimensions 158cm. Not included on Discount/Basic fares. From ~€25 online." }
     }
   },
   {
@@ -314,11 +314,11 @@
     "links": {
       "policy": "https://www.iberia.com/es/ayuda/equipaje/"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [56, 40, 25], "maxKg": 10, "notes": "1 cabin bag plus 1 personal item." },
-      "underseat": { "maxCm": [40, 30, 15], "maxKg": 10, "notes": "Personal item must fit under seat." },
-      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+      "cabin": { "maxCm": [56, 40, 25], "maxKg": 10, "included": true, "notes": "1 cabin bag plus 1 personal item included on most fares. Not included on Basic/Light fares — personal item only." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 10, "included": true, "notes": "Personal item must fit under seat. Included on all fares." },
+      "checked": { "maxCm": [158], "maxKg": 23, "included": false, "fee": { "min": 20, "max": 50, "currency": "EUR" }, "notes": "Total dimensions 158cm. Not included on Basic fares. From ~€20 online." }
     }
   },
   {
@@ -328,11 +328,11 @@
     "links": {
       "policy": "https://www.austrian.com/Info/Flying/Baggage.aspx"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [55, 40, 23], "maxKg": 8, "notes": "1 cabin bag plus 1 personal item." },
-      "underseat": { "maxCm": [40, 30, 15], "maxKg": 8, "notes": "Personal item must fit under seat." },
-      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+      "cabin": { "maxCm": [55, 40, 23], "maxKg": 8, "included": true, "notes": "1 cabin bag plus 1 personal item included on Economy Classic/Flex. May not be included on Economy Light on some routes." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 8, "included": true, "notes": "Personal item must fit under seat. Included on all fares." },
+      "checked": { "maxCm": [158], "maxKg": 23, "included": false, "fee": { "min": 30, "max": 70, "currency": "EUR" }, "notes": "Total dimensions 158cm. Not included on Economy Light. From ~€30 online." }
     }
   },
   {
@@ -342,11 +342,11 @@
     "links": {
       "policy": "https://www.flysas.com/en/us/travel-info/baggage/"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [55, 40, 23], "maxKg": 8, "notes": "1 cabin bag plus 1 small item. SAS Go Light excludes cabin bag." },
-      "underseat": { "maxCm": [40, 30, 15], "maxKg": 8, "notes": "Small item must fit under seat." },
-      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in SAS Go." }
+      "cabin": { "maxCm": [55, 40, 23], "maxKg": 8, "included": false, "fee": { "min": 20, "max": 40, "currency": "EUR" }, "notes": "Cabin bag NOT included on SAS Go Light (European routes). Go Light only includes small underseat item. Included on Go, Plus, Pro fares. From ~€20 to add cabin bag." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 8, "included": true, "notes": "Small item (40×30×15cm) included FREE on all fares including Go Light." },
+      "checked": { "maxCm": [158], "maxKg": 23, "included": false, "fee": { "min": 20, "max": 50, "currency": "EUR" }, "notes": "Total dimensions 158cm. Not included on SAS Go Light. From ~€20 online." }
     }
   },
   {
@@ -356,11 +356,11 @@
     "links": {
       "policy": "https://www.finnair.com/en/baggage"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [56, 45, 25], "maxKg": 8, "notes": "1 cabin bag plus 1 personal item. Economy Light excludes cabin bag." },
-      "underseat": { "maxCm": [40, 30, 15], "maxKg": 8, "notes": "Personal item must fit under seat." },
-      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+      "cabin": { "maxCm": [56, 45, 25], "maxKg": 8, "included": false, "fee": { "min": 25, "max": 45, "currency": "EUR" }, "notes": "Cabin bag NOT included on Economy Light or Economy Superlight. Only underseat bag on cheapest fares. Included on Economy Classic/Flex. From ~€25-€45 to add." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 8, "included": true, "notes": "Personal item must fit under seat. Included on all fares including Superlight." },
+      "checked": { "maxCm": [158], "maxKg": 23, "included": false, "fee": { "min": 25, "max": 60, "currency": "EUR" }, "notes": "Total dimensions 158cm. Not included on Economy Light/Superlight. From ~€25 online." }
     }
   },
   {
@@ -370,11 +370,11 @@
     "links": {
       "policy": "https://www.lot.com/us/en/baggage"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [55, 40, 23], "maxKg": 8, "notes": "1 cabin bag plus 1 personal item." },
-      "underseat": { "maxCm": [40, 30, 15], "maxKg": 8, "notes": "Personal item must fit under seat." },
-      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+      "cabin": { "maxCm": [55, 40, 23], "maxKg": 8, "included": true, "notes": "1 cabin bag plus 1 personal item included on Economy standard fares. Not included on Economy Saver/Light on some routes." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 8, "included": true, "notes": "Personal item must fit under seat. Included on all fares." },
+      "checked": { "maxCm": [158], "maxKg": 23, "included": false, "fee": { "min": 20, "max": 50, "currency": "EUR" }, "notes": "Total dimensions 158cm. Not included on Economy Saver. From ~€20-€30 online." }
     }
   },
   {
@@ -384,11 +384,11 @@
     "links": {
       "policy": "https://www.turkishairlines.com/en-int/any-questions/carry-on-baggage/"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [55, 40, 23], "maxKg": 8, "notes": "1 cabin bag plus 1 personal item." },
-      "underseat": { "maxCm": [40, 30, 15], "maxKg": 8, "notes": "Personal item must fit under seat." },
-      "checked": { "maxCm": [158], "maxKg": 20, "notes": "Total dimensions 158cm. 20kg in Economy." }
+      "cabin": { "maxCm": [55, 40, 23], "maxKg": 8, "included": true, "notes": "1 cabin bag plus 1 personal item included on all fares. 8kg combined." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 8, "included": true, "notes": "Personal item must fit under seat. Included on all fares." },
+      "checked": { "maxCm": [158], "maxKg": 20, "included": true, "notes": "Total dimensions 158cm. Included on most Economy routes (20kg). Some routes and Economy Promotion fares may have different allowances." }
     }
   },
   {
@@ -398,11 +398,11 @@
     "links": {
       "policy": "https://www.etihad.com/en-us/baggage"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [56, 36, 23], "maxKg": 7, "notes": "1 cabin bag plus 1 personal item." },
-      "underseat": { "maxCm": [40, 30, 15], "maxKg": 7, "notes": "Personal item must fit under seat." },
-      "checked": { "maxCm": [207], "maxKg": 23, "notes": "Total dimensions 207cm. 23kg in Economy." }
+      "cabin": { "maxCm": [56, 36, 23], "maxKg": 7, "included": true, "notes": "1 cabin bag plus 1 personal item included on all fares. 7kg combined." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 7, "included": true, "notes": "Personal item must fit under seat. Included on all fares." },
+      "checked": { "maxCm": [207], "maxKg": 23, "included": false, "fee": { "min": 30, "max": 70, "currency": "USD" }, "notes": "Total dimensions 207cm. Not included on Economy Lite fares. From ~$30 to add online. 23kg in Economy." }
     }
   },
   {
@@ -412,11 +412,11 @@
     "links": {
       "policy": "https://www.koreanair.com/booking/baggage"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [55, 40, 20], "maxKg": 12, "notes": "1 cabin bag plus 1 personal item." },
-      "underseat": { "maxCm": [40, 30, 15], "maxKg": 12, "notes": "Personal item must fit under seat." },
-      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+      "cabin": { "maxCm": [55, 40, 20], "maxKg": 12, "included": true, "notes": "1 cabin bag plus 1 personal item included on all fares. 12kg total." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 12, "included": true, "notes": "Personal item must fit under seat. Included on all fares." },
+      "checked": { "maxCm": [158], "maxKg": 23, "included": true, "notes": "Total dimensions 158cm. Included on International Economy (1-2 pieces by route at 23kg)." }
     }
   },
   {
@@ -426,11 +426,11 @@
     "links": {
       "policy": "https://www.airnewzealand.com/baggage"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [56, 36, 23], "maxKg": 7, "notes": "1 cabin bag plus 1 small item." },
-      "underseat": { "maxCm": [40, 30, 15], "maxKg": 7, "notes": "Small item must fit under seat." },
-      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+      "cabin": { "maxCm": [56, 36, 23], "maxKg": 7, "included": true, "notes": "1 cabin bag plus 1 small item included on most Economy fares. 7kg." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 7, "included": true, "notes": "Small item must fit under seat. Included on all fares." },
+      "checked": { "maxCm": [158], "maxKg": 23, "included": false, "fee": { "min": 30, "max": 80, "currency": "NZD" }, "notes": "Total dimensions 158cm. Not included on Seat-only/Works Lite fares. From ~NZD$30 online." }
     }
   },
   {
@@ -440,11 +440,11 @@
     "links": {
       "policy": "https://www.vueling.com/en/booking/baggage"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [40, 30, 20], "maxKg": 10, "notes": "Small cabin bag included. Larger bag requires purchase." },
-      "underseat": { "maxCm": [40, 30, 20], "maxKg": 10, "notes": "Free small bag must fit under seat." },
-      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg or 32kg options." }
+      "cabin": { "maxCm": [55, 40, 20], "maxKg": 10, "included": false, "fee": { "min": 8, "max": 30, "currency": "EUR" }, "notes": "Large cabin bag NOT included in Basic/Optima fares. Must purchase from ~€8 online. Only small underseat bag free on Basic fare." },
+      "underseat": { "maxCm": [40, 30, 20], "maxKg": 10, "included": true, "notes": "Free small bag (40×30×20cm) included FREE with all fares — must fit under seat." },
+      "checked": { "maxCm": [158], "maxKg": 23, "included": false, "fee": { "min": 20, "max": 60, "currency": "EUR" }, "notes": "Total dimensions 158cm. Not included in Basic fares. From ~€20 online. 23kg or 32kg options." }
     }
   },
   {
@@ -454,11 +454,11 @@
     "links": {
       "policy": "https://www.aerlingus.com/help/baggage/"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [55, 40, 24], "maxKg": 10, "notes": "1 cabin bag plus 1 small personal item." },
-      "underseat": { "maxCm": [40, 30, 15], "maxKg": 10, "notes": "Personal item must fit under seat." },
-      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+      "cabin": { "maxCm": [55, 40, 24], "maxKg": 10, "included": false, "fee": { "min": 12, "max": 45, "currency": "EUR" }, "notes": "Cabin bag NOT included on Hand Baggage Only / basic European fares. Included on Plus/Advantage/AerSpace and transatlantic fares. From ~€12 online, ~€45 at airport." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 10, "included": true, "notes": "Personal item must fit under seat. Included FREE on all fares." },
+      "checked": { "maxCm": [158], "maxKg": 23, "included": false, "fee": { "min": 12, "max": 50, "currency": "EUR" }, "notes": "Total dimensions 158cm. Not included on standard European fares. From ~€12 online." }
     }
   },
   {
@@ -468,11 +468,11 @@
     "links": {
       "policy": "https://www.brusselsairlines.com/en/be/practical-information/travel-info/baggage.aspx"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [55, 40, 23], "maxKg": 12, "notes": "1 cabin bag plus 1 personal item." },
-      "underseat": { "maxCm": [40, 30, 15], "maxKg": 12, "notes": "Personal item must fit under seat." },
-      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+      "cabin": { "maxCm": [55, 40, 23], "maxKg": 12, "included": true, "notes": "1 cabin bag plus 1 personal item included on most fares. Not included on Light/Saver fares." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 12, "included": true, "notes": "Personal item must fit under seat. Included on all fares." },
+      "checked": { "maxCm": [158], "maxKg": 23, "included": false, "fee": { "min": 30, "max": 70, "currency": "EUR" }, "notes": "Total dimensions 158cm. Not included on Economy Light/Saver. From ~€30 online." }
     }
   },
   {
@@ -482,11 +482,11 @@
     "links": {
       "policy": "https://www.csa.cz/en/baggage/"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [55, 45, 25], "maxKg": 8, "notes": "1 cabin bag plus 1 personal item." },
-      "underseat": { "maxCm": [40, 30, 15], "maxKg": 8, "notes": "Personal item must fit under seat." },
-      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+      "cabin": { "maxCm": [55, 45, 25], "maxKg": 8, "included": true, "notes": "1 cabin bag plus 1 personal item included on most fares. Note: Czech Airlines (ČSA) has reduced operations — verify current status before booking." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 8, "included": true, "notes": "Personal item must fit under seat. Included on all fares." },
+      "checked": { "maxCm": [158], "maxKg": 23, "included": true, "notes": "Total dimensions 158cm. Generally included on Economy fares." }
     }
   },
   {
@@ -496,11 +496,11 @@
     "links": {
       "policy": "https://www.malaysiaairlines.com/hq/en/baggage.html"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [56, 36, 23], "maxKg": 7, "notes": "1 cabin bag plus 1 personal item." },
-      "underseat": { "maxCm": [40, 30, 15], "maxKg": 7, "notes": "Personal item must fit under seat." },
-      "checked": { "maxCm": [158], "maxKg": 30, "notes": "Total dimensions 158cm. 30kg in Economy." }
+      "cabin": { "maxCm": [56, 36, 23], "maxKg": 7, "included": true, "notes": "1 cabin bag plus 1 personal item included on all fares. 7kg." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 7, "included": true, "notes": "Personal item must fit under seat. Included on all fares." },
+      "checked": { "maxCm": [158], "maxKg": 30, "included": true, "notes": "Total dimensions 158cm. 30kg included on Economy fares." }
     }
   },
   {
@@ -510,11 +510,11 @@
     "links": {
       "policy": "https://www.thaiairways.com/en/baggage"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [56, 45, 25], "maxKg": 7, "notes": "1 cabin bag plus 1 personal item." },
-      "underseat": { "maxCm": [40, 30, 15], "maxKg": 7, "notes": "Personal item must fit under seat." },
-      "checked": { "maxCm": [158], "maxKg": 30, "notes": "Total dimensions 158cm. 30kg in Economy." }
+      "cabin": { "maxCm": [56, 45, 25], "maxKg": 7, "included": true, "notes": "1 cabin bag plus 1 personal item included on all fares. 7kg." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 7, "included": true, "notes": "Personal item must fit under seat. Included on all fares." },
+      "checked": { "maxCm": [158], "maxKg": 30, "included": true, "notes": "Total dimensions 158cm. 30kg included on Economy fares." }
     }
   },
   {
@@ -524,11 +524,11 @@
     "links": {
       "policy": "https://www.philippineairlines.com/en/baggage"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [56, 36, 23], "maxKg": 7, "notes": "1 cabin bag plus 1 personal item." },
-      "underseat": { "maxCm": [40, 30, 15], "maxKg": 7, "notes": "Personal item must fit under seat." },
-      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+      "cabin": { "maxCm": [56, 36, 23], "maxKg": 7, "included": true, "notes": "1 cabin bag plus 1 personal item included on all fares. 7kg." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 7, "included": true, "notes": "Personal item must fit under seat. Included on all fares." },
+      "checked": { "maxCm": [158], "maxKg": 23, "included": true, "notes": "Total dimensions 158cm. Generally included on Economy fares (23kg)." }
     }
   },
   {
@@ -538,11 +538,11 @@
     "links": {
       "policy": "https://www.garuda-indonesia.com/en/baggage"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [56, 36, 23], "maxKg": 7, "notes": "1 cabin bag plus 1 personal item." },
-      "underseat": { "maxCm": [40, 30, 15], "maxKg": 7, "notes": "Personal item must fit under seat." },
-      "checked": { "maxCm": [158], "maxKg": 30, "notes": "Total dimensions 158cm. 30kg in Economy." }
+      "cabin": { "maxCm": [56, 36, 23], "maxKg": 7, "included": true, "notes": "1 cabin bag plus 1 personal item included on all fares. 7kg." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 7, "included": true, "notes": "Personal item must fit under seat. Included on all fares." },
+      "checked": { "maxCm": [158], "maxKg": 30, "included": true, "notes": "Total dimensions 158cm. 30kg included on Economy fares." }
     }
   },
   {
@@ -552,11 +552,11 @@
     "links": {
       "policy": "https://www.airchina.com/en/baggage/"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [55, 40, 20], "maxKg": 5, "notes": "1 cabin bag plus 1 personal item." },
-      "underseat": { "maxCm": [40, 30, 15], "maxKg": 5, "notes": "Personal item must fit under seat." },
-      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+      "cabin": { "maxCm": [55, 40, 20], "maxKg": 5, "included": true, "notes": "1 cabin bag plus 1 personal item included. Very strict 5kg weight limit — one of the lowest. Enforced." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 5, "included": true, "notes": "Personal item must fit under seat. Included on all fares." },
+      "checked": { "maxCm": [158], "maxKg": 23, "included": true, "notes": "Total dimensions 158cm. 23kg included on Economy fares (varies by route)." }
     }
   },
   {
@@ -566,11 +566,11 @@
     "links": {
       "policy": "https://www.ceair.com/baggage"
     },
-    "lastVerified": "2026-01-15",
+    "lastVerified": "2026-02-18",
     "allowances": {
-      "cabin": { "maxCm": [55, 40, 20], "maxKg": 8, "notes": "1 cabin bag plus 1 personal item." },
-      "underseat": { "maxCm": [40, 30, 15], "maxKg": 8, "notes": "Personal item must fit under seat." },
-      "checked": { "maxCm": [158], "maxKg": 23, "notes": "Total dimensions 158cm. 23kg in Economy." }
+      "cabin": { "maxCm": [55, 40, 20], "maxKg": 8, "included": true, "notes": "1 cabin bag plus 1 personal item included on all fares. 8kg." },
+      "underseat": { "maxCm": [40, 30, 15], "maxKg": 8, "included": true, "notes": "Personal item must fit under seat. Included on all fares." },
+      "checked": { "maxCm": [158], "maxKg": 23, "included": true, "notes": "Total dimensions 158cm. 23kg included on Economy fares." }
     }
   }
 ]

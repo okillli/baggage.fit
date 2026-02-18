@@ -3,5 +3,5 @@
   <rect x="40" y="40" width="1120" height="550" rx="16" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
   <text x="600" y="260" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-weight="700" font-size="72" fill="#FFFFFF">baggage.fit</text>
   <text x="600" y="340" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-weight="600" font-size="36" fill="#B8FF57">Will your bag fit?</text>
-  <text x="600" y="420" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-weight="400" font-size="24" fill="rgba(255,255,255,0.6)">Check cabin, underseat, and checked baggage limits for 30+ airlines</text>
+  <text x="600" y="420" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-weight="400" font-size="24" fill="rgba(255,255,255,0.6)">Check cabin, underseat, and checked baggage limits for 41 airlines</text>
 </svg>

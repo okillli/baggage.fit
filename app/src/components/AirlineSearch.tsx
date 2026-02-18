@@ -102,9 +102,8 @@ export function AirlineSearch({
   }, []);
 
   // Reset active index when results change
-  useEffect(() => {
-    setActiveIndex(0);
-  }, [results]);
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => { setActiveIndex(0); }, [results]);
 
   // Scroll active item into view
   useEffect(() => {
